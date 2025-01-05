@@ -16,7 +16,7 @@ COPY backend/Cargo.toml ./Cargo.lock ./
 RUN echo "[workspace]" >> Cargo.toml && \
     echo "members = [\"entity\", \"migration\"]" >> Cargo.toml
 
-RUN cargo chef prepare --recipe-path recipe.json --bin positron-backend
+RUN cargo chef prepare --recipe-path recipe.json --bin backend
 
 FROM chef AS builder
 
@@ -32,8 +32,8 @@ COPY backend/entity ./entity
 COPY backend/migration ./migration
 COPY backend/Cargo.toml ./Cargo.lock ./
 
-RUN cargo build --release --target $TARGET --bin positron-backend
-RUN mv ./target/$TARGET/release/positron-backend ./app
+RUN cargo build --release --target $TARGET --bin backend
+RUN mv ./target/$TARGET/release/backend ./app
 
 FROM alpine
 

@@ -13,8 +13,8 @@ jobs:
       matrix:
         item:
           [
-            { df_path: ./frontend, image: {{project-name}} },
-            { df_path: ./backend, image: {{project-name}}-backend },
+            { df_path: ./frontend, image: my_project },
+            { df_path: ./backend, image: my_project-backend },
           ]
     steps:
       - name: Checkout repository
