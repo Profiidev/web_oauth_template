@@ -13,3 +13,8 @@ Set Github actions secrets:
 Create .env files from env templates
 
 Change image names in `.github/workflows/release.yml` from `my_project` to something else
+
+Run
+```
+npm i
+```
