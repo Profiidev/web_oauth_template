@@ -1,0 +1,53 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        item:
+          [
+            { df_path: ./frontend, image: {{project-name}} },
+            { df_path: ./backend, image: {{project-name}}-backend },
+          ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./
+          file: ${{ matrix.item.df_path }}/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.item.image }}:latest
+          build-args: URL=${{ secrets.BACKEND_URL }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  publish:
+    name: Update Server
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Update via Webhook
+        uses: newarifrh/portainer-service-webhook@v1
+        with:
+          webhook_url: ${{ secrets.PORTAINER_WEBHOOK }}

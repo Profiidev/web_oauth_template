@@ -1,0 +1,99 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.Dev
+    volumes:
+      - ./frontend:/app/frontend
+      - ./node_modules:/app/node_modules
+      - ./package-lock.json:/app/package-lock.json
+      - ./package.json:/app/package.json
+    tty: true
+    networks:
+      - nginx
+    command: npm run dev -- --host
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.Dev
+    volumes:
+      - ./backend:/app
+    networks:
+      - nginx
+      - kafka
+    tty: true
+    entrypoint: ["tini", "--"]
+    command: ["cargo", "watch", "-x", "run"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "1420:1420"
+    networks:
+      - nginx
+    environment:
+      - NGINX_ENTRYPOINT_QUIET_LOGS=1
+    depends_on:
+      - frontend
+      - backend
+
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test
+    networks:
+      - nginx
+    ports:
+      - "9301:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "test"]
+      interval: 60s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+      start_interval: 1s
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    networks:
+      kafka:
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LOG_DIRS: /logs
+      KAFKA_CREATE_TOPICS: "logging:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    networks:
+      kafka:
+
+  ui:
+    image: provectuslabs/kafka-ui
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+    ports:
+      - "127.0.0.1:6354:8080"
+    networks:
+      kafka:
+
+networks:
+  nginx:
+  kafka:

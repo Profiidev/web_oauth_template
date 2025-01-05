@@ -1,0 +1,7 @@
+src-tauri/
+frontend/build/
+node_modules/
+.svelte-kit/
+target/
+/backend/
+/postgres/
