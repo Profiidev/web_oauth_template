@@ -10,7 +10,7 @@ export default defineConfig({
 		hmr: {
 			protocol: 'ws',
 			port: 1421
-		},
+		}
 	},
 	preview: {
 		port: 1420

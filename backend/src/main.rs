@@ -10,8 +10,8 @@ use sea_orm_rocket::Database;
 
 mod cors;
 mod db;
-mod error;
 mod dummy;
+mod error;
 
 #[launch]
 async fn rocket() -> _ {
@@ -52,9 +52,7 @@ async fn rocket() -> _ {
 }
 
 fn routes() -> Vec<Route> {
-  dummy::routes()
-    .into_iter()
-    .collect()
+  dummy::routes().into_iter().collect()
 }
 
 fn state(server: Rocket<Build>) -> Rocket<Build> {
