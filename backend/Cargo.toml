@@ -16,5 +16,5 @@ migration = { path = "migration" }
 sea-orm-rocket = "0.5.5"
 log = "0.4.25"
 kafka-logger = "0.1.0"
-jsonwebtoken = "9.3.0"
+jsonwebtoken = "9.3.1"
 dotenv = "0.15.0"
