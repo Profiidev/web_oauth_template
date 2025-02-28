@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use cors::cors;
 use db::DB;
 #[cfg(debug_assertions)]
@@ -18,7 +20,18 @@ async fn rocket() -> _ {
   #[cfg(debug_assertions)]
   dotenv().ok();
 
-  kafka_logger::init_from_env();
+  let url = std::env::var("LOKI_URL").expect("Failed to load LOKI_URL");
+  let level = std::env::var("RUST_LOG")
+    .unwrap_or("warn".into())
+    .parse()
+    .expect("Failed to parse RUST_LOG");
+  let application = std::env::var("LOKI_APP").expect("Failed to load LOKI_APP");
+  let environment = std::env::var("LOKI_ENV").expect("Failed to load LOKI_ENV");
+  let log_labels = HashMap::from_iter([
+    ("application".into(), application),
+    ("environment".into(), environment),
+  ]);
+  loki_logger::init_with_labels(url, level, log_labels).expect("Failed to init logger");
 
   let cors = cors();
 
