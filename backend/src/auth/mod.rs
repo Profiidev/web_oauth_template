@@ -1,8 +1,9 @@
-use jwt::JwtState;
+use jwt::{JwtInvalidState, JwtState};
 use rocket::{Build, Rocket, Route};
 use sea_orm::DatabaseConnection;
 use state::OIDCState;
 
+mod endpoint;
 mod jwt;
 mod oidc;
 mod state;
@@ -10,8 +11,13 @@ mod state;
 pub fn routes() -> Vec<Route> {
   oidc::routes()
     .into_iter()
+    .chain(endpoint::routes())
     .flat_map(|route| route.map_base(|base| format!("{}{}", "/auth", base)))
     .collect()
+}
+
+pub fn state(server: Rocket<Build>) -> Rocket<Build> {
+  server.manage(JwtInvalidState::default())
 }
 
 pub struct AsyncAuthStates {

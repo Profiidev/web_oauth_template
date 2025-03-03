@@ -1,10 +1,20 @@
 <script lang="ts">
-	import { PUBLIC_BACKEND_URL } from '$env/static/public';
-	const click = () => {
-		fetch(`${PUBLIC_BACKEND_URL}/auth/oidc/start_auth`)
-			.then((res) => res.text())
-			.then((text) => (window.location.href = text));
+	import { logout, start_auth, test_token } from '$lib/backend/auth.svelte';
+
+	const login = async () => {
+		let res = await start_auth();
+		if (res) {
+			window.location.href = res;
+		}
+	};
+
+	let valid = $state();
+	const test = async () => {
+		valid = await test_token();
 	};
 </script>
 
-<button onclick={click} class="text-white"> Test </button>
+<button onclick={login} class="text-white"> Login </button>
+<button onclick={logout} class="text-white"> Logout </button>
+<button onclick={test} class="text-white"> Test </button>
+<p class="text-white">Valid: {valid}</p>

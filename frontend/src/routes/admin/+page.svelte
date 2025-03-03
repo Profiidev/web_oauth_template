@@ -1,1 +1,1 @@
-<p>Admin</p>
+<p class="text-white">Admin</p>

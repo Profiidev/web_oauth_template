@@ -70,14 +70,12 @@ fn routes() -> Vec<Route> {
 }
 
 fn state(server: Rocket<Build>) -> Rocket<Build> {
-  //init state
-  server
+  auth::state(server)
 }
 
 async fn init_state_with_db(server: Rocket<Build>) -> fairing::Result {
   let db = &DB::fetch(&server).unwrap().conn;
 
-  //init state using db
   let state = AsyncAuthStates::new(db).await;
   let server = state.add(server).await;
 
