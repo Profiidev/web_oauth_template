@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use auth::AsyncAuthStates;
 use cors::cors;
 use db::DB;
 #[cfg(debug_assertions)]
@@ -10,9 +11,9 @@ use rocket::{
 };
 use sea_orm_rocket::Database;
 
+mod auth;
 mod cors;
 mod db;
-mod dummy;
 mod error;
 
 #[launch]
@@ -65,18 +66,18 @@ async fn rocket() -> _ {
 }
 
 fn routes() -> Vec<Route> {
-  dummy::routes().into_iter().collect()
+  auth::routes().into_iter().collect()
 }
 
 fn state(server: Rocket<Build>) -> Rocket<Build> {
-  //init state
-  dummy::state(server)
+  auth::state(server)
 }
 
 async fn init_state_with_db(server: Rocket<Build>) -> fairing::Result {
   let db = &DB::fetch(&server).unwrap().conn;
 
-  //init state using db
+  let state = AsyncAuthStates::new(db).await;
+  let server = state.add(server).await;
 
   Ok(server)
 }
