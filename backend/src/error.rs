@@ -41,6 +41,11 @@ pub enum Error {
     #[from]
     source: std::io::Error,
   },
+  #[error("Reqwest Error {source:?}")]
+  Reqwest {
+    #[from]
+    source: reqwest::Error,
+  },
 }
 
 impl<'r, 'o: 'r> Responder<'r, 'o> for Error {
@@ -49,7 +54,9 @@ impl<'r, 'o: 'r> Responder<'r, 'o> for Error {
     match self {
       Self::Unauthorized => Status::Unauthorized.respond_to(request),
       Self::Gone => Status::Gone.respond_to(request),
-      Self::InternalServerError => Status::InternalServerError.respond_to(request),
+      Self::InternalServerError | Self::Reqwest { .. } => {
+        Status::InternalServerError.respond_to(request)
+      }
       Self::Conflict => Status::Conflict.respond_to(request),
       _ => Status::BadRequest.respond_to(request),
     }
