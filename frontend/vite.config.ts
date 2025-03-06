@@ -9,7 +9,7 @@ export default defineConfig({
 		strictPort: true,
 		hmr: {
 			protocol: 'ws',
-			port: 1421
+			port: 1420
 		}
 	},
 	preview: {
