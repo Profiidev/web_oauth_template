@@ -4,7 +4,10 @@ import tailwindcssAnimate from 'tailwindcss-animate';
 
 const config: Config = {
 	darkMode: ['class'],
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: [
+		'./src/**/*.{html,js,svelte,ts}',
+		'../node_modules/positron-components/**/*.{html,js,svelte,ts}'
+	],
 	safelist: ['dark'],
 	theme: {
 		container: {
