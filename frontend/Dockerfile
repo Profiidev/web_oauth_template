@@ -6,13 +6,10 @@ ENV PUBLIC_IS_APP=false
 
 WORKDIR /app/frontend
 
-COPY frontend/package.json frontend/postcss.config.js frontend/svelte.config.js frontend/tailwind.config.ts frontend/tsconfig.json frontend/vite.config.js ./
+COPY frontend/package.json frontend/postcss.config.js frontend/svelte.config.js frontend/tailwind.config.ts frontend/tsconfig.json frontend/vite.config.ts ./
 COPY frontend/src ./src
 COPY frontend/static ./static
 COPY package-lock.json ../
-
-RUN rm src/routes/+layout.ts
-RUN sed -i 's/static/node/g' svelte.config.js
 
 RUN npm i
 
