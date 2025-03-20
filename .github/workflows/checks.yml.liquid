@@ -24,7 +24,7 @@ jobs:
 
       - name: Generate svelte data
         run: |
-          cd frontend && npm run check
+          cd frontend && npm run sync
 
       - name: Run linters
         uses: profiidev/rust-lint-action@v3
