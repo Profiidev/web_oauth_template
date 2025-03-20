@@ -1,8 +1,8 @@
 <script lang="ts">
-	import '../app.css';
-	let { children } = $props();
+  import '../app.css';
+  let { children } = $props();
 </script>
 
 <div class="h-full w-full bg-black">
-{@render children()}
+  {@render children()}
 </div>
