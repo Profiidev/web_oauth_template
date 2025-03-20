@@ -24,7 +24,7 @@ jobs:
       - uses: bahmutov/npm-install@v1
 
       - name: Run linters
-        uses: profiidev/rust-lint-action@master
+        uses: profiidev/rust-lint-action@v3
         with:
           rustfmt: true
           auto_fix: true

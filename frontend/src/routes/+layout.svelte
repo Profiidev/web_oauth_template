@@ -1,9 +1,8 @@
 <script lang="ts">
   import '../app.css';
   let { children } = $props();
-  let x: string = 0;
 </script>
 
-<div class="h-full w-full bg-black" onclick={() => {}}>
+<div class="h-full w-full bg-black">
   {@render children()}
 </div>
