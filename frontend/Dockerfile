@@ -7,11 +7,12 @@ ENV PUBLIC_IS_APP=false
 WORKDIR /app/frontend
 
 COPY frontend/package.json frontend/postcss.config.js frontend/svelte.config.js frontend/tailwind.config.ts frontend/tsconfig.json frontend/vite.config.ts ./
-COPY frontend/src ./src
-COPY frontend/static ./static
-COPY package-lock.json ../
+COPY package-lock.json package.json ../
 
 RUN npm i
+
+COPY frontend/src ./src
+COPY frontend/static ./static
 
 RUN npm run build
 
@@ -23,6 +24,6 @@ WORKDIR /app
 
 COPY --from=build /app/frontend/build .
 COPY --from=build /app/frontend/package.json .
-COPY --from=build /app/frontend/package-lock.json .
+COPY --from=build /app/package-lock.json .
 
 CMD ["node", "."]
