@@ -52,6 +52,7 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v6
+        id: push
         with:
           context: ./
           file: ${{ matrix.item.df_path }}/Dockerfile
