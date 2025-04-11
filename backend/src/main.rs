@@ -5,6 +5,7 @@ use cors::cors;
 use db::DB;
 #[cfg(debug_assertions)]
 use dotenv::dotenv;
+use fern::Dispatch;
 use rocket::{
   fairing::{self, AdHoc},
   launch, Build, Config, Rocket, Route,
@@ -21,18 +22,16 @@ async fn rocket() -> _ {
   #[cfg(debug_assertions)]
   dotenv().ok();
 
-  let url = std::env::var("LOKI_URL").expect("Failed to load LOKI_URL");
   let level = std::env::var("RUST_LOG")
     .unwrap_or("warn".into())
     .parse()
     .expect("Failed to parse RUST_LOG");
-  let application = std::env::var("LOKI_APP").expect("Failed to load LOKI_APP");
-  let environment = std::env::var("LOKI_ENV").expect("Failed to load LOKI_ENV");
-  let log_labels = HashMap::from_iter([
-    ("application".into(), application),
-    ("environment".into(), environment),
-  ]);
-  loki_logger::init_with_labels(url, level, log_labels).expect("Failed to init logger");
+
+  Dispatch::new()
+    .chain(Box::new(env_logger::builder().build()) as Box<dyn log::Log>)
+    .level(level)
+    .apply()
+    .expect("Failed to initialize logger");
 
   let cors = cors();
 
