@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use auth::AsyncAuthStates;
 use cors::cors;
 use db::DB;
