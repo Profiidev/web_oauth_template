@@ -9,7 +9,7 @@ Set Github actions secrets:
 - PORTAINER_WEBHOOK
 - BACKEND_URL
 - PERSONAL_TOKEN (also for dependabot)
-- BUMPBER_TOKEN (server-config token)
+- SERVER_CONFIG_TOKEN (server-config token)
 
 Create .env files from env templates
 
