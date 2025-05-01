@@ -9,7 +9,7 @@ WORKDIR /app/frontend
 COPY frontend/package.json frontend/postcss.config.js frontend/svelte.config.js frontend/tailwind.config.ts frontend/tsconfig.json frontend/vite.config.ts ./
 COPY package-lock.json package.json ../
 
-RUN npm i
+RUN npm ci
 
 COPY frontend/src ./src
 COPY frontend/static ./static
