@@ -1,16 +1,9 @@
 ARG TARGET=x86_64-unknown-linux-musl
 
-FROM profidev/rust-musl-builder:latest AS chef
-RUN rustup update
+FROM ghcr.io/profiidev/images/rust-musl-builder:main AS planner
 
-RUN cargo install cargo-chef 
-WORKDIR /app
-
-FROM chef AS planner
-
-COPY backend/src ./src
-COPY backend/entity ./entity
-COPY backend/migration ./migration
+COPY backend/entity/Cargo.toml ./entity/Cargo.toml
+COPY backend/migration/Cargo.toml ./migration/Cargo.toml
 COPY backend/Cargo.toml ./Cargo.lock ./
 
 RUN echo "[workspace]" >> Cargo.toml && \
@@ -18,7 +11,7 @@ RUN echo "[workspace]" >> Cargo.toml && \
 
 RUN cargo chef prepare --recipe-path recipe.json --bin backend
 
-FROM chef AS builder
+FROM ghcr.io/profiidev/images/rust-musl-builder:main AS builder
 
 ARG TARGET
 ENV TARGET=$TARGET
