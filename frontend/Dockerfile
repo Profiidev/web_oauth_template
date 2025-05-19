@@ -6,7 +6,7 @@ ENV PUBLIC_IS_APP=false
 
 WORKDIR /app/frontend
 
-COPY frontend/package.json frontend/postcss.config.js frontend/svelte.config.js frontend/tailwind.config.ts frontend/tsconfig.json frontend/vite.config.ts ./
+COPY frontend/package.json frontend/svelte.config.js frontend/tsconfig.json frontend/vite.config.ts ./
 COPY package-lock.json package.json ../
 
 RUN npm ci
