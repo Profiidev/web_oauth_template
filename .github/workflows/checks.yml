@@ -36,3 +36,5 @@ jobs:
           prettier_extensions: "css,html,js,json,jsx,md,sass,scss,ts,tsx,vue,yaml,yml,svelte"
           svelte: true
           svelte_args: "--ignore target"
+          tsc: true
+          tsc_dir: frontend
