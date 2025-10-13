@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-sea-orm = "1.1.16"
+sea-orm = "1.1.17"
 serde = { version = "1.0.228", features = ["derive"] }
 
 [lib]
