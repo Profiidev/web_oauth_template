@@ -1,4 +1,4 @@
-import { ContentType, RequestError, ResponseType, get, post } from "positron-components/backend";
+import { RequestError, ResponseType, get, post } from "positron-components/backend";
 
 export const start_auth = async () => {
   let res = await get<string>("/auth/oidc/start_auth", ResponseType.Text);
@@ -11,7 +11,6 @@ export const logout = async () => {
   return await post<undefined>(
     "/auth/logout",
     ResponseType.None,
-    ContentType.Json,
     undefined,
   );
 };
