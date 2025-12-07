@@ -10,12 +10,12 @@ jobs:
       checks: write
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
       - uses: dtolnay/rust-toolchain@stable
         with:
-          components: rustfmt,clippy
+          components: clippy,rustfmt
 
       - name: Cache cargo and rust files
         id: rust_cache
@@ -39,3 +39,5 @@ jobs:
           prettier_extensions: "css,html,js,json,jsx,md,sass,scss,ts,tsx,vue,yaml,yml,svelte"
           svelte: true
           svelte_args: "--ignore target"
+          tsc: true
+          tsc_dir: frontend
