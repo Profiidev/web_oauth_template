@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { logout, start_auth, test_token } from '$lib/backend/auth.svelte';
+  import { get_oidc_url, logout, test_token } from '$lib/backend/auth.svelte';
 
   const login = async () => {
-    let res = await start_auth();
-    if (res) {
-      window.location.href = res;
+    let url = await get_oidc_url();
+    if (url) {
+      window.location.href = url;
     }
   };
 

@@ -1,5 +1,5 @@
 use entity::{key, prelude::*};
-use sea_orm::{prelude::*, ActiveValue::Set};
+use sea_orm::{ActiveValue::Set, prelude::*};
 
 pub struct KeyTable<'db> {
   db: &'db DatabaseConnection,

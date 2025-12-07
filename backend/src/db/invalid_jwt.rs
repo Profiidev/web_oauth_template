@@ -1,6 +1,6 @@
 use chrono::{DateTime, Utc};
 use entity::{invalid_jwt, prelude::*};
-use sea_orm::{prelude::*, ActiveValue::Set};
+use sea_orm::{ActiveValue::Set, prelude::*};
 
 pub struct InvalidJwtTable<'db> {
   db: &'db DatabaseConnection,

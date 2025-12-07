@@ -1,80 +1,60 @@
-use auth::AsyncAuthStates;
-use cors::cors;
-use db::DB;
+use axum::{Extension, Router};
+use centaurus::{
+  db::init::init_db,
+  init::{
+    axum::{listener_setup, run_app},
+    logging::init_logging,
+    router::base_router,
+  },
+  router_extension,
+};
 #[cfg(debug_assertions)]
 use dotenv::dotenv;
-use fern::Dispatch;
-use rocket::{
-  fairing::{self, AdHoc},
-  launch, Build, Config, Rocket, Route,
-};
-use sea_orm_rocket::Database;
+use tracing::info;
+
+use crate::config::Config;
 
 mod auth;
-mod cors;
+mod config;
 mod db;
-mod error;
+mod dummy;
 
-#[launch]
-async fn rocket() -> _ {
+#[tokio::main]
+async fn main() {
   #[cfg(debug_assertions)]
   dotenv().ok();
 
-  let level = std::env::var("RUST_LOG")
-    .unwrap_or("warn".into())
-    .parse()
-    .expect("Failed to parse RUST_LOG");
+  let config = Config::parse();
+  init_logging(&config.base);
 
-  Dispatch::new()
-    .chain(Box::new(env_logger::builder().build()) as Box<dyn log::Log>)
-    .level(level)
-    .apply()
-    .expect("Failed to initialize logger");
+  let listener = listener_setup(config.base.port).await;
 
-  let cors = cors();
+  let app = base_router(api_router(), &config.base, &config.metrics)
+    .await
+    .state(config)
+    .await;
 
-  let url = std::env::var("DB_URL").expect("Failed to load DB_URL");
-  let sqlx_logging = std::env::var("DB_LOGGING")
-    .map(|s| s.parse::<bool>().unwrap_or(false))
-    .unwrap_or(false);
-
-  let figment = Config::figment()
-    .merge(("address", "0.0.0.0"))
-    .merge(("log_level", "normal"))
-    .merge((
-      "databases.sea_orm",
-      sea_orm_rocket::Config {
-        url,
-        min_connections: None,
-        max_connections: 1024,
-        connect_timeout: 5,
-        idle_timeout: None,
-        sqlx_logging,
-      },
-    ));
-
-  let server = rocket::custom(figment)
-    .attach(cors)
-    .manage(rocket_cors::catch_all_options_routes())
-    .mount("/", routes());
-
-  let server = state(server);
-  DB::attach(server).attach(AdHoc::try_on_ignite("DB States init", init_state_with_db))
+  info!("Starting application");
+  run_app(listener, app).await;
 }
 
-fn routes() -> Vec<Route> {
-  auth::routes().into_iter().collect()
+fn api_router() -> Router {
+  dummy::router().nest("/auth", auth::router())
 }
 
-fn state(server: Rocket<Build>) -> Rocket<Build> {
-  auth::state(server)
-}
+router_extension!(
+  async fn state(self, config: Config) -> Self {
+    use auth::auth;
+    use dummy::dummy;
 
-async fn init_state_with_db(server: Rocket<Build>) -> fairing::Result {
-  let db = &DB::fetch(&server).unwrap().conn;
+    let db = init_db::<migration::Migrator>(&config.db, &config.db_url).await;
 
-  let state = AsyncAuthStates::new(db).await;
-  let server = state.add(server).await;
-
-  Ok(server)
-}
+    self
+      .auth(&config, &db)
+      .await
+      .dummy()
+      .await
+      .layer(Extension(db))
+      .layer(Extension(config))
+  }
+);

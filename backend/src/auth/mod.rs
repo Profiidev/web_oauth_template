@@ -1,39 +1,36 @@
-use jwt::{JwtInvalidState, JwtState};
-use rocket::{Build, Rocket, Route};
-use sea_orm::DatabaseConnection;
-use state::OIDCState;
+use axum::{Extension, Router};
+use centaurus::{db::init::Connection, router_extension};
 
-mod endpoint;
-mod jwt;
+use crate::{
+  auth::{
+    jwt_state::{JwtInvalidState, JwtState},
+    oidc::OidcState,
+  },
+  config::Config,
+};
+
+pub mod jwt_auth;
+mod jwt_state;
+mod logout;
 mod oidc;
-mod state;
+mod res;
+mod test_token;
 
-pub fn routes() -> Vec<Route> {
-  oidc::routes()
-    .into_iter()
-    .chain(endpoint::routes())
-    .flat_map(|route| route.map_base(|base| format!("{}{}", "/auth", base)))
-    .collect()
+pub fn router() -> Router {
+  test_token::router()
+    .merge(logout::router())
+    .merge(oidc::router())
 }
 
-pub fn state(server: Rocket<Build>) -> Rocket<Build> {
-  server.manage(JwtInvalidState::default())
-}
-
-pub struct AsyncAuthStates {
-  jwt: JwtState,
-  oidc: OIDCState,
-}
-
-impl AsyncAuthStates {
-  pub async fn new(db: &DatabaseConnection) -> Self {
-    Self {
-      jwt: JwtState::init(db).await,
-      oidc: OIDCState::new().await,
-    }
+router_extension!(
+  async fn auth(self, config: &Config, db: &Connection) -> Self {
+    self
+      .layer(Extension(JwtState::init(config, db).await))
+      .layer(Extension(JwtInvalidState::default()))
+      .layer(Extension(
+        OidcState::new(config)
+          .await
+          .expect("Failed to initialize OIDC state"),
+      ))
   }
-
-  pub async fn add(self, server: Rocket<Build>) -> Rocket<Build> {
-    server.manage(self.jwt).manage(self.oidc)
-  }
-}
+);

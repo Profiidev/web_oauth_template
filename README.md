@@ -4,16 +4,13 @@
 
 Set Github actions secrets:
 
-- DOCKERHUB_USERNAME
-- DOCKERHUB_TOKEN
-- PORTAINER_WEBHOOK
-- BACKEND_URL
 - PERSONAL_TOKEN (also for dependabot)
-- SERVER_CONFIG_TOKEN (server-config token)
+- HELM_CHARTS_TOKEN
 
 Create .env files from env templates
 
-Change image names in `.github/workflows/release.yml` from `my_project` to something else
+Change names in `.github/workflows/release.yml` from `my-app` to something else
+Setup helm chart in chart repo
 
 Run
 
