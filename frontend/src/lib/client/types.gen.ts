@@ -41,6 +41,7 @@ export type DeleteUserRequest = {
 };
 
 export type DetailUserInfo = {
+  avatar?: string | null;
   email: string;
   groups: Array<SimpleGroupInfo>;
   name: string;
