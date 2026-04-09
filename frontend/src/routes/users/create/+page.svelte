@@ -42,7 +42,9 @@
     let encrypted_password = encrypt.encrypt(anyData.password || '');
     anyData.password = encrypted_password || '';
 
-    let res = await createUser(anyData);
+    let res = await createUser({
+      body: anyData
+    });
 
     if (!res.data) {
       if (res.response.status === 409) {

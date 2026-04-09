@@ -64,5 +64,5 @@ async fn state(router: ApiRouter, config: Config) -> ApiRouter {
   router = mail::state(router, &db).await;
   router = dummy::state(router);
 
-  router.layer(Extension(config))
+  router.layer(Extension(db))
 }

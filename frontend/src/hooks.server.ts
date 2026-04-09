@@ -15,20 +15,14 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
     let cookie = event.request.headers.get('cookie');
     if (cookie) request.headers.set('cookie', cookie);
   }
-  return fetch(request)
-    .then((res) => {
-      console.log(res);
-      let headers = new Headers(res.headers);
-      headers.append('Access-Control-Allow-Origin', '*');
-      return new Response(res.body, {
-        ...res,
-        headers
-      });
-    })
-    .then((res) => {
-      console.log(res);
-      return res;
+  return fetch(request).then((res) => {
+    let headers = new Headers(res.headers);
+    headers.append('Access-Control-Allow-Origin', '*');
+    return new Response(res.body, {
+      ...res,
+      headers
     });
+  });
 };
 
 export const handle: Handle = async ({ event, resolve }) => {

@@ -10,7 +10,7 @@ path = "src/lib.rs"
 
 [dependencies]
 async-std = { version = "1", features = ["attributes", "tokio1"] }
-centaurus = { version = "0.8.0", features = [
+centaurus = { version = "0.9.0", features = [
   "sea-orm",
 ], default-features = false }
 

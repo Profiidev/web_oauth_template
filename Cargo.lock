@@ -710,9 +710,9 @@ dependencies = [
 
 [[package]]
 name = "centaurus"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d08ff981d3aeedf05c3f627e0140de364ee9bba39dd191e0f9a2cccba17e0fe"
+checksum = "2a48afb463780057c92ff3ae2d8cf4902beb7915d76673ebda33ba6645750140"
 dependencies = [
  "addr",
  "aide",
@@ -2459,15 +2459,6 @@ name = "memchr"
 version = "2.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8ca58f447f06ed17d5fc4043ce1b10dd205e060fb3ce5b979b8ed8e59ff3f79"
-
-[[package]]
-name = "memoffset"
-version = "0.9.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "488016bfae457b036d996092f6cb448677611ce4449e970ceaf42695203f218a"
-dependencies = [
- "autocfg",
-]
 
 [[package]]
 name = "memoffset"

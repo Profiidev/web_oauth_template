@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-centaurus = { version = "0.8.0", features = [
+centaurus = { version = "0.9.0", features = [
   "sea-orm",
   "uuid",
   "argon2",
@@ -56,6 +56,12 @@ aide = { version = "0.16.0-alpha.3", features = [
   "macros",
 ] }
 schemars = { version = "1.2.1", features = ["uuid1", "chrono04", "url2"] }
+# Required to enable image formats
+image = { version = "0.25.10", default-features = false, features = [
+  "png",
+  "jpeg",
+  "webp",
+] }
 
 [features]
 # only used for testing purposes
