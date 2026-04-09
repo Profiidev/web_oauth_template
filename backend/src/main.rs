@@ -1,23 +1,29 @@
-use axum::{Extension, Router};
+use aide::axum::ApiRouter;
+use axum::Extension;
 use centaurus::{
-  db::init::init_db,
-  init::{
-    axum::{listener_setup, run_app},
-    logging::init_logging,
-    router::base_router,
+  backend::{
+    auth, group,
+    init::{listener_setup, run_app},
+    mail,
+    middleware::rate_limiter::RateLimiter,
+    router::build_router,
+    setup, user, websocket,
   },
-  router_extension,
+  db::init::init_db,
+  logging::init_logging,
+  version_header,
 };
 #[cfg(debug_assertions)]
-use dotenv::dotenv;
+use dotenvy::dotenv;
 use tracing::info;
 
-use crate::config::Config;
+use crate::{config::Config, utils::UpdateMessage};
 
-mod auth;
 mod config;
 mod db;
 mod dummy;
+mod settings;
+mod utils;
 
 #[tokio::main]
 async fn main() {
@@ -28,33 +34,35 @@ async fn main() {
   init_logging(config.base.log_level);
 
   let listener = listener_setup(config.base.port).await;
-
-  let app = base_router(api_router(), &config.base, &config.metrics)
-    .await
-    .state(config)
-    .await;
+  let mut app = build_router(api_router, state, config).await;
+  version_header!(app);
 
   info!("Starting application");
   run_app(listener, app).await;
 }
 
-fn api_router() -> Router {
-  dummy::router().nest("/auth", auth::router())
+fn api_router(rate_limiter: &mut RateLimiter) -> ApiRouter {
+  ApiRouter::new()
+    .nest("/ws", websocket::router::<UpdateMessage>())
+    .nest("/setup", setup::router())
+    .nest("/auth", auth::router(rate_limiter))
+    .nest("/user", user::router::<UpdateMessage>(rate_limiter))
+    .nest("/settings", settings::router())
+    .nest("/mail", mail::router(rate_limiter))
+    .nest("/group", group::router::<UpdateMessage>())
+    .nest("/dummy", dummy::router())
 }
 
-router_extension!(
-  async fn state(self, config: Config) -> Self {
-    use auth::auth;
-    use dummy::dummy;
+async fn state(router: ApiRouter, config: Config) -> ApiRouter {
+  let db = init_db::<migration::Migrator>(&config.db, &config.db_url).await;
+  centaurus::backend::setup::create_admin_group(&db, utils::permissions())
+    .await
+    .expect("Failed to create admin group");
 
-    let db = init_db::<migration::Migrator>(&config.db, &config.db_url).await;
+  let mut router = websocket::state::<UpdateMessage>(router).await;
+  router = auth::state(router, &config.auth, &db).await;
+  router = mail::state(router, &db).await;
+  router = dummy::state(router);
 
-    self
-      .auth(&config, &db)
-      .await
-      .dummy()
-      .await
-      .layer(Extension(db))
-      .layer(Extension(config))
-  }
-);
+  router.layer(Extension(db))
+}

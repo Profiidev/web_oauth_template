@@ -1,6 +1,11 @@
+use aide::OperationIo;
 use axum::{Extension, extract::FromRequestParts};
 use centaurus::{
-  config::{BaseConfig, MetricsConfig},
+  Config,
+  backend::{
+    auth::settings::AuthConfig,
+    config::{BaseConfig, MetricsConfig, SiteConfig},
+  },
   db::config::DBConfig,
 };
 use figment::{
@@ -9,29 +14,25 @@ use figment::{
 };
 use serde::{Deserialize, Serialize};
 use tracing::instrument;
-use url::Url;
 
-#[derive(Deserialize, Serialize, Clone, Debug, FromRequestParts)]
+#[derive(Deserialize, Serialize, Clone, Debug, FromRequestParts, Config, OperationIo)]
 #[from_request(via(Extension))]
 pub struct Config {
+  #[base]
   #[serde(flatten)]
   pub base: BaseConfig,
   #[serde(flatten)]
   pub db: DBConfig,
+  #[metrics]
   #[serde(flatten)]
   pub metrics: MetricsConfig,
+  #[site]
+  #[serde(flatten)]
+  pub site: SiteConfig,
+  #[serde(flatten)]
+  pub auth: AuthConfig,
 
   pub db_url: String,
-
-  pub jwt_iss: String,
-  pub jwt_exp: i64,
-
-  pub oidc_url: Option<String>,
-  pub oidc_client_id: Option<String>,
-  pub oidc_client_secret: Option<String>,
-  pub oidc_scope: Option<String>,
-
-  pub base_url: Url,
 }
 
 impl Default for Config {
@@ -39,18 +40,16 @@ impl Default for Config {
     Self {
       base: BaseConfig::default(),
       db: DBConfig::default(),
+      site: SiteConfig::default(),
       db_url: "".to_string(),
       metrics: MetricsConfig {
         metrics_name: "{{project-name}}".to_string(),
         ..Default::default()
       },
-      jwt_iss: "{{project-name}}".to_string(),
-      jwt_exp: 604800,
-      oidc_url: None,
-      oidc_client_id: None,
-      oidc_client_secret: None,
-      oidc_scope: None,
-      base_url: Url::parse("http://localhost:5173").unwrap(),
+      auth: AuthConfig {
+        auth_pepper: "__{{project-name}}_PEPPER__".to_string(),
+        ..Default::default()
+      },
     }
   }
 }
@@ -62,10 +61,14 @@ impl Config {
       .merge(Serialized::defaults(Self::default()))
       .merge(Env::raw().global());
 
-    let config: Self = config.extract().expect("Failed to parse configuration");
+    let mut config: Self = config.extract().expect("Failed to parse configuration");
 
     if config.db_url.is_empty() {
       panic!("Database URL is not set");
+    }
+
+    if config.db_url.starts_with("sqlite") {
+      config.db.validate_sqlite();
     }
 
     config

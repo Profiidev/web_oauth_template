@@ -1,23 +1,25 @@
-use axum::{Extension, Router, extract::FromRequestParts, routing::get};
-use centaurus::{error::Result, router_extension};
+use aide::{
+  OperationIo,
+  axum::{ApiRouter, routing::get_with},
+};
+use axum::{Extension, extract::FromRequestParts};
+use centaurus::error::Result;
 
 use crate::auth::jwt_auth::JwtAuth;
 
-pub fn router() -> Router {
-  Router::new().route("/test", get(test))
+pub fn router() -> ApiRouter {
+  ApiRouter::new().api_route("/test", get_with(test, |op| op.id("test")))
 }
 
-router_extension!(
-  async fn dummy(self) -> Self {
-    self.layer(Extension(TestState::default()))
-  }
-);
+pub fn state(router: ApiRouter) -> ApiRouter {
+  router.layer(Extension(TestState::default()))
+}
 
 async fn test(auth: JwtAuth, test: TestState) -> Result<String> {
   Ok(format!("{} - {}", test.test, auth.user_id))
 }
 
-#[derive(Clone, FromRequestParts)]
+#[derive(Clone, FromRequestParts, OperationIo)]
 #[from_request(via(Extension))]
 struct TestState {
   test: String,
