@@ -19,7 +19,8 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
     let headers = new Headers(res.headers);
     headers.append('Access-Control-Allow-Origin', '*');
     return new Response(res.body, {
-      ...res,
+      status: res.status,
+      statusText: res.statusText,
       headers
     });
   });

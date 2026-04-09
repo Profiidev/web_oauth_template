@@ -26,10 +26,6 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     redirect(302, '/setup');
   }
 
-  if (typeof user === 'string') {
-    user = undefined;
-  }
-
   return {
     user
   };
