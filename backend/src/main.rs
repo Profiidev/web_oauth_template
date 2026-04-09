@@ -3,7 +3,7 @@ use axum::Extension;
 use centaurus::{
   backend::{
     auth, group,
-    init::{listener_setup, run_app},
+    init::{listener_setup, run_app_connect_info},
     mail,
     middleware::rate_limiter::RateLimiter,
     router::build_router,
@@ -38,7 +38,7 @@ async fn main() {
   version_header!(app);
 
   info!("Starting application");
-  run_app(listener, app).await;
+  run_app_connect_info(listener, app).await;
 }
 
 fn api_router(rate_limiter: &mut RateLimiter) -> ApiRouter {

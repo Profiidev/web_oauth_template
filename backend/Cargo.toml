@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-centaurus = { version = "0.9.0", features = [
+centaurus = { version = "0.9.1", features = [
   "sea-orm",
   "uuid",
   "argon2",
