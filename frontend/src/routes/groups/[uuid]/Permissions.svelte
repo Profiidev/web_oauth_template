@@ -83,33 +83,4 @@
       {/if}
     </div>
   {/if}
-  {#if user?.permissions.includes(Permission.CACHE_CREATE) || user?.permissions.includes(Permission.CACHE_VIEW) || user?.permissions.includes(Permission.CACHE_EDIT)}
-    <h6>Caches</h6>
-    <div class="ml-4">
-      {#if user?.permissions.includes(Permission.CACHE_CREATE)}
-        <FormCheckbox
-          {...props}
-          key="cache_create"
-          label="Create Caches"
-          disabled={readonly}
-        />
-      {/if}
-      {#if user?.permissions.includes(Permission.CACHE_VIEW)}
-        <FormCheckbox
-          {...props}
-          key="cache_view"
-          label="View all Caches"
-          disabled={readonly}
-        />
-      {/if}
-      {#if user?.permissions.includes(Permission.CACHE_EDIT)}
-        <FormCheckbox
-          {...props}
-          key="cache_edit"
-          label="Edit all Caches"
-          disabled={readonly}
-        />
-      {/if}
-    </div>
-  {/if}
 </div>

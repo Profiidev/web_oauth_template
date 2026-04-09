@@ -23,7 +23,6 @@
   import SimpleAvatar from 'positron-components/components/util/simple-avatar.svelte';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
   import FormInputPassword from 'positron-components/components/form/form-input-password.svelte';
-  import CacheAccess from '../../groups/[uuid]/CacheAccess.svelte';
   import {
     deleteUser,
     editUser,
@@ -45,7 +44,6 @@
       data.user?.permissions.includes(perm)
     )
   );
-  let mappings = $derived(data.userInfo.caches);
 
   const deleteItemConfirm = async () => {
     isLoading = true;
@@ -73,7 +71,7 @@
   };
 
   const onsubmit = async (form: FormValue<typeof userSettings>) => {
-    let user = reformatData(form, data.userInfo.uuid, mappings);
+    let user = reformatData(form, data.userInfo.uuid);
     let res = await editUser({
       body: user
     });
@@ -205,13 +203,6 @@
                   label: group.name,
                   value: group.uuid
                 })) || []}
-              />
-              <CacheAccess
-                caches={data.caches ?? []}
-                bind:mappings
-                disabled={!data.user?.permissions.includes(
-                  Permission.CACHE_EDIT
-                ) || isLoading}
               />
             </div>
           </div>

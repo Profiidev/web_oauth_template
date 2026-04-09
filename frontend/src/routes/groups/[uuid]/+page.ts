@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
-import { groupInfo, listCachesSimpleGroup, listUsersSimple } from '$lib/client';
+import { groupInfo, listUsersSimple } from '$lib/client';
 
 export const load: PageLoad = async ({ params, fetch }) => {
   let resPromise = groupInfo({
@@ -8,13 +8,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
     fetch
   });
   let usersPromise = listUsersSimple({ fetch });
-  let cachesPromise = listCachesSimpleGroup({ fetch });
 
-  let [res, users, caches] = await Promise.all([
-    resPromise,
-    usersPromise,
-    cachesPromise
-  ]);
+  let [res, users] = await Promise.all([resPromise, usersPromise]);
 
   if (!res.data) {
     if (res.response.status === 404) {
@@ -27,7 +22,6 @@ export const load: PageLoad = async ({ params, fetch }) => {
   return {
     uuid: params.uuid,
     group: res.data,
-    users: users.data,
-    caches: caches.data
+    users: users.data
   };
 };

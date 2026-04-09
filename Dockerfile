@@ -71,7 +71,8 @@ RUN \
 
 FROM node:24-alpine
 
-ENV DB_URL="sqlite:/data/hibernation.db?mode=rwc"
+ENV DB_URL="sqlite:/data/{{project-name}}.db?mode=rwc"
+ENV SITE_URL="http://localhost:8000"
 
 COPY --from=backend-builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 

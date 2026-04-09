@@ -13,7 +13,7 @@
 
   let { data } = $props();
 
-  let stages: Stage<{ db_backend: string; storage_backend: string }>[] = [
+  let stages: Stage<{ db_backend: string }>[] = [
     {
       title: 'Database Setup',
       content: DatabaseSetup,

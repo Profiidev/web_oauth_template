@@ -1,4 +1,4 @@
-import type { CacheMapping, UserEditReq, DetailUserInfo } from '$lib/client';
+import type { UserEditReq, DetailUserInfo } from '$lib/client';
 import type { FormValue } from 'positron-components/components/form/types';
 import { z } from 'zod';
 
@@ -9,14 +9,12 @@ export const userSettings = z.object({
 
 export const reformatData = (
   data: FormValue<typeof userSettings>,
-  uuid: string,
-  caches: CacheMapping[]
+  uuid: string
 ): UserEditReq => {
   return {
     uuid,
     name: data.name,
-    groups: data.groups || [],
-    caches: caches
+    groups: data.groups || []
   };
 };
 

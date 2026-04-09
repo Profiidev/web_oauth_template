@@ -1,4 +1,4 @@
-import type { CacheMapping, EditGroupRequest, GroupDetails } from '$lib/client';
+import type { EditGroupRequest, GroupDetails } from '$lib/client';
 import type { FormValue } from 'positron-components/components/form/types';
 import { z } from 'zod';
 
@@ -18,8 +18,7 @@ export const groupSettings = z.object({
 
 export const reformatData = (
   data: FormValue<typeof groupSettings>,
-  uuid: string,
-  mappings: CacheMapping[]
+  uuid: string
 ): EditGroupRequest => {
   const permissions: string[] = [];
 
@@ -33,8 +32,7 @@ export const reformatData = (
     uuid,
     name: data.name,
     permissions,
-    users: data.users || [],
-    caches: mappings
+    users: data.users || []
   };
 };
 

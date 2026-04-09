@@ -10,7 +10,7 @@ export const mailSettings = z
     smtp_user: z.string().optional(),
     smtp_password: z.string().optional(),
     smtp_from_address: z.email().optional(),
-    smtp_from_name: z.string().optional().default('Hibernation'),
+    smtp_from_name: z.string().optional().default('{{project-name}}'),
     use_tls: z.boolean()
   })
   .superRefine((data, ctx) => {
@@ -62,7 +62,7 @@ export const unReformat = (
     smtp_user: settings.smtp?.username,
     smtp_password: settings.smtp?.password || '',
     smtp_from_address: settings.smtp?.from_address,
-    smtp_from_name: settings.smtp?.from_name || 'Hibernation',
+    smtp_from_name: settings.smtp?.from_name || '{{project-name}}',
     use_tls: settings.smtp?.use_tls || false
   };
 };

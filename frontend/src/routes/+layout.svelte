@@ -51,7 +51,7 @@
           name: '',
           permissions: []
         }}
-    app_name="Hibernation"
+    app_name="my-app"
     {version}
     {items}
     logout={async () => {
