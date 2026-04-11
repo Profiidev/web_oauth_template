@@ -1,27 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "schedule:automergeMonthly",
-    "schedule:monthly"
-  ],
+  "extends": ["config:best-practices", "group:allNonMajor", ":automergeMinor"],
   "packageRules": [
     {
-      "groupName": "{{manager}}",
-      "matchPackageNames": ["*"]
+      "abandonmentThreshold": "5 years",
+      "matchPackageNames": ["dotenvy", "figment"],
+      "matchDatasources": ["crate"]
     }
   ],
-  "semanticCommitType": "chore",
-  "automerge": true,
-  "automergeStrategy": "merge-commit",
+  "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
     "enabled": true,
-    "vulnerabilityFixStrategy": "highest"
-  },
-  "osvVulnerabilityAlerts": true,
-  "dependencyDashboardOSVVulnerabilitySummary": "unresolved",
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-  "ignoreDeps": ["tracing-subscriber"]
+    "vulnerabilityFixStrategy": "highest",
+    "schedule": ["at any time"],
+    "automerge": true
+  }
 }
