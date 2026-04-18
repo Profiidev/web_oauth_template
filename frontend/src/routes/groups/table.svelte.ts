@@ -29,22 +29,23 @@ export const columns = ({
   createColumn('id', 'UUID'),
   {
     accessorKey: 'actions',
-    header: () => {},
     cell: ({ row }) => {
-      let disabled =
+      const disabled =
         !user?.permissions.includes(Permission.GROUP_EDIT) ||
         row.original.id === admin_group ||
         row.original.permissions.some(
+          // oxlint-disable-next-line no-unsafe-type-assertion
           (p) => !user?.permissions.includes(p as Permission)
         );
 
       return DataTable.renderComponent(Actions, {
-        edit_disabled: disabled,
         delete_disabled: disabled,
         edit: `/groups/${row.original.id}`,
+        edit_disabled: disabled,
         remove: () => deleteGroup(row.original)
       });
     },
-    enableHiding: false
+    enableHiding: false,
+    header: () => {}
   }
 ];

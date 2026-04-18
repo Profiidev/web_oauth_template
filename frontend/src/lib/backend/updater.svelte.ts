@@ -28,27 +28,30 @@ export const disconnectWebsocket = () => disconnect();
 const handleMessage = (msg: UpdateMessage, user: string) => {
   switch (msg.type) {
     case UpdateType.Settings: {
-      invalidate((url) => url.pathname.startsWith('/api/settings'));
+      const _ = invalidate((url) => url.pathname.startsWith('/api/settings'));
       break;
     }
     case UpdateType.User: {
-      invalidate('/api/user/management');
-      invalidate(`/api/user/management/${msg.uuid}`);
-      invalidate('/api/group/users');
+      const _ = invalidate('/api/user/management');
+      const _u = invalidate(`/api/user/management/${msg.uuid}`);
+      const _g = invalidate('/api/group/users');
       // Same as current user
       if (msg.uuid === user) {
-        invalidate('/api/user/info');
+        const _i = invalidate('/api/user/info');
       }
       break;
     }
     case UpdateType.UserPermissions: {
-      invalidate('/api/user/info');
+      const _ = invalidate('/api/user/info');
       break;
     }
     case UpdateType.Group: {
-      invalidate('/api/group');
-      invalidate(`/api/group/${msg.uuid}`);
-      invalidate('/api/user/management/groups');
+      const _ = invalidate('/api/group');
+      const _g = invalidate(`/api/group/${msg.uuid}`);
+      const _u = invalidate('/api/user/management/groups');
+      break;
+    }
+    default: {
       break;
     }
   }

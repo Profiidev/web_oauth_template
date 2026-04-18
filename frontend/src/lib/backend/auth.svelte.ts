@@ -1,37 +1,39 @@
 import type JSEncrypt from 'jsencrypt';
-import { get, RequestError, ResponseType } from '@profidev/pleiades/backend';
+import { RequestError, ResponseType, get } from '@profidev/pleiades/backend';
 import { browser } from '$app/environment';
 import { key as getKey } from '$lib/client';
 
 let encrypt: false | undefined | JSEncrypt = $state(browser && undefined);
 
-export const getEncrypt = () => {
-  return encrypt;
-};
+export const getEncrypt = () => encrypt;
 
 export const fetchKey = async () => {
   if (encrypt === false) {
     return RequestError.Other;
   }
 
-  let { data: keyData } = await getKey();
+  const { data: keyData } = await getKey();
   if (!keyData) {
-    return;
+    return undefined;
   }
 
-  const JSEncrypt = (await import('jsencrypt')).JSEncrypt;
+  const {JSEncrypt} = (await import('jsencrypt'));
 
   encrypt = new JSEncrypt({ default_key_size: '4096' });
   encrypt.setPublicKey(keyData.key);
+
+  return undefined;
 };
-fetchKey();
+const _ = fetchKey();
 
 export const getOidcUrl = async () => {
-  let res = await get<{ url: string }>('/api/auth/oidc/url', {
+  const res = await get<{ url: string }>('/api/auth/oidc/url', {
     res_type: ResponseType.Json
   });
 
   if (typeof res === 'object') {
     return res.url;
   }
+
+  return undefined;
 };
