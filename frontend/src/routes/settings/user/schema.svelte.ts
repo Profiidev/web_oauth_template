@@ -48,11 +48,11 @@ export const reformat = (form: FormValue<typeof userSettings>) => {
 export const unReformat = (
   settings: UserSettings
 ): FormValue<typeof userSettings> => ({
-    oidc_client_id: settings.oidc?.client_id,
-    oidc_client_secret: settings.oidc?.client_secret || '',
-    oidc_enabled: Boolean(settings.oidc),
-    oidc_issuer: settings.oidc?.issuer,
-    oidc_scopes: settings.oidc?.scopes.join(' '),
-    sso_create_user: settings.sso_create_user,
-    sso_instant_redirect: settings.sso_instant_redirect
-  });
+  oidc_client_id: settings.oidc?.client_id,
+  oidc_client_secret: settings.oidc?.client_secret || '',
+  oidc_enabled: Boolean(settings.oidc),
+  oidc_issuer: settings.oidc?.issuer,
+  oidc_scopes: settings.oidc?.scopes.join(' '),
+  sso_create_user: settings.sso_create_user,
+  sso_instant_redirect: settings.sso_instant_redirect
+});

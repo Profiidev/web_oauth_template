@@ -55,12 +55,12 @@ export const reformat = (form: FormValue<typeof mailSettings>) => {
 export const unReformat = (
   settings: MailSettings
 ): FormValue<typeof mailSettings> => ({
-    smtp_enabled: Boolean(settings.smtp),
-    smtp_from_address: settings.smtp?.from_address,
-    smtp_from_name: settings.smtp?.from_name || '{{project-name}}',
-    smtp_host: settings.smtp?.server,
-    smtp_password: settings.smtp?.password || '',
-    smtp_port: settings.smtp?.port,
-    smtp_user: settings.smtp?.username,
-    use_tls: settings.smtp?.use_tls || false
-  });
+  smtp_enabled: Boolean(settings.smtp),
+  smtp_from_address: settings.smtp?.from_address,
+  smtp_from_name: settings.smtp?.from_name || '{{project-name}}',
+  smtp_host: settings.smtp?.server,
+  smtp_password: settings.smtp?.password || '',
+  smtp_port: settings.smtp?.port,
+  smtp_user: settings.smtp?.username,
+  use_tls: settings.smtp?.use_tls || false
+});

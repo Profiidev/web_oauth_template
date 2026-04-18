@@ -5,7 +5,9 @@ import { info, isSetup } from '$lib/client';
 
 export const load: LayoutLoad = async ({ fetch, url }) => {
   const { data: status, error } = await isSetup({ fetch });
-  if (error) {return {};}
+  if (error) {
+    return {};
+  }
 
   if (!status?.is_setup && url.pathname !== '/setup') {
     redirect(302, '/setup');
