@@ -1,14 +1,14 @@
 <script lang="ts">
-  import BaseForm from 'positron-components/components/form/base-form.svelte';
+  import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
   import { generalSettings } from './schema.svelte';
-  import type { FormValue } from 'positron-components/components/form/types';
-  import { Button } from 'positron-components/components/ui/button';
-  import { Spinner } from 'positron-components/components/ui/spinner';
+  import type { FormValue } from '@profidev/pleiades/components/form/types';
+  import { Button } from '@profidev/pleiades/components/ui/button';
+  import { Spinner } from '@profidev/pleiades/components/ui/spinner';
   import Save from '@lucide/svelte/icons/save';
-  import { toast } from 'positron-components/components/util/general';
-  import FormInput from 'positron-components/components/form/form-input.svelte';
-  import * as ImageCropper from 'positron-components/components/ui-extra/image-cropper';
-  import { arrayBufferToBase64 } from 'positron-components/util/convert.svelte';
+  import { toast } from '@profidev/pleiades/components/util/general';
+  import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
+  import * as ImageCropper from '@profidev/pleiades/components/ui-extra/image-cropper';
+  import { arrayBufferToBase64 } from '@profidev/pleiades/util/convert.svelte';
   import { updateAccount, updateAvatar } from '$lib/client';
 
   let { data } = $props();

@@ -1,5 +1,5 @@
 import type { UserEditReq, DetailUserInfo } from '$lib/client';
-import type { FormValue } from 'positron-components/components/form/types';
+import type { FormValue } from '@profidev/pleiades/components/form/types';
 import { z } from 'zod';
 
 export const userSettings = z.object({

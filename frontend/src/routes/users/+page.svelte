@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Button } from 'positron-components/components/ui/button';
-  import FormDialog from 'positron-components/components/form/form-dialog.svelte';
+  import { Button } from '@profidev/pleiades/components/ui/button';
+  import FormDialog from '@profidev/pleiades/components/form/form-dialog.svelte';
   import Plus from '@lucide/svelte/icons/plus';
   import Table from '$lib/components/table/Table.svelte';
   import { columns } from './table.svelte';
   import { z } from 'zod';
-  import { toast } from 'positron-components/components/util/general';
+  import { toast } from '@profidev/pleiades/components/util/general';
   import { invalidate } from '$app/navigation';
   import { Permission } from '$lib/permissions.svelte';
   import { deleteUser, type UserListInfo } from '$lib/client';

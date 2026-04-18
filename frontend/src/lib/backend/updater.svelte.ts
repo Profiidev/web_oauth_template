@@ -2,7 +2,7 @@ import { invalidate } from '$app/navigation';
 import {
   connectWebsocket as connect,
   disconnectWebsocket as disconnect
-} from 'positron-components/backend';
+} from '@profidev/pleiades/backend';
 
 export enum UpdateType {
   Settings = 'Settings',

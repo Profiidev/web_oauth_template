@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { ModeWatcher } from 'positron-components/components/util/general';
-  import { Toaster } from 'positron-components/components/ui/sonner';
+  import { ModeWatcher } from '@profidev/pleiades/components/util/general';
+  import { Toaster } from '@profidev/pleiades/components/ui/sonner';
   import '../app.css';
   import { connectWebsocket } from '$lib/backend/updater.svelte';
   import { onMount } from 'svelte';
@@ -9,7 +9,7 @@
   import { items, noSidebarPaths } from '$lib/components/nav.svelte';
   import { setMode } from 'mode-watcher';
   import { logout, testToken } from '$lib/client';
-  import Sidebar from 'positron-components/components/nav/sidebar/sidebar.svelte';
+  import Sidebar from '@profidev/pleiades/components/nav/sidebar/sidebar.svelte';
 
   // @ts-ignore this is injected at build time via Vite's define option
   let version = __version__;

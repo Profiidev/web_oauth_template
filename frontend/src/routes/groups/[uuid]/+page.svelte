@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { Separator } from 'positron-components/components/ui/separator';
-  import { Button } from 'positron-components/components/ui/button';
+  import { Separator } from '@profidev/pleiades/components/ui/separator';
+  import { Button } from '@profidev/pleiades/components/ui/button';
   import ArrowLeft from '@lucide/svelte/icons/arrow-left';
   import Trash from '@lucide/svelte/icons/trash';
   import { Permission } from '$lib/permissions.svelte';
-  import FormDialog from 'positron-components/components/form/form-dialog.svelte';
+  import FormDialog from '@profidev/pleiades/components/form/form-dialog.svelte';
   import { z } from 'zod';
-  import { toast } from 'positron-components/components/util/general';
+  import { toast } from '@profidev/pleiades/components/util/general';
   import { goto } from '$app/navigation';
-  import BaseForm from 'positron-components/components/form/base-form.svelte';
+  import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
   import { formatData, groupSettings, reformatData } from './schema.svelte.js';
-  import type { FormValue } from 'positron-components/components/form/types';
-  import FormInput from 'positron-components/components/form/form-input.svelte';
+  import type { FormValue } from '@profidev/pleiades/components/form/types';
+  import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
   import Save from '@lucide/svelte/icons/save';
-  import { Spinner } from 'positron-components/components/ui/spinner';
-  import FormSelect from 'positron-components/components/form/form-select.svelte';
+  import { Spinner } from '@profidev/pleiades/components/ui/spinner';
+  import FormSelect from '@profidev/pleiades/components/form/form-select.svelte';
   import Permissions from './Permissions.svelte';
-  import { ScrollArea } from 'positron-components/components/ui/scroll-area';
+  import { ScrollArea } from '@profidev/pleiades/components/ui/scroll-area';
   import { deleteGroup, editGroup } from '$lib/client';
 
   const { data } = $props();

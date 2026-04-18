@@ -1,28 +1,28 @@
 <script lang="ts">
-  import { Separator } from 'positron-components/components/ui/separator';
-  import { Button } from 'positron-components/components/ui/button';
+  import { Separator } from '@profidev/pleiades/components/ui/separator';
+  import { Button } from '@profidev/pleiades/components/ui/button';
   import ArrowLeft from '@lucide/svelte/icons/arrow-left';
   import Trash from '@lucide/svelte/icons/trash';
   import { Permission } from '$lib/permissions.svelte';
-  import FormDialog from 'positron-components/components/form/form-dialog.svelte';
+  import FormDialog from '@profidev/pleiades/components/form/form-dialog.svelte';
   import { z } from 'zod';
-  import { toast } from 'positron-components/components/util/general';
+  import { toast } from '@profidev/pleiades/components/util/general';
   import { goto } from '$app/navigation';
-  import BaseForm from 'positron-components/components/form/base-form.svelte';
+  import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
   import {
     formatData,
     userSettings,
     reformatData,
     resetPassword
   } from './schema.svelte.js';
-  import type { FormValue } from 'positron-components/components/form/types';
-  import FormInput from 'positron-components/components/form/form-input.svelte';
+  import type { FormValue } from '@profidev/pleiades/components/form/types';
+  import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
   import Save from '@lucide/svelte/icons/save';
-  import { Spinner } from 'positron-components/components/ui/spinner';
-  import FormSelect from 'positron-components/components/form/form-select.svelte';
-  import SimpleAvatar from 'positron-components/components/util/simple-avatar.svelte';
+  import { Spinner } from '@profidev/pleiades/components/ui/spinner';
+  import FormSelect from '@profidev/pleiades/components/form/form-select.svelte';
+  import SimpleAvatar from '@profidev/pleiades/components/util/simple-avatar.svelte';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
-  import FormInputPassword from 'positron-components/components/form/form-input-password.svelte';
+  import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import {
     deleteUser,
     editUser,

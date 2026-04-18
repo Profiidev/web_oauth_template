@@ -1,10 +1,10 @@
 import type { ColumnDef } from '@tanstack/table-core';
-import * as DataTable from 'positron-components/components/ui/data-table';
-import { createColumn } from 'positron-components/components/table/helpers.svelte';
+import * as DataTable from '@profidev/pleiades/components/ui/data-table';
+import { createColumn } from '@profidev/pleiades/components/table/helpers.svelte';
 import { Permission } from '$lib/permissions.svelte';
-import SimpleAvatar from 'positron-components/components/util/simple-avatar.svelte';
+import SimpleAvatar from '@profidev/pleiades/components/util/simple-avatar.svelte';
 import type { SimpleGroupInfo, UserInfo, UserListInfo } from '$lib/client';
-import Actions from 'positron-components/components/table/actions.svelte';
+import Actions from '@profidev/pleiades/components/table/actions.svelte';
 
 export const columns = ({
   deleteUser,
