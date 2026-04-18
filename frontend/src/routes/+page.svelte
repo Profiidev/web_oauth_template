@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label } from 'positron-components/components/ui/label';
+  import { Label } from '@profidev/pleiades/components/ui/label';
 </script>
 
 <Label>Overview</Label>

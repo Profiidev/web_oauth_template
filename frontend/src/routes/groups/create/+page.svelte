@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { toast } from 'positron-components/components/util/general';
-  import type { Stage } from 'positron-components/components/form/types';
-  import MultiStepForm from 'positron-components/components/form/multistep-form.svelte';
+  import { toast } from '@profidev/pleiades/components/util/general';
+  import type { Stage } from '@profidev/pleiades/components/form/types';
+  import MultiStepForm from '@profidev/pleiades/components/form/multistep-form.svelte';
   import Information from './Information.svelte';
   import { createGroup } from '$lib/client';
 

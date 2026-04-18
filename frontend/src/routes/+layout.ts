@@ -4,8 +4,10 @@ import { noSidebarPaths } from '$lib/components/nav.svelte';
 import { info, isSetup } from '$lib/client';
 
 export const load: LayoutLoad = async ({ fetch, url }) => {
-  let { data: status, error } = await isSetup({ fetch });
-  if (error) return {};
+  const { data: status, error } = await isSetup({ fetch });
+  if (error) {
+    return {};
+  }
 
   if (!status?.is_setup && url.pathname !== '/setup') {
     redirect(302, '/setup');
@@ -15,7 +17,7 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     return {};
   }
 
-  let { data: user, response } = await info({ fetch });
+  const { data: user, response } = await info({ fetch });
 
   if (
     !user &&

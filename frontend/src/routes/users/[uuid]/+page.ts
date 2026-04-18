@@ -3,16 +3,16 @@ import { redirect } from '@sveltejs/kit';
 import { listGroupsSimple, mailActive, userInfo } from '$lib/client';
 
 export const load: PageLoad = async ({ params, fetch }) => {
-  let resPromise = userInfo({
-    path: { uuid: params.uuid },
+  const resPromise = userInfo({
+    fetch,
+    path: { uuid: params.uuid }
+  });
+  const groupsPromise = listGroupsSimple({
     fetch
   });
-  let groupsPromise = listGroupsSimple({
-    fetch
-  });
-  let mailPromise = mailActive({ fetch });
+  const mailPromise = mailActive({ fetch });
 
-  let [res, groups, mail] = await Promise.all([
+  const [res, groups, mail] = await Promise.all([
     resPromise,
     groupsPromise,
     mailPromise
@@ -27,9 +27,9 @@ export const load: PageLoad = async ({ params, fetch }) => {
   }
 
   return {
-    uuid: params.uuid,
-    userInfo: res.data,
     groups: groups.data,
-    mailActive: mail.data?.active ?? false
+    mailActive: mail.data?.active ?? false,
+    userInfo: res.data,
+    uuid: params.uuid
   };
 };

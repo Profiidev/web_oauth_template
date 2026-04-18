@@ -1,15 +1,15 @@
 <script lang="ts">
-  import BaseForm from 'positron-components/components/form/base-form.svelte';
+  import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
   import { mailSettings, reformat, unReformat } from './schema.svelte';
-  import type { FormValue } from 'positron-components/components/form/types';
-  import { Button } from 'positron-components/components/ui/button';
-  import { Spinner } from 'positron-components/components/ui/spinner';
+  import type { FormValue } from '@profidev/pleiades/components/form/types';
+  import { Button } from '@profidev/pleiades/components/ui/button';
+  import { Spinner } from '@profidev/pleiades/components/ui/spinner';
   import Save from '@lucide/svelte/icons/save';
-  import { toast } from 'positron-components/components/util/general';
+  import { toast } from '@profidev/pleiades/components/util/general';
   import { Permission } from '$lib/permissions.svelte';
-  import FormSwitch from 'positron-components/components/form/form-switch.svelte';
-  import FormInput from 'positron-components/components/form/form-input.svelte';
-  import FormInputPassword from 'positron-components/components/form/form-input-password.svelte';
+  import FormSwitch from '@profidev/pleiades/components/form/form-switch.svelte';
+  import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
+  import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import Send from '@lucide/svelte/icons/send';
   import { saveMailSettings, testMail } from '$lib/client';
 

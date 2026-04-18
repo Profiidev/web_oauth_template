@@ -1,19 +1,19 @@
 <script lang="ts">
-  import BaseForm from 'positron-components/components/form/base-form.svelte';
+  import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
   import { reformat, unReformat, userSettings } from './schema.svelte';
-  import type { FormValue } from 'positron-components/components/form/types';
-  import { Button } from 'positron-components/components/ui/button';
-  import { Spinner } from 'positron-components/components/ui/spinner';
+  import type { FormValue } from '@profidev/pleiades/components/form/types';
+  import { Button } from '@profidev/pleiades/components/ui/button';
+  import { Spinner } from '@profidev/pleiades/components/ui/spinner';
   import Save from '@lucide/svelte/icons/save';
-  import { toast } from 'positron-components/components/util/general';
-  import FormInputTooltip from 'positron-components/components/form/form-input-tooltip.svelte';
-  import FormSwitch from 'positron-components/components/form/form-switch.svelte';
-  import FormInput from 'positron-components/components/form/form-input.svelte';
-  import { Label } from 'positron-components/components/ui/label';
-  import { Input } from 'positron-components/components/ui/input';
-  import FormInputPassword from 'positron-components/components/form/form-input-password.svelte';
+  import { toast } from '@profidev/pleiades/components/util/general';
+  import FormInputTooltip from '@profidev/pleiades/components/form/form-input-tooltip.svelte';
+  import FormSwitch from '@profidev/pleiades/components/form/form-switch.svelte';
+  import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
+  import { Label } from '@profidev/pleiades/components/ui/label';
+  import { Input } from '@profidev/pleiades/components/ui/input';
+  import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import { Permission } from '$lib/permissions.svelte';
-  import { Separator } from 'positron-components/components/ui/separator';
+  import { Separator } from '@profidev/pleiades/components/ui/separator';
   import { saveUserSettings } from '$lib/client';
 
   let { data } = $props();

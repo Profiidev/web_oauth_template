@@ -1,9 +1,9 @@
 <script lang="ts" generics="T, CD">
-  import * as Table from 'positron-components/components/ui/table';
-  import { FlexRender } from 'positron-components/components/ui/data-table';
-  import { ScrollArea } from 'positron-components/components/ui/scroll-area';
-  import { createTable } from 'positron-components/components/table/helpers.svelte';
-  import { cn } from 'positron-components/utils';
+  import * as Table from '@profidev/pleiades/components/ui/table';
+  import { FlexRender } from '@profidev/pleiades/components/ui/data-table';
+  import { ScrollArea } from '@profidev/pleiades/components/ui/scroll-area';
+  import { createTable } from '@profidev/pleiades/components/table/helpers.svelte';
+  import { cn } from '@profidev/pleiades/utils';
   import type { ColumnDef } from '@tanstack/table-core';
 
   type Props = {

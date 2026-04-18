@@ -1,10 +1,10 @@
 <script lang="ts">
-  import FormCheckbox from 'positron-components/components/form/form-checkbox.svelte';
+  import FormCheckbox from '@profidev/pleiades/components/form/form-checkbox.svelte';
   import { Permission } from '$lib/permissions.svelte';
   import type {
     FormValue,
     SuperForm
-  } from 'positron-components/components/form/types';
+  } from '@profidev/pleiades/components/form/types';
   import type { groupSettings } from './schema.svelte';
   import type { UserInfo } from '$lib/client';
 

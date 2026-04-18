@@ -1,16 +1,16 @@
 import type { MailSettings } from '$lib/client';
-import type { FormValue } from 'positron-components/components/form/types';
+import type { FormValue } from '@profidev/pleiades/components/form/types';
 import { z } from 'zod';
 
 export const mailSettings = z
   .object({
     smtp_enabled: z.boolean(),
-    smtp_host: z.string().optional(),
-    smtp_port: z.number().optional(),
-    smtp_user: z.string().optional(),
-    smtp_password: z.string().optional(),
     smtp_from_address: z.email().optional(),
     smtp_from_name: z.string().optional().default('{{project-name}}'),
+    smtp_host: z.string().optional(),
+    smtp_password: z.string().optional(),
+    smtp_port: z.number().optional(),
+    smtp_user: z.string().optional(),
     use_tls: z.boolean()
   })
   .superRefine((data, ctx) => {
@@ -28,8 +28,8 @@ export const mailSettings = z
         if (!data[field]) {
           ctx.addIssue({
             code: 'custom',
-            path: [field],
-            message: 'This field is required when SMTP is enabled.'
+            message: 'This field is required when SMTP is enabled.',
+            path: [field]
           });
         }
       }
@@ -37,16 +37,16 @@ export const mailSettings = z
   });
 
 export const reformat = (form: FormValue<typeof mailSettings>) => {
-  let data: MailSettings = {};
+  const data: MailSettings = {};
   if (form.smtp_enabled) {
     data.smtp = {
-      server: form.smtp_host!,
-      port: form.smtp_port!,
-      username: form.smtp_user!,
-      password: form.smtp_password!,
       from_address: form.smtp_from_address!,
-      from_name: form.smtp_from_name!,
-      use_tls: form.use_tls
+      from_name: form.smtp_from_name,
+      password: form.smtp_password!,
+      port: form.smtp_port!,
+      server: form.smtp_host!,
+      use_tls: form.use_tls,
+      username: form.smtp_user!
     };
   }
   return data;
@@ -54,15 +54,13 @@ export const reformat = (form: FormValue<typeof mailSettings>) => {
 
 export const unReformat = (
   settings: MailSettings
-): FormValue<typeof mailSettings> => {
-  return {
-    smtp_enabled: !!settings.smtp,
-    smtp_host: settings.smtp?.server,
-    smtp_port: settings.smtp?.port,
-    smtp_user: settings.smtp?.username,
-    smtp_password: settings.smtp?.password || '',
-    smtp_from_address: settings.smtp?.from_address,
-    smtp_from_name: settings.smtp?.from_name || '{{project-name}}',
-    use_tls: settings.smtp?.use_tls || false
-  };
-};
+): FormValue<typeof mailSettings> => ({
+  smtp_enabled: Boolean(settings.smtp),
+  smtp_from_address: settings.smtp?.from_address,
+  smtp_from_name: settings.smtp?.from_name || '{{project-name}}',
+  smtp_host: settings.smtp?.server,
+  smtp_password: settings.smtp?.password || '',
+  smtp_port: settings.smtp?.port,
+  smtp_user: settings.smtp?.username,
+  use_tls: settings.smtp?.use_tls || false
+});

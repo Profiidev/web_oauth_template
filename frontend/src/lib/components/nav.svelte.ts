@@ -3,35 +3,35 @@ import House from '@lucide/svelte/icons/house';
 import { Permission } from '$lib/permissions.svelte';
 import Users from '@lucide/svelte/icons/users';
 import User from '@lucide/svelte/icons/user';
-import type { NavGroup } from 'positron-components/components/nav/sidebar/types';
+import type { NavGroup } from '@profidev/pleiades/components/nav/sidebar/types';
 
 export const items: NavGroup[] = [
   {
-    label: 'Overview',
-    items: [{ label: 'Overview', href: '/', icon: House }]
+    items: [{ href: '/', icon: House, label: 'Overview' }],
+    label: 'Overview'
   },
   {
-    label: 'Administration',
     items: [
       {
-        label: 'Users',
         href: '/users',
         icon: User,
+        label: 'Users',
         requiredPermission: Permission.USER_VIEW
       },
       {
-        label: 'Groups',
         href: '/groups',
         icon: Users,
+        label: 'Groups',
         requiredPermission: Permission.GROUP_VIEW
       },
       {
-        label: 'Settings',
         href: '/settings',
         icon: Settings,
+        label: 'Settings',
         requiredPermission: Permission.SETTINGS_VIEW
       }
-    ]
+    ],
+    label: 'Administration'
   }
 ];
 

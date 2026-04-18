@@ -1,10 +1,10 @@
 <script lang="ts">
-  import BaseForm from 'positron-components/components/form/base-form.svelte';
-  import FormInput from 'positron-components/components/form/form-input.svelte';
-  import * as Card from 'positron-components/components/ui/card';
+  import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
+  import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
+  import * as Card from '@profidev/pleiades/components/ui/card';
   import { forgotPassword } from './schema.svelte';
-  import type { FormValue } from 'positron-components/components/form/types';
-  import { toast } from 'positron-components/components/util/general';
+  import type { FormValue } from '@profidev/pleiades/components/form/types';
+  import { toast } from '@profidev/pleiades/components/util/general';
   import { sendResetLink } from '$lib/client';
 
   const onsubmit = async (data: FormValue<typeof forgotPassword>) => {
