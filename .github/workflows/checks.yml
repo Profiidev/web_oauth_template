@@ -26,7 +26,20 @@ jobs:
         with:
           cache-on-failure: true
           shared-key: "linter_cache"
-      - uses: bahmutov/npm-install@v1
+
+      - name: Cache node modules
+        id: node_cache
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        with:
+          path: |
+            node_modules
+            frontend/node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Generate svelte data
         run: |
