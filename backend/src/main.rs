@@ -2,12 +2,11 @@ use aide::axum::ApiRouter;
 use axum::Extension;
 use centaurus::{
   backend::{
-    auth, group,
+    auth,
+    endpoints::{group, mail, setup, user, websocket},
     init::{listener_setup, run_app_connect_info},
-    mail,
     middleware::rate_limiter::RateLimiter,
     router::build_router,
-    setup, user, websocket,
   },
   db::init::init_db,
   logging::init_logging,
@@ -55,7 +54,7 @@ fn api_router(rate_limiter: &mut RateLimiter) -> ApiRouter {
 
 async fn state(router: ApiRouter, config: Config) -> ApiRouter {
   let db = init_db::<migration::Migrator>(&config.db, &config.db_url).await;
-  centaurus::backend::setup::create_admin_group(&db, utils::permissions())
+  centaurus::backend::endpoints::setup::create_admin_group(&db, utils::permissions())
     .await
     .expect("Failed to create admin group");
 

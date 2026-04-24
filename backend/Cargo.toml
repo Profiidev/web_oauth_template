@@ -3,70 +3,59 @@ name = "backend"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "backend"
+path = "src/main.rs"
+
 [dependencies]
-centaurus = { version = "0.9.1", features = [
-  "sea-orm",
-  "uuid",
-  "argon2",
-  "base64",
-  "rsa",
-  "auth",
-  "jsonwebtoken",
-  "reqwest",
-  "url",
-  "image",
-  "gravatar",
-  "lettre",
-] }
-uuid = { version = "1.23.0", features = ["v4"] }
-entity = { path = "entity" }
-migration = { path = "migration" }
-sea-orm = { version = "1.1.20", features = [
-  "sqlx-postgres",
-  "sqlx-sqlite",
-  "runtime-tokio-rustls",
-] }
-axum = { version = "0.8.8", features = ["macros", "ws", "tracing"] }
-axum-extra = { version = "0.12.5", features = ["cookie", "typed-header"] }
-tracing = "0.1.44"
-tower = "0.5.3"
-tower-http = { version = "0.6.8", features = ["cors", "trace"] }
-tokio = { version = "1.51.1", features = ["signal"] }
-http = "1.4.0"
-dotenvy = "0.15.7"
-serde = { version = "1.0.228", features = ["derive"] }
-figment = { version = "0.10.19", features = ["env"] }
-hyper-util = { version = "0.1.20", features = ["client-legacy"] }
-chrono = "0.4.44"
-rsa = "0.9.10"
-jsonwebtoken = { version = "10.3.0", features = ["rust_crypto"] }
-time = "0.3.47"
-url = { version = "2.5.8", features = ["serde"] }
-reqwest = { version = "0.13.2", features = ["json", "form"] }
-serde_json = "1.0.149"
 aide = { version = "0.16.0-alpha.3", features = [
   "axum",
-  "axum-json",
-  "axum-tokio",
-  "axum-query",
-  "axum-ws",
   "axum-extra",
   "axum-extra-cookie",
   "axum-extra-headers",
+  "axum-json",
+  "axum-query",
+  "axum-tokio",
+  "axum-ws",
   "macros",
 ] }
-schemars = { version = "1.2.1", features = ["uuid1", "chrono04", "url2"] }
+axum = { version = "0.8.8", features = ["macros", "tracing", "ws"] }
+axum-extra = { version = "0.12.5", features = ["cookie", "typed-header"] }
+centaurus = { version = "0.10.0", features = [
+  "uuid",
+] }
+chrono = "0.4.44"
+dotenvy = "0.15.7"
+entity = { path = "entity" }
+figment = { version = "0.10.19", features = ["env"] }
+http = "1.4.0"
+hyper-util = { version = "0.1.20", features = ["client-legacy"] }
 # Required to enable image formats
 image = { version = "0.25.10", default-features = false, features = [
-  "png",
   "jpeg",
+  "png",
   "webp",
 ] }
+jsonwebtoken = { version = "10.3.0", features = ["rust_crypto"] }
+migration = { path = "migration" }
+reqwest = { version = "0.13.2", features = ["form", "json"] }
+rsa = "0.9.10"
+schemars = { version = "1.2.1", features = ["chrono04", "url2", "uuid1"] }
+sea-orm = { version = "1.1.20", features = [
+  "runtime-tokio-rustls",
+  "sqlx-postgres",
+  "sqlx-sqlite",
+] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+time = "0.3.47"
+tokio = { version = "1.51.1", features = ["signal"] }
+tower = "0.5.3"
+tower-http = { version = "0.6.8", features = ["cors", "trace"] }
+tracing = "0.1.44"
+url = { version = "2.5.8", features = ["serde"] }
+uuid = { version = "1.23.0", features = ["v4"] }
 
 [features]
 # only used for testing purposes
 test = []
-
-[[bin]]
-name = "backend"
-path = "src/main.rs"
