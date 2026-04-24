@@ -1,7 +1,7 @@
 use aide::axum::ApiRouter;
 use aide::axum::routing::get_with;
 use axum::Json;
-use centaurus::backend::{auth::jwt_auth::JwtAuth, settings};
+use centaurus::backend::{auth::jwt_auth::JwtAuth, endpoints::settings};
 use centaurus::error::Result;
 use schemars::JsonSchema;
 use serde::Serialize;

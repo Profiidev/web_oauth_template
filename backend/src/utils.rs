@@ -1,6 +1,6 @@
 use centaurus::{
   UpdateMessage,
-  backend::{auth::permission, websocket},
+  backend::{auth::permission, endpoints::websocket},
 };
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
