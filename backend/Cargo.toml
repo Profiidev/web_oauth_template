@@ -21,7 +21,7 @@ aide = { version = "0.16.0-alpha.3", features = [
 ] }
 axum = { version = "0.8.8", features = ["macros", "tracing", "ws"] }
 axum-extra = { version = "0.12.5", features = ["cookie", "typed-header"] }
-centaurus = { version = "0.10.0", features = [
+centaurus = { version = "0.11.2", features = [
   "uuid",
 ] }
 chrono = "0.4.44"

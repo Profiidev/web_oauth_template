@@ -3,9 +3,6 @@ import type { FormValue } from '@profidev/pleiades/components/form/types';
 import { z } from 'zod';
 
 export const groupSettings = z.object({
-  cache_create: z.boolean().default(false),
-  cache_edit: z.boolean().default(false),
-  cache_view: z.boolean().default(false),
   group_edit: z.boolean().default(false),
   group_view: z.boolean().default(false),
   name: z.string().min(1, 'Group name is required'),
@@ -40,9 +37,6 @@ export const formatData = (
   group: GroupDetails
 ): FormValue<typeof groupSettings> => {
   const formattedData: FormValue<typeof groupSettings> = {
-    cache_create: false,
-    cache_edit: false,
-    cache_view: false,
     group_edit: false,
     group_view: false,
     name: group.name,
