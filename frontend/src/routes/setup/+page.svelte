@@ -6,7 +6,7 @@
   import CheckIcon from '@lucide/svelte/icons/check';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
   import type { adminUser } from './schema.svelte';
-  import { goto } from '$app/navigation';
+  import { goto, invalidate } from '$app/navigation';
   import { connectWebsocket } from '$lib/backend/updater.svelte';
   import { completeSetup } from '$lib/client';
   import { getEncrypt } from '$lib/backend/auth.svelte';
@@ -27,7 +27,7 @@
   ];
 
   const submit = async (rawData: object) => {
-    let data: FormValue<typeof adminUser> = rawData as any;
+    let formData: FormValue<typeof adminUser> = rawData as any;
     let encrypt = getEncrypt();
     if (!encrypt) {
       return {
@@ -37,24 +37,26 @@
 
     let ret = await completeSetup({
       body: {
-        admin_email: data.email,
-        admin_password: encrypt.encrypt(data.password) || '',
-        admin_username: data.username
+        admin_email: formData.email,
+        admin_password: encrypt.encrypt(formData.password) || '',
+        admin_username: formData.username
       }
     });
 
     if (!ret.data) {
-      if (ret.response.status === 409) {
+      if (ret.response?.status === 409) {
         return { error: 'The setup was already completed.' };
-      } else if (ret.response.status === 500) {
+      } else if (ret.response?.status === 500) {
         return { error: 'The server failed to find the admin group.' };
       } else {
         return { error: 'An unknown error occurred.' };
       }
     } else {
-      setTimeout(() => {
-        connectWebsocket((ret.data as { user: string }).user);
-        goto('/');
+      setTimeout(async () => {
+        let user = ((await ret.data) as { user?: string } | undefined)?.user;
+        connectWebsocket(user || '');
+        await invalidate('/api/user/info');
+        await goto('/');
       });
     }
   };

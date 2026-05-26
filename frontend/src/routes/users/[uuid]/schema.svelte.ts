@@ -26,3 +26,7 @@ export const formatData = (
 export const resetPassword = z.object({
   new_password: z.string().min(6, 'Password must be at least 6 characters long')
 });
+
+export const changeEmailSchema = z.object({
+  new_email: z.string().email('Invalid email address')
+});

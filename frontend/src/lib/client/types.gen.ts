@@ -14,8 +14,17 @@ export type AuthConfig = {
   sso_type: SsoType;
 };
 
+export type AvatarPath = {
+  uuid: string;
+};
+
 export type AvatarUpdate = {
   avatar: string;
+};
+
+export type ChangeUserEmail = {
+  new_email: string;
+  uuid: string;
 };
 
 export type CreateGroupRequest = {
@@ -41,7 +50,6 @@ export type DeleteUserRequest = {
 };
 
 export type DetailUserInfo = {
-  avatar?: string | null;
   email: string;
   groups: Array<SimpleGroupInfo>;
   name: string;
@@ -54,6 +62,15 @@ export type EditGroupRequest = {
   permissions: Array<string>;
   users: Array<string>;
   uuid: string;
+};
+
+export type EmailChange = {
+  new_email: string;
+};
+
+export type EmailChangeConfirm = {
+  new_code: string;
+  old_code: string;
 };
 
 export type GeneralSettings = {
@@ -69,6 +86,11 @@ export type GroupDetails = {
   name: string;
   permissions: Array<string>;
   users: Array<SimpleUserInfo>;
+};
+
+export type GroupDetailsResponse = {
+  admin_group: string;
+  group: GroupDetails;
 };
 
 export type GroupInfo = {
@@ -106,20 +128,25 @@ export type MailActiveResponse = {
 };
 
 export type MailSettings = {
-  smtp?: SmtpSettings | null;
+  smtp_enabled?: boolean;
+  smtp_from_address?: string | null;
+  smtp_from_name?: string | null;
+  smtp_password?: string | null;
+  smtp_port?: number | null;
+  smtp_server?: string | null;
+  smtp_use_tls?: boolean | null;
+  smtp_username?: string | null;
+};
+
+export type MailSettingsResponse = {
+  from_env: Array<string>;
+  settings: MailSettings;
 };
 
 export type OidcCallbackQuery = {
   code?: string | null;
   error?: string | null;
   state: string;
-};
-
-export type OidcSettings = {
-  client_id: string;
-  client_secret: string;
-  issuer: string;
-  scopes: Array<string>;
 };
 
 export type PasswordUpdate = {
@@ -161,16 +188,6 @@ export type SimpleUserInfo = {
   name: string;
 };
 
-export type SmtpSettings = {
-  from_address: string;
-  from_name: string;
-  password: string;
-  port: number;
-  server: string;
-  use_tls: boolean;
-  username: string;
-};
-
 export type UserAvatarResetRequest = {
   uuid: string;
 };
@@ -182,7 +199,6 @@ export type UserEditReq = {
 };
 
 export type UserInfo = {
-  avatar?: string | null;
   email: string;
   name: string;
   permissions: Array<string>;
@@ -190,7 +206,6 @@ export type UserInfo = {
 };
 
 export type UserListInfo = {
-  avatar?: string | null;
   email: string;
   groups: Array<SimpleGroupInfo>;
   name: string;
@@ -198,9 +213,18 @@ export type UserListInfo = {
 };
 
 export type UserSettings = {
-  oidc?: OidcSettings | null;
+  oidc_client_id?: string | null;
+  oidc_client_secret?: string | null;
+  oidc_enabled?: boolean;
+  oidc_issuer?: string | null;
+  oidc_scopes?: string | null;
   sso_create_user: boolean;
   sso_instant_redirect: boolean;
+};
+
+export type UserSettingsResponse = {
+  from_env: Array<string>;
+  settings: UserSettings;
 };
 
 export type UserViewPath = {
@@ -357,45 +381,6 @@ export type AuthConfigResponses = {
 
 export type AuthConfigResponse = AuthConfigResponses[keyof AuthConfigResponses];
 
-export type UpdateAvatarData = {
-  body: AvatarUpdate;
-  path?: never;
-  query?: never;
-  url: '/api/user/account/avatar';
-};
-
-export type UpdateAvatarErrors = {
-  /**
-   * Failed to parse the request body as JSON
-   */
-  400: string;
-  /**
-   * Expected request with `Content-Type: application/json`
-   */
-  415: string;
-  /**
-   * Failed to deserialize the JSON body into the target type
-   */
-  422: string;
-  /**
-   * An error occurred
-   */
-  '4XX': unknown;
-  /**
-   * An error occurred
-   */
-  '5XX': unknown;
-};
-
-export type UpdateAvatarError = UpdateAvatarErrors[keyof UpdateAvatarErrors];
-
-export type UpdateAvatarResponses = {
-  /**
-   * no content
-   */
-  200: unknown;
-};
-
 export type UpdatePasswordData = {
   body: PasswordUpdate;
   path?: never;
@@ -430,6 +415,46 @@ export type UpdatePasswordError =
   UpdatePasswordErrors[keyof UpdatePasswordErrors];
 
 export type UpdatePasswordResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
+
+export type StartEmailChangeData = {
+  body: EmailChange;
+  path?: never;
+  query?: never;
+  url: '/api/user/account/email_change_start';
+};
+
+export type StartEmailChangeErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  '4XX': unknown;
+  /**
+   * An error occurred
+   */
+  '5XX': unknown;
+};
+
+export type StartEmailChangeError =
+  StartEmailChangeErrors[keyof StartEmailChangeErrors];
+
+export type StartEmailChangeResponses = {
   /**
    * no content
    */
@@ -475,6 +500,85 @@ export type UpdateAccountResponses = {
   200: unknown;
 };
 
+export type ConfirmEmailChangeData = {
+  body: EmailChangeConfirm;
+  path?: never;
+  query?: never;
+  url: '/api/user/account/email_change_confirm';
+};
+
+export type ConfirmEmailChangeErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  '4XX': unknown;
+  /**
+   * An error occurred
+   */
+  '5XX': unknown;
+};
+
+export type ConfirmEmailChangeError =
+  ConfirmEmailChangeErrors[keyof ConfirmEmailChangeErrors];
+
+export type ConfirmEmailChangeResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
+
+export type UpdateAvatarData = {
+  body: AvatarUpdate;
+  path?: never;
+  query?: never;
+  url: '/api/user/account/avatar';
+};
+
+export type UpdateAvatarErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  '4XX': unknown;
+  /**
+   * An error occurred
+   */
+  '5XX': unknown;
+};
+
+export type UpdateAvatarError = UpdateAvatarErrors[keyof UpdateAvatarErrors];
+
+export type UpdateAvatarResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
+
 export type InfoData = {
   body?: never;
   path?: never;
@@ -498,6 +602,75 @@ export type InfoResponses = {
 };
 
 export type InfoResponse = InfoResponses[keyof InfoResponses];
+
+export type AvatarByIdData = {
+  body?: never;
+  path: {
+    uuid: string;
+  };
+  query?: never;
+  url: '/api/user/info/avatar/{uuid}';
+};
+
+export type AvatarByIdErrors = {
+  /**
+   * An error occurred
+   */
+  '4XX': unknown;
+  /**
+   * An error occurred
+   */
+  '5XX': unknown;
+};
+
+export type AvatarByIdResponses = {
+  /**
+   * byte stream
+   */
+  200: Blob | File;
+};
+
+export type AvatarByIdResponse = AvatarByIdResponses[keyof AvatarByIdResponses];
+
+export type ResetUserAvatarData = {
+  body: UserAvatarResetRequest;
+  path?: never;
+  query?: never;
+  url: '/api/user/management/avatar';
+};
+
+export type ResetUserAvatarErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  '4XX': unknown;
+  /**
+   * An error occurred
+   */
+  '5XX': unknown;
+};
+
+export type ResetUserAvatarError =
+  ResetUserAvatarErrors[keyof ResetUserAvatarErrors];
+
+export type ResetUserAvatarResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
 
 export type DeleteUserData = {
   body: DeleteUserRequest;
@@ -716,46 +889,6 @@ export type ListGroupsSimpleResponses = {
 export type ListGroupsSimpleResponse =
   ListGroupsSimpleResponses[keyof ListGroupsSimpleResponses];
 
-export type ResetUserAvatarData = {
-  body: UserAvatarResetRequest;
-  path?: never;
-  query?: never;
-  url: '/api/user/management/avatar';
-};
-
-export type ResetUserAvatarErrors = {
-  /**
-   * Failed to parse the request body as JSON
-   */
-  400: string;
-  /**
-   * Expected request with `Content-Type: application/json`
-   */
-  415: string;
-  /**
-   * Failed to deserialize the JSON body into the target type
-   */
-  422: string;
-  /**
-   * An error occurred
-   */
-  '4XX': unknown;
-  /**
-   * An error occurred
-   */
-  '5XX': unknown;
-};
-
-export type ResetUserAvatarError =
-  ResetUserAvatarErrors[keyof ResetUserAvatarErrors];
-
-export type ResetUserAvatarResponses = {
-  /**
-   * no content
-   */
-  200: unknown;
-};
-
 export type ResetUserPasswordData = {
   body: ResetUserPassword;
   path?: never;
@@ -790,6 +923,46 @@ export type ResetUserPasswordError =
   ResetUserPasswordErrors[keyof ResetUserPasswordErrors];
 
 export type ResetUserPasswordResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
+
+export type ChangeUserEmailData = {
+  body: ChangeUserEmail;
+  path?: never;
+  query?: never;
+  url: '/api/user/management/email';
+};
+
+export type ChangeUserEmailErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  '4XX': unknown;
+  /**
+   * An error occurred
+   */
+  '5XX': unknown;
+};
+
+export type ChangeUserEmailError =
+  ChangeUserEmailErrors[keyof ChangeUserEmailErrors];
+
+export type ChangeUserEmailResponses = {
   /**
    * no content
    */
@@ -840,7 +1013,7 @@ export type GetUserSettingsErrors = {
 };
 
 export type GetUserSettingsResponses = {
-  200: UserSettings;
+  200: UserSettingsResponse;
 };
 
 export type GetUserSettingsResponse =
@@ -905,7 +1078,7 @@ export type GetMailSettingsErrors = {
 };
 
 export type GetMailSettingsResponses = {
-  200: MailSettings;
+  200: MailSettingsResponse;
 };
 
 export type GetMailSettingsResponse =
@@ -1200,7 +1373,7 @@ export type GroupInfoErrors = {
 };
 
 export type GroupInfoResponses = {
-  200: GroupDetails;
+  200: GroupDetailsResponse;
 };
 
 export type GroupInfoResponse = GroupInfoResponses[keyof GroupInfoResponses];

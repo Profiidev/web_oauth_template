@@ -1,11 +1,11 @@
 import { listGroups } from '$lib/client';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, url }) => {
-  const { data: res } = await listGroups({ fetch });
+export const load: PageLoad = ({ fetch, url }) => {
+  const groups = listGroups({ fetch }).then(({ data }) => data);
   return {
-    admin_group: res?.admin_group,
+    admin_group: groups.then((g) => g?.admin_group ?? undefined),
     error: url.searchParams.get('error'),
-    groups: res?.groups
+    groups: groups.then((g) => g?.groups ?? [])
   };
 };

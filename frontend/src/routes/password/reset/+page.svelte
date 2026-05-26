@@ -12,7 +12,7 @@
 
   let { data } = $props();
 
-  const onsubmit = async (data: FormValue<typeof resetPassword>) => {
+  const onsubmit = async (formData: FormValue<typeof resetPassword>) => {
     let encrypt = getEncrypt();
     if (!encrypt) {
       return {
@@ -22,12 +22,12 @@
 
     let ret = await sendResetPassword({
       body: {
-        token: data.token,
-        new_password: encrypt.encrypt(data.new_password) || ''
+        token: formData.token,
+        new_password: encrypt.encrypt(formData.new_password) || ''
       }
     });
 
-    if (ret.error && ret.response.status === 429) {
+    if (ret.error && ret.response?.status === 429) {
       return { error: 'Rate limit exceeded. Please try again later.' };
     } else if (ret.error) {
       return { error: 'Failed to reset password.' };
@@ -55,6 +55,7 @@
         schema={resetPassword}
         {onsubmit}
         initialValue={{ token: data.token ?? '' }}
+        submitText="Reset Password"
       >
         {#snippet children({ props })}
           <FormInput
@@ -75,9 +76,6 @@
             placeholder="Confirm your new password"
             key="confirm_password"
           />
-        {/snippet}
-        {#snippet footer({ defaultBtn })}
-          {@render defaultBtn({ content: 'Reset Password' })}
         {/snippet}
       </BaseForm>
     </Card.Content>

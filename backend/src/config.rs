@@ -3,10 +3,11 @@ use axum::{Extension, extract::FromRequestParts};
 use centaurus::{
   Config,
   backend::{
-    auth::settings::AuthConfig,
+    auth::settings::{AuthConfig, UserSettings},
     config::{BaseConfig, MetricsConfig, SiteConfig},
   },
   db::config::DBConfig,
+  mail::MailSettings,
 };
 use figment::{
   Figment,
@@ -15,7 +16,7 @@ use figment::{
 use serde::{Deserialize, Serialize};
 use tracing::instrument;
 
-#[derive(Deserialize, Serialize, Clone, Debug, FromRequestParts, Config, OperationIo)]
+#[derive(Deserialize, Serialize, Clone, FromRequestParts, Config, OperationIo)]
 #[from_request(via(Extension))]
 pub struct Config {
   #[base]
@@ -29,8 +30,15 @@ pub struct Config {
   #[site]
   #[serde(flatten)]
   pub site: SiteConfig,
+  #[auth]
   #[serde(flatten)]
   pub auth: AuthConfig,
+  #[mail]
+  #[serde(flatten)]
+  pub mail: MailSettings,
+  #[oidc]
+  #[serde(flatten)]
+  pub oidc: UserSettings,
 
   pub db_url: String,
 }
@@ -41,6 +49,8 @@ impl Default for Config {
       base: BaseConfig::default(),
       db: DBConfig::default(),
       site: SiteConfig::default(),
+      mail: MailSettings::default(),
+      oidc: UserSettings::default(),
       db_url: "".to_string(),
       metrics: MetricsConfig {
         metrics_name: "{{project-name}}".to_string(),

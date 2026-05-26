@@ -12,7 +12,7 @@
       body: data
     });
 
-    if (ret.error && ret.response.status === 429) {
+    if (ret.error && ret.response?.status === 429) {
       return { error: 'Rate limit exceeded. Please try again later.' };
     } else if (ret.error) {
       return { error: 'Failed to send reset link.' };
@@ -31,7 +31,7 @@
       >
     </Card.Header>
     <Card.Content>
-      <BaseForm schema={forgotPassword} {onsubmit}>
+      <BaseForm schema={forgotPassword} {onsubmit} submitText="Send Reset Link">
         {#snippet children({ props })}
           <FormInput
             {...props}
@@ -40,9 +40,6 @@
             placeholder="mail@example.com"
             key="email"
           />
-        {/snippet}
-        {#snippet footer({ defaultBtn })}
-          {@render defaultBtn({ content: 'Send Reset Link' })}
         {/snippet}
       </BaseForm>
     </Card.Content>

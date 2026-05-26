@@ -8,29 +8,51 @@
   import { page } from '$app/state';
   import { items, noSidebarPaths } from '$lib/components/nav.svelte';
   import { setMode } from 'mode-watcher';
-  import { logout, testToken } from '$lib/client';
+  import { logout, testToken, type UserInfo } from '$lib/client';
   import Sidebar from '@profidev/pleiades/components/nav/sidebar/sidebar.svelte';
+  import { avatarUrl } from '$lib/permissions.svelte';
 
   // @ts-ignore this is injected at build time via Vite's define option
   let version = __version__;
 
   let { children, data } = $props();
 
+  let user: UserInfo | undefined = $state();
+  let blockRedirect = false;
+
+  $effect(() => {
+    data.user.then((u) => {
+      user = u;
+    });
+  });
+
   onMount(() => {
     setMode('dark');
-    testToken().then(({ data: dataRaw }) => {
+    testToken().then(async ({ data: dataRaw }) => {
       let { valid } = (dataRaw as { valid: boolean } | undefined) ?? {
         valid: false
       };
       // can also be undefined if there was an error
       if (valid === false) {
-        if (!noSidebarPaths.includes(page.url.pathname)) {
+        if (!noSidebarPaths.includes(page.url.pathname) && !blockRedirect) {
           goto('/login');
         }
       } else {
-        connectWebsocket(data.user?.uuid ?? '');
+        let user = await data.user;
+        connectWebsocket(user.uuid);
       }
     });
+
+    (async () => {
+      let { data: status, error } = await data.setupStatus;
+      if (error) return;
+
+      if (!status?.is_setup && page.url.pathname !== '/setup') {
+        blockRedirect = true;
+        await goto('/setup');
+        blockRedirect = false;
+      }
+    })();
   });
 </script>
 
@@ -41,17 +63,9 @@
   {@render children()}
 {:else}
   <Sidebar
-    user={data.user
-      ? {
-          ...data.user,
-          avatar: data.user.avatar || undefined
-        }
-      : {
-          email: '',
-          name: '',
-          permissions: []
-        }}
+    {user}
     app_name="my-app"
+    avatar={user ? `${avatarUrl}/${user.uuid}` : undefined}
     {version}
     {items}
     logout={async () => {

@@ -17,7 +17,7 @@ export const fetchKey = async () => {
     return undefined;
   }
 
-  const {JSEncrypt} = (await import('jsencrypt'));
+  const { JSEncrypt } = await import('jsencrypt');
 
   encrypt = new JSEncrypt({ default_key_size: '4096' });
   encrypt.setPublicKey(keyData.key);

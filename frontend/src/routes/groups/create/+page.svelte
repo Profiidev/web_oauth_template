@@ -18,7 +18,7 @@
     let res = await createGroup({ body: rawData as any });
 
     if (!res.data) {
-      if (res.response.status === 409) {
+      if (res.response?.status === 409) {
         return {
           error: 'A group with this name already exists.',
           field: 'name'

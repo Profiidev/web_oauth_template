@@ -19,12 +19,17 @@
     }
   ];
 
+  let mailActive = $state(false);
+
+  $effect(() => {
+    data.mailActive.then((active) => {
+      mailActive = active;
+    });
+  });
+
   const submit = async (rawData: object) => {
     let anyData = rawData as any;
-    if (
-      !data.mailActive &&
-      (!anyData.password || anyData.password.length < 6)
-    ) {
+    if (!mailActive && (!anyData.password || anyData.password.length < 6)) {
       return {
         error: 'Password must be at least 6 characters long.',
         field: 'password'
@@ -47,7 +52,7 @@
     });
 
     if (!res.data) {
-      if (res.response.status === 409) {
+      if (res.response?.status === 409) {
         return {
           error: 'A user with this email already exists.',
           field: 'email'
@@ -67,6 +72,6 @@
 <MultiStepForm
   {stages}
   onsubmit={submit}
-  data={{ mailActive: data.mailActive }}
+  data={{ mailActive }}
   cancelHref="/users"
 />

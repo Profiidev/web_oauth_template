@@ -3,7 +3,7 @@ use axum::Extension;
 use centaurus::{
   backend::{
     auth,
-    endpoints::{group, mail, setup, user, websocket},
+    endpoints::{self, group, mail, setup, user, websocket},
     init::{listener_setup, run_app_connect_info},
     middleware::rate_limiter::RateLimiter,
     router::build_router,
@@ -52,16 +52,17 @@ fn api_router(rate_limiter: &mut RateLimiter) -> ApiRouter {
     .nest("/dummy", dummy::router())
 }
 
-async fn state(router: ApiRouter, config: Config) -> ApiRouter {
+async fn state(mut router: ApiRouter, config: Config) -> ApiRouter {
   let db = init_db::<migration::Migrator>(&config.db, &config.db_url).await;
   centaurus::backend::endpoints::setup::create_admin_group(&db, utils::permissions())
     .await
     .expect("Failed to create admin group");
 
-  let mut router = websocket::state::<UpdateMessage>(router).await;
-  router = auth::state(router, &config.auth, &db).await;
-  router = mail::state(router, &db).await;
+  router = endpoints::user::state(router);
+  router = auth::state(router, &config, &db).await;
+  router = mail::state(router, &db, &config).await;
   router = dummy::state(router);
+  router = websocket::state::<UpdateMessage>(router).await;
 
   router.layer(Extension(db))
 }

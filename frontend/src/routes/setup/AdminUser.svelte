@@ -21,7 +21,14 @@
   };
 </script>
 
-<BaseForm {onsubmit} {initialValue} {footer} bind:isLoading schema={adminUser}>
+<BaseForm
+  {onsubmit}
+  {initialValue}
+  {footer}
+  bind:isLoading
+  schema={adminUser}
+  bind:this={form}
+>
   {#snippet children({ props })}
     <FormInput
       {...props}

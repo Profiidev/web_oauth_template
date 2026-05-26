@@ -8,7 +8,7 @@ name = "backend"
 path = "src/main.rs"
 
 [dependencies]
-aide = { version = "0.16.0-alpha.3", features = [
+aide = { version = "0.16.0-alpha.4", features = [
   "axum",
   "axum-extra",
   "axum-extra-cookie",
@@ -17,44 +17,33 @@ aide = { version = "0.16.0-alpha.3", features = [
   "axum-query",
   "axum-tokio",
   "axum-ws",
-  "macros",
+  "macros"
 ] }
-axum = { version = "0.8.8", features = ["macros", "tracing", "ws"] }
+axum = { version = "0.8.9", features = ["macros", "tracing", "ws"] }
 axum-extra = { version = "0.12.5", features = ["cookie", "typed-header"] }
-centaurus = { version = "0.10.0", features = [
-  "uuid",
-] }
+centaurus = { version = "0.12.2", features = ["uuid"] }
 chrono = "0.4.44"
 dotenvy = "0.15.7"
 entity = { path = "entity" }
 figment = { version = "0.10.19", features = ["env"] }
-http = "1.4.0"
-hyper-util = { version = "0.1.20", features = ["client-legacy"] }
-# Required to enable image formats
-image = { version = "0.25.10", default-features = false, features = [
-  "jpeg",
-  "png",
-  "webp",
-] }
-jsonwebtoken = { version = "10.3.0", features = ["rust_crypto"] }
+http = "1.4.1"
+jsonwebtoken = { version = "10.4.0", features = ["rust_crypto"] }
 migration = { path = "migration" }
-reqwest = { version = "0.13.2", features = ["form", "json"] }
+reqwest = { version = "0.13.4", features = ["form", "json"] }
 rsa = "0.9.10"
 schemars = { version = "1.2.1", features = ["chrono04", "url2", "uuid1"] }
 sea-orm = { version = "1.1.20", features = [
   "runtime-tokio-rustls",
   "sqlx-postgres",
-  "sqlx-sqlite",
+  "sqlx-sqlite"
 ] }
 serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.149"
+serde_json = "1.0.150"
 time = "0.3.47"
-tokio = { version = "1.51.1", features = ["signal"] }
-tower = "0.5.3"
-tower-http = { version = "0.6.8", features = ["cors", "trace"] }
+tokio = { version = "1.52.3", features = ["signal"] }
 tracing = "0.1.44"
 url = { version = "2.5.8", features = ["serde"] }
-uuid = { version = "1.23.0", features = ["v4"] }
+uuid = { version = "1.23.1", features = ["v4"] }
 
 [features]
 # only used for testing purposes
