@@ -35,10 +35,7 @@ export const userSettings = z
 export const reformat = (
   form: FormValue<typeof userSettings>
 ): UserSettings => ({
-  ...form,
-  oidc_scopes: form.oidc_scopes
-    ? form.oidc_scopes.split(' ').map((s) => s.trim())
-    : []
+  ...form
 });
 
 export const unReformat = (
@@ -49,7 +46,7 @@ export const unReformat = (
   oidc_client_secret: settings.oidc_client_secret || '',
   oidc_enabled: settings.oidc_enabled ?? false,
   oidc_issuer: settings.oidc_issuer ?? undefined,
-  oidc_scopes: settings.oidc_scopes?.join(' ') ?? undefined,
+  oidc_scopes: settings.oidc_scopes ?? undefined,
   sso_create_user: settings.sso_create_user ?? false,
   sso_instant_redirect: settings.sso_instant_redirect ?? false
 });

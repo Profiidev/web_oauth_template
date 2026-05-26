@@ -217,7 +217,7 @@ export type UserSettings = {
   oidc_client_secret?: string | null;
   oidc_enabled?: boolean;
   oidc_issuer?: string | null;
-  oidc_scopes?: Array<string> | null;
+  oidc_scopes?: string | null;
   sso_create_user: boolean;
   sso_instant_redirect: boolean;
 };

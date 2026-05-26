@@ -17,13 +17,11 @@ aide = { version = "0.16.0-alpha.4", features = [
   "axum-query",
   "axum-tokio",
   "axum-ws",
-  "macros",
+  "macros"
 ] }
 axum = { version = "0.8.9", features = ["macros", "tracing", "ws"] }
 axum-extra = { version = "0.12.5", features = ["cookie", "typed-header"] }
-centaurus = { version = "0.12.1", features = [
-  "uuid",
-] }
+centaurus = { version = "0.12.2", features = ["uuid"] }
 chrono = "0.4.44"
 dotenvy = "0.15.7"
 entity = { path = "entity" }
@@ -37,7 +35,7 @@ schemars = { version = "1.2.1", features = ["chrono04", "url2", "uuid1"] }
 sea-orm = { version = "1.1.20", features = [
   "runtime-tokio-rustls",
   "sqlx-postgres",
-  "sqlx-sqlite",
+  "sqlx-sqlite"
 ] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.150"
