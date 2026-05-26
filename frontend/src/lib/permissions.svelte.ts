@@ -6,3 +6,5 @@ export enum Permission {
   USER_VIEW = 'user:view',
   USER_EDIT = 'user:edit'
 }
+
+export const avatarUrl = '/api/user/info/avatar';
