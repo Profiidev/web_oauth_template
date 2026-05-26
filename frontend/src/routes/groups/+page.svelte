@@ -8,19 +8,37 @@
   import { toast } from '@profidev/pleiades/components/util/general';
   import { invalidate } from '$app/navigation';
   import { Permission } from '$lib/permissions.svelte';
-  import { deleteGroup, type GroupInfo } from '$lib/client';
+  import { deleteGroup, type GroupInfo, type UserInfo } from '$lib/client';
 
   const { data } = $props();
 
   let selected: GroupInfo | undefined = $state();
   let deleteOpen = $state(false);
   let isLoading = $state(false);
+  let user: UserInfo | undefined = $state();
+  let adminGroup: string | undefined = $state();
+
+  let canCreate = $derived(
+    user?.permissions.includes(Permission.GROUP_EDIT) ?? false
+  );
+
+  $effect(() => {
+    data.user.then((d) => {
+      user = d;
+    });
+  });
+
+  $effect(() => {
+    data.admin_group.then((d) => {
+      adminGroup = d;
+    });
+  });
 
   $effect(() => {
     if (data.error) {
-      if (data.error === 'group_not_found') {
+      if (data.error === 'not_found') {
         toast.error('Group not found');
-      } else if (data.error === 'group_other') {
+      } else if (data.error === 'other') {
         toast.error('Failed to load group');
       }
 
@@ -57,7 +75,7 @@
     <Button
       class="ml-auto cursor-pointer"
       href="/groups/create"
-      disabled={!data.user?.permissions.includes(Permission.GROUP_EDIT)}
+      disabled={!canCreate}
     >
       <Plus />
       Create
@@ -69,8 +87,8 @@
     class="mt-4"
     columnData={{
       deleteGroup: startDeleteGroup,
-      user: data.user,
-      admin_group: data.admin_group ?? undefined
+      user,
+      admin_group: adminGroup
     }}
   />
 </div>
