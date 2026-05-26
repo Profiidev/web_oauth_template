@@ -1,32 +1,34 @@
-import type { DetailUserInfo, UserEditReq } from '$lib/client';
-import type { FormValue } from '@profidev/pleiades/components/form/types';
-import { z } from 'zod';
+import type { DetailUserInfo, UserEditReq } from "$lib/client";
+import type { FormValue } from "@profidev/pleiades/components/form/types";
+import { z } from "zod";
 
 export const userSettings = z.object({
   groups: z.array(z.string()),
-  name: z.string().min(1, 'User name is required')
+  name: z.string().min(1, "User name is required"),
 });
 
 export const reformatData = (
   data: FormValue<typeof userSettings>,
-  uuid: string
+  uuid: string,
 ): UserEditReq => ({
   groups: data.groups || [],
   name: data.name,
-  uuid
+  uuid,
 });
 
 export const formatData = (
-  user: DetailUserInfo
+  user: DetailUserInfo,
 ): FormValue<typeof userSettings> => ({
   groups: user.groups.map((group) => group.uuid),
-  name: user.name
+  name: user.name,
 });
 
 export const resetPassword = z.object({
-  new_password: z.string().min(6, 'Password must be at least 6 characters long')
+  new_password: z
+    .string()
+    .min(6, "Password must be at least 6 characters long"),
 });
 
 export const changeEmailSchema = z.object({
-  new_email: z.string().email('Invalid email address')
+  new_email: z.string().email("Invalid email address"),
 });
