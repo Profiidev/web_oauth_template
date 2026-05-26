@@ -88,7 +88,6 @@
 </script>
 
 <h4 class="mb-2">Mail Settings</h4>
-
 <BaseForm schema={mailSettings} {onsubmit} bind:this={form} bind:isLoading>
   {#snippet children({ props })}
     <div class="grid grid-cols-1 gap-8 xl:grid-cols-2">

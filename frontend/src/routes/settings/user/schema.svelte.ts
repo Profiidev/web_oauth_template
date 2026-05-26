@@ -5,7 +5,7 @@ import { z } from 'zod';
 export const userSettings = z
   .object({
     oidc_client_id: z.string().optional(),
-    oidc_client_secret: z.string().optional(),
+    oidc_client_secret: z.string().default(''),
     oidc_enabled: z.boolean(),
     oidc_issuer: z.url().optional(),
     oidc_scopes: z.string().optional(),
@@ -32,27 +32,24 @@ export const userSettings = z
     }
   });
 
-export const reformat = (form: FormValue<typeof userSettings>) => {
-  const data: UserSettings = form;
-  if (form.oidc_enabled) {
-    data.oidc = {
-      client_id: form.oidc_client_id!,
-      client_secret: form.oidc_client_secret!,
-      issuer: form.oidc_issuer!,
-      scopes: form.oidc_scopes?.split(' ') || []
-    };
-  }
-  return data;
-};
+export const reformat = (
+  form: FormValue<typeof userSettings>
+): UserSettings => ({
+  ...form,
+  oidc_scopes: form.oidc_scopes
+    ? form.oidc_scopes.split(' ').map((s) => s.trim())
+    : []
+});
 
 export const unReformat = (
   settings: UserSettings
 ): FormValue<typeof userSettings> => ({
-  oidc_client_id: settings.oidc?.client_id,
-  oidc_client_secret: settings.oidc?.client_secret || '',
-  oidc_enabled: Boolean(settings.oidc),
-  oidc_issuer: settings.oidc?.issuer,
-  oidc_scopes: settings.oidc?.scopes.join(' '),
-  sso_create_user: settings.sso_create_user,
-  sso_instant_redirect: settings.sso_instant_redirect
+  ...settings,
+  oidc_client_id: settings.oidc_client_id ?? undefined,
+  oidc_client_secret: settings.oidc_client_secret || '',
+  oidc_enabled: settings.oidc_enabled ?? false,
+  oidc_issuer: settings.oidc_issuer ?? undefined,
+  oidc_scopes: settings.oidc_scopes?.join(' ') ?? undefined,
+  sso_create_user: settings.sso_create_user ?? false,
+  sso_instant_redirect: settings.sso_instant_redirect ?? false
 });

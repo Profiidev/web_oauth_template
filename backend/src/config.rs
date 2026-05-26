@@ -3,7 +3,7 @@ use axum::{Extension, extract::FromRequestParts};
 use centaurus::{
   Config,
   backend::{
-    auth::settings::AuthConfig,
+    auth::settings::{AuthConfig, UserSettings},
     config::{BaseConfig, MetricsConfig, SiteConfig},
   },
   db::config::DBConfig,
@@ -36,6 +36,9 @@ pub struct Config {
   #[mail]
   #[serde(flatten)]
   pub mail: MailSettings,
+  #[oidc]
+  #[serde(flatten)]
+  pub oidc: UserSettings,
 
   pub db_url: String,
 }
@@ -47,6 +50,7 @@ impl Default for Config {
       db: DBConfig::default(),
       site: SiteConfig::default(),
       mail: MailSettings::default(),
+      oidc: UserSettings::default(),
       db_url: "".to_string(),
       metrics: MetricsConfig {
         metrics_name: "{{project-name}}".to_string(),
