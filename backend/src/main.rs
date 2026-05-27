@@ -44,7 +44,7 @@ fn api_router(rate_limiter: &mut RateLimiter) -> ApiRouter {
   ApiRouter::new()
     .nest("/ws", websocket::router::<UpdateMessage>())
     .nest("/setup", setup::router())
-    .nest("/auth", auth::router(rate_limiter))
+    .nest("/auth", auth::router::<UpdateMessage>(rate_limiter))
     .nest("/user", user::router::<UpdateMessage>(rate_limiter))
     .nest("/settings", settings::router())
     .nest("/mail", mail::router(rate_limiter))

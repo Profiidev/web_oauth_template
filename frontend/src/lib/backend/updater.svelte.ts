@@ -30,23 +30,23 @@ const handleMessage = (msg: UpdateMessage, user: string) => {
       break;
     }
     case UpdateType.User: {
-      const _ = invalidate('/api/user/management');
-      const _u = invalidate(`/api/user/management/${msg.uuid}`);
-      const _g = invalidate('/api/group/users');
+      invalidate('/api/user/management').catch(() => {});
+      invalidate(`/api/user/management/${msg.uuid}`).catch(() => {});
+      invalidate('/api/group/users').catch(() => {});
       // Same as current user
       if (msg.uuid === user) {
-        const _i = invalidate('/api/user/info');
+        invalidate('/api/user/info').catch(() => {});
       }
       break;
     }
     case UpdateType.UserPermissions: {
-      const _ = invalidate('/api/user/info');
+      invalidate('/api/user/info').catch(() => {});
       break;
     }
     case UpdateType.Group: {
-      const _ = invalidate('/api/group');
-      const _g = invalidate(`/api/group/${msg.uuid}`);
-      const _u = invalidate('/api/user/management/groups');
+      invalidate('/api/group').catch(() => {});
+      invalidate(`/api/group/${msg.uuid}`).catch(() => {});
+      invalidate('/api/user/management/groups').catch(() => {});
       break;
     }
     default: {

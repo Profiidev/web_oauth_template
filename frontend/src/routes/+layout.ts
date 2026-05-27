@@ -8,6 +8,7 @@ export const load: LayoutLoad = ({ fetch }) => {
       data ?? {
         email: 'unknown@example.com',
         name: 'Unknown User',
+        oidc_user: false,
         permissions: [],
         totp_enabled: false,
         uuid: ''

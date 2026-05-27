@@ -53,6 +53,7 @@ export type DetailUserInfo = {
   email: string;
   groups: Array<SimpleGroupInfo>;
   name: string;
+  oidc_user: boolean;
   permissions: Array<string>;
   uuid: string;
 };
@@ -201,6 +202,7 @@ export type UserEditReq = {
 export type UserInfo = {
   email: string;
   name: string;
+  oidc_user: boolean;
   permissions: Array<string>;
   uuid: string;
 };
@@ -216,6 +218,9 @@ export type UserSettings = {
   oidc_client_id?: string | null;
   oidc_client_secret?: string | null;
   oidc_enabled?: boolean;
+  oidc_group_claim?: string | null;
+  oidc_group_sync?: boolean;
+  oidc_image_sync?: boolean;
   oidc_issuer?: string | null;
   oidc_scopes?: string | null;
   sso_create_user: boolean;

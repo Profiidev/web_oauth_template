@@ -7,6 +7,9 @@ export const userSettings = z
     oidc_client_id: z.string().optional(),
     oidc_client_secret: z.string().default(''),
     oidc_enabled: z.boolean(),
+    oidc_group_claim: z.string().optional(),
+    oidc_group_sync: z.boolean().default(false),
+    oidc_image_sync: z.boolean().default(false),
     oidc_issuer: z.url().optional(),
     oidc_scopes: z.string().optional(),
     sso_create_user: z.boolean(),
@@ -35,7 +38,8 @@ export const userSettings = z
 export const reformat = (
   form: FormValue<typeof userSettings>
 ): UserSettings => ({
-  ...form
+  ...form,
+  oidc_group_claim: form.oidc_group_claim || undefined
 });
 
 export const unReformat = (
@@ -45,6 +49,9 @@ export const unReformat = (
   oidc_client_id: settings.oidc_client_id ?? undefined,
   oidc_client_secret: settings.oidc_client_secret || '',
   oidc_enabled: settings.oidc_enabled ?? false,
+  oidc_group_claim: settings.oidc_group_claim ?? undefined,
+  oidc_group_sync: settings.oidc_group_sync ?? false,
+  oidc_image_sync: settings.oidc_image_sync ?? false,
   oidc_issuer: settings.oidc_issuer ?? undefined,
   oidc_scopes: settings.oidc_scopes ?? undefined,
   sso_create_user: settings.sso_create_user ?? false,

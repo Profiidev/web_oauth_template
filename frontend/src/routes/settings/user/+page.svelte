@@ -123,6 +123,25 @@
           placeholder="openid profile email"
           disabled={readonly || settings?.from_env.includes('oidc_scopes')}
         />
+        <FormSwitch
+          {...props}
+          key="oidc_image_sync"
+          label="Sync profile images"
+          disabled={readonly || settings?.from_env.includes('oidc_image_sync')}
+        />
+        <FormSwitch
+          {...props}
+          key="oidc_group_sync"
+          label="Sync groups"
+          disabled={readonly || settings?.from_env.includes('oidc_group_sync')}
+        />
+        <FormInput
+          {...props}
+          label="Claim for group sync (optional)"
+          key="oidc_group_claim"
+          placeholder="groups"
+          disabled={readonly || settings?.from_env.includes('oidc_group_claim')}
+        />
         <Label for="callback-url">Callback URL</Label>
         <CopyButton
           class="my-2 max-h-8 grow justify-start"
