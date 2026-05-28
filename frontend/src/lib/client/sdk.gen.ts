@@ -19,6 +19,9 @@ import type {
   ConfirmEmailChangeData,
   ConfirmEmailChangeErrors,
   ConfirmEmailChangeResponses,
+  ConvertOidcUserData,
+  ConvertOidcUserErrors,
+  ConvertOidcUserResponses,
   CreateGroupData,
   CreateGroupErrors,
   CreateGroupResponses,
@@ -422,6 +425,22 @@ export const changeUserEmail = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     url: "/api/user/management/email",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+export const convertOidcUser = <ThrowOnError extends boolean = false>(
+  options: Options<ConvertOidcUserData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<
+    ConvertOidcUserResponses,
+    ConvertOidcUserErrors,
+    ThrowOnError
+  >({
+    url: "/api/user/management/convert-oidc",
     ...options,
     headers: {
       "Content-Type": "application/json",

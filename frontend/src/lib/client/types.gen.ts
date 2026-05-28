@@ -974,6 +974,46 @@ export type ChangeUserEmailResponses = {
   200: unknown;
 };
 
+export type ConvertOidcUserData = {
+  body: ResetUserPassword;
+  path?: never;
+  query?: never;
+  url: "/api/user/management/convert-oidc";
+};
+
+export type ConvertOidcUserErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  "4XX": unknown;
+  /**
+   * An error occurred
+   */
+  "5XX": unknown;
+};
+
+export type ConvertOidcUserError =
+  ConvertOidcUserErrors[keyof ConvertOidcUserErrors];
+
+export type ConvertOidcUserResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
+
 export type GetGeneralSettingsData = {
   body?: never;
   path?: never;
