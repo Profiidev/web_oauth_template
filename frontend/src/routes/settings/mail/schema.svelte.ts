@@ -36,6 +36,24 @@ export const mailSettings = z
     }
   });
 
+export const reformat = (
+  data: FormValue<typeof mailSettings>,
+  from_env: string[]
+) => {
+  const settings: MailSettings = {
+    ...data
+  };
+
+  for (const key of from_env) {
+    if (key in settings) {
+      // oxlint-disable-next-line no-unsafe-type-assertion no-dynamic-delete
+      delete settings[key as keyof MailSettings];
+    }
+  }
+
+  return settings;
+};
+
 export const unReformat = (
   settings: MailSettings
 ): FormValue<typeof mailSettings> => ({

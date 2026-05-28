@@ -6,6 +6,16 @@
   import { getEncrypt } from '$lib/backend/auth.svelte';
   import { updatePassword } from '$lib/client';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
+  import * as Tooltip from '@profidev/pleiades/components/ui/tooltip';
+  import { Button } from '@profidev/pleiades/components/ui/button';
+
+  interface Props {
+    oidc: boolean;
+  }
+
+  const { oidc }: Props = $props();
+
+  let formOpen = $state(false);
 
   const changeConfirm = async (form: FormValue<typeof passwordChange>) => {
     if (form.password !== form.password_confirm) {
@@ -48,18 +58,37 @@
 
 <div class="flex items-center">
   <h5>Password:</h5>
+  <Tooltip.Provider>
+    <Tooltip.Root>
+      <Tooltip.Trigger class="ml-auto">
+        <Button
+          variant="secondary"
+          class="cursor-pointer"
+          disabled={oidc}
+          onclick={() => {
+            formOpen = true;
+          }}
+        >
+          Change Password
+        </Button>
+      </Tooltip.Trigger>
+      {#if oidc}
+        <Tooltip.Content side="left">
+          <p>
+            Oidc users can not change their password. Please contact your
+            administrator to change your password.
+          </p>
+        </Tooltip.Content>
+      {/if}
+    </Tooltip.Root>
+  </Tooltip.Provider>
   <FormDialog
     title="Change Password"
     description="Enter your new password below"
     confirm="Change Password"
-    trigger={{
-      text: 'Change Password',
-      variant: 'secondary',
-      class: 'ml-auto cursor-pointer',
-      loadIcon: true
-    }}
     onsubmit={changeConfirm}
     schema={passwordChange}
+    bind:open={formOpen}
   >
     {#snippet children({ props })}
       <FormInputPassword

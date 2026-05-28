@@ -14,7 +14,8 @@
     userSettings,
     reformatData,
     resetPassword,
-    changeEmailSchema
+    changeEmailSchema,
+    convertUserSchema
   } from './schema.svelte.js';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
   import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
@@ -25,6 +26,7 @@
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import {
     changeUserEmail,
+    convertOidcUser,
     deleteUser,
     editUser,
     resetUserAvatar,
@@ -43,6 +45,7 @@
   let resetOpen = $state(false);
   let deleteOpen = $state(false);
   let emailOpen = $state(false);
+  let convertOpen = $state(false);
   let isLoading = $state(false);
   let readonly = $state(true);
   let allowSpecialEdit = $state(false);
@@ -160,6 +163,35 @@
     }
   };
 
+  const convertUserSubmit = async (
+    form: FormValue<typeof convertUserSchema>
+  ) => {
+    if (!userInfo) return;
+    let encrypt = getEncrypt();
+    if (!encrypt) {
+      return { error: 'Encryption function not available' };
+    }
+
+    let res = await convertOidcUser({
+      body: {
+        uuid: userInfo.uuid,
+        new_password: encrypt.encrypt(form.new_password) || ''
+      }
+    });
+
+    if (res.error) {
+      if (res.response?.status === 403) {
+        return { error: 'You do not have permission to convert this user' };
+      } else {
+        return { error: 'Failed to convert user' };
+      }
+    } else {
+      toast.success(
+        `User ${userInfo.name} converted to local user successfully`
+      );
+    }
+  };
+
   const changeEmailSubmit = async (
     form: FormValue<typeof changeEmailSchema>
   ) => {
@@ -198,7 +230,7 @@
         {userInfo.name}
       {/if}
     </h3>
-    {#if !mailActive && allowSpecialEdit}
+    {#if !mailActive && allowSpecialEdit && !userInfo?.oidc_user}
       <Button
         variant="secondary"
         class="mr-2 ml-auto cursor-pointer"
@@ -209,9 +241,26 @@
         Reset Password
       </Button>
     {/if}
+    {#if allowSpecialEdit && userInfo?.oidc_user}
+      <Button
+        variant="secondary"
+        class={'mr-2 cursor-pointer' +
+          (mailActive || !allowSpecialEdit || userInfo?.oidc_user
+            ? ' ml-auto'
+            : '')}
+        onclick={() => (convertOpen = true)}
+        disabled={readonly}
+      >
+        <RotateCcw />
+        Convert to Local User
+      </Button>
+    {/if}
     <Button
       class={'cursor-pointer' +
-        (mailActive || !allowSpecialEdit ? ' ml-auto' : '')}
+        (!(!mailActive && allowSpecialEdit && !userInfo?.oidc_user) &&
+        !(allowSpecialEdit && userInfo?.oidc_user)
+          ? ' ml-auto'
+          : '')}
       onclick={() => (deleteOpen = true)}
       variant="destructive"
       disabled={readonly}
@@ -370,6 +419,24 @@
       label="New Email"
       placeholder="mail@example.com"
       type="email"
+    />
+  {/snippet}
+</FormDialog>
+<FormDialog
+  title={`Convert to Local User`}
+  description={`Do you really want to convert user ${userInfo?.name} to a local user? This will allow the user to change email and password for usage with the local login. Login with oidc is not affected. This action cannot be undone.`}
+  confirm="Convert"
+  onsubmit={convertUserSubmit}
+  bind:open={convertOpen}
+  bind:isLoading
+  schema={convertUserSchema}
+>
+  {#snippet children({ props })}
+    <FormInputPassword
+      {...props}
+      key="new_password"
+      label="New Password"
+      placeholder="Enter new password"
     />
   {/snippet}
 </FormDialog>

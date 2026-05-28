@@ -62,7 +62,8 @@
   });
 
   const onsubmit = async (form: FormValue<typeof userSettings>) => {
-    let data = reformat(form);
+    if (!settings) return;
+    let data = reformat(form, settings.from_env);
     let ret = await saveUserSettings({ body: data });
 
     if (ret.error) {
@@ -85,7 +86,7 @@
 <h4 class="mb-2">User Settings</h4>
 <BaseForm schema={userSettings} {onsubmit} bind:this={form} bind:isLoading>
   {#snippet children({ props })}
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto_1fr]">
+    <div class="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_auto_1fr]">
       <div class="flex flex-col gap-1">
         <FormSwitch
           {...props}
@@ -122,6 +123,25 @@
           key="oidc_scopes"
           placeholder="openid profile email"
           disabled={readonly || settings?.from_env.includes('oidc_scopes')}
+        />
+        <FormSwitch
+          {...props}
+          key="oidc_image_sync"
+          label="Sync profile images"
+          disabled={readonly || settings?.from_env.includes('oidc_image_sync')}
+        />
+        <FormSwitch
+          {...props}
+          key="oidc_group_sync"
+          label="Sync groups"
+          disabled={readonly || settings?.from_env.includes('oidc_group_sync')}
+        />
+        <FormInput
+          {...props}
+          label="Claim for group sync (optional)"
+          key="oidc_group_claim"
+          placeholder="groups"
+          disabled={readonly || settings?.from_env.includes('oidc_group_claim')}
         />
         <Label for="callback-url">Callback URL</Label>
         <CopyButton
@@ -160,34 +180,30 @@
     isLoading: boolean;
     isError: boolean;
   })}
-    <div class="grid w-full grid-cols-1 gap-8 xl:grid-cols-2">
-      <div class="flex flex-col">
-        {#if (settings?.from_env.length ?? 0) > 0}
-          <div class="mb-2 flex items-center">
-            <TriangleAlert class="size-6 min-h-6 min-w-6 text-yellow-600" />
-            <p class="ml-2 text-yellow-600">
-              Values loaded from environment variables cannot be edited here.
-            </p>
-          </div>
-        {/if}
-        <div class="mt-4 flex">
-          <Button
-            class="ml-auto cursor-pointer"
-            type="submit"
-            disabled={isLoading}
-            variant={isError ? 'destructive' : undefined}
-          >
-            {#if isLoading}
-              <Spinner />
-            {:else if isError}
-              <RotateCcw />
-            {:else}
-              <Save />
-            {/if}
-            {isError ? 'Retry' : 'Save Changes'}</Button
-          >
-        </div>
+    {#if (settings?.from_env.length ?? 0) > 0}
+      <div class="mb-2 flex items-center">
+        <TriangleAlert class="size-6 min-h-6 min-w-6 text-yellow-600" />
+        <p class="ml-2 text-yellow-600">
+          Values loaded from environment variables cannot be edited here.
+        </p>
       </div>
+    {/if}
+    <div class="mt-4 flex">
+      <Button
+        class="ml-auto cursor-pointer"
+        type="submit"
+        disabled={isLoading}
+        variant={isError ? 'destructive' : undefined}
+      >
+        {#if isLoading}
+          <Spinner />
+        {:else if isError}
+          <RotateCcw />
+        {:else}
+          <Save />
+        {/if}
+        {isError ? 'Retry' : 'Save Changes'}</Button
+      >
     </div>
   {/snippet}
 </BaseForm>

@@ -19,6 +19,9 @@ import type {
   ConfirmEmailChangeData,
   ConfirmEmailChangeErrors,
   ConfirmEmailChangeResponses,
+  ConvertOidcUserData,
+  ConvertOidcUserErrors,
+  ConvertOidcUserResponses,
   CreateGroupData,
   CreateGroupErrors,
   CreateGroupResponses,
@@ -43,6 +46,9 @@ import type {
   GetMailSettingsData,
   GetMailSettingsErrors,
   GetMailSettingsResponses,
+  GetOidcSettingsData,
+  GetOidcSettingsErrors,
+  GetOidcSettingsResponses,
   GetUserSettingsData,
   GetUserSettingsErrors,
   GetUserSettingsResponses,
@@ -52,6 +58,9 @@ import type {
   InfoData,
   InfoErrors,
   InfoResponses,
+  InitOidcData,
+  InitOidcErrors,
+  InitOidcResponses,
   IsSetupData,
   IsSetupErrors,
   IsSetupResponses,
@@ -148,6 +157,31 @@ export const completeSetup = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<unknown, CompleteSetupErrors, ThrowOnError>({
     url: '/api/setup',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  });
+
+export const getOidcSettings = <ThrowOnError extends boolean = false>(
+  options?: Options<GetOidcSettingsData, ThrowOnError>
+) =>
+  (options?.client ?? client).get<
+    GetOidcSettingsResponses,
+    GetOidcSettingsErrors,
+    ThrowOnError
+  >({ url: '/api/setup/oidc', ...options });
+
+export const initOidc = <ThrowOnError extends boolean = false>(
+  options: Options<InitOidcData, ThrowOnError>
+) =>
+  (options.client ?? client).post<
+    InitOidcResponses,
+    InitOidcErrors,
+    ThrowOnError
+  >({
+    url: '/api/setup/oidc',
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -422,6 +456,22 @@ export const changeUserEmail = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     url: '/api/user/management/email',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  });
+
+export const convertOidcUser = <ThrowOnError extends boolean = false>(
+  options: Options<ConvertOidcUserData, ThrowOnError>
+) =>
+  (options.client ?? client).put<
+    ConvertOidcUserResponses,
+    ConvertOidcUserErrors,
+    ThrowOnError
+  >({
+    url: '/api/user/management/convert-oidc',
     ...options,
     headers: {
       'Content-Type': 'application/json',

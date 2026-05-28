@@ -12,9 +12,10 @@
   interface Props {
     email: string;
     mailActive: boolean;
+    oidc: boolean;
   }
 
-  let { email, mailActive }: Props = $props();
+  let { email, mailActive, oidc }: Props = $props();
 
   let enteringCodes = $state(false);
   let newEmail = $state('');
@@ -99,10 +100,17 @@
       </Tooltip.Trigger>
       {#if !mailActive}
         <Tooltip.Content side="left">
-          <p>
-            Email can not be changed when mail support is not configured. Please
-            contact your administrator to change your email address.
-          </p>
+          {#if oidc}
+            <p>
+              Oidc users can not change their email. Please contact your
+              administrator to change your email address.
+            </p>
+          {:else}
+            <p>
+              Email can not be changed when mail support is not configured.
+              Please contact your administrator to change your email address.
+            </p>
+          {/if}
         </Tooltip.Content>
       {/if}
     </Tooltip.Root>
