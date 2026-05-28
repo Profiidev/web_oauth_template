@@ -5,7 +5,7 @@ export default defineConfig({
   logs: './build',
   output: {
     path: 'src/lib/client',
-    postProcess: ['prettier']
+    postProcess: ['oxfmt']
   },
   plugins: [
     {
