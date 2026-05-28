@@ -129,7 +129,7 @@ export type MailActiveResponse = {
 };
 
 export type MailSettings = {
-  smtp_enabled?: boolean;
+  smtp_enabled?: boolean | null;
   smtp_from_address?: string | null;
   smtp_from_name?: string | null;
   smtp_password?: string | null;
@@ -217,14 +217,14 @@ export type UserListInfo = {
 export type UserSettings = {
   oidc_client_id?: string | null;
   oidc_client_secret?: string | null;
-  oidc_enabled?: boolean;
+  oidc_enabled?: boolean | null;
   oidc_group_claim?: string | null;
-  oidc_group_sync?: boolean;
-  oidc_image_sync?: boolean;
+  oidc_group_sync?: boolean | null;
+  oidc_image_sync?: boolean | null;
   oidc_issuer?: string | null;
   oidc_scopes?: string | null;
-  sso_create_user: boolean;
-  sso_instant_redirect: boolean;
+  sso_create_user?: boolean | null;
+  sso_instant_redirect?: boolean | null;
 };
 
 export type UserSettingsResponse = {

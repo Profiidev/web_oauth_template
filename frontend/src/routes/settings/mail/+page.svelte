@@ -1,6 +1,6 @@
 <script lang="ts">
   import BaseForm from '@profidev/pleiades/components/form/base-form.svelte';
-  import { mailSettings, unReformat } from './schema.svelte';
+  import { mailSettings, reformat, unReformat } from './schema.svelte';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
   import { Button } from '@profidev/pleiades/components/ui/button';
   import { Spinner } from '@profidev/pleiades/components/ui/spinner';
@@ -51,7 +51,9 @@
   });
 
   const onsubmit = async (form: FormValue<typeof mailSettings>) => {
-    let ret = await saveMailSettings({ body: form });
+    if (!settings) return;
+    const data = reformat(form, settings.from_env);
+    let ret = await saveMailSettings({ body: data });
 
     if (ret.error) {
       if (ret.response?.status === 406) {

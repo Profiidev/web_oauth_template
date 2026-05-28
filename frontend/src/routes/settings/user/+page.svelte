@@ -62,7 +62,8 @@
   });
 
   const onsubmit = async (form: FormValue<typeof userSettings>) => {
-    let data = reformat(form);
+    if (!settings) return;
+    let data = reformat(form, settings.from_env);
     let ret = await saveUserSettings({ body: data });
 
     if (ret.error) {

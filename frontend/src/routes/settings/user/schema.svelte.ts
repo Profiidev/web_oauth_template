@@ -36,11 +36,23 @@ export const userSettings = z
   });
 
 export const reformat = (
-  form: FormValue<typeof userSettings>
-): UserSettings => ({
-  ...form,
-  oidc_group_claim: form.oidc_group_claim || undefined
-});
+  form: FormValue<typeof userSettings>,
+  from_env: string[]
+): UserSettings => {
+  const settings: UserSettings = {
+    ...form,
+    oidc_group_claim: form.oidc_group_claim || undefined
+  };
+
+  for (const field of from_env) {
+    if (field in settings) {
+      // oxlint-disable-next-line no-unsafe-type-assertion no-dynamic-delete
+      delete settings[field as keyof UserSettings];
+    }
+  }
+
+  return settings;
+};
 
 export const unReformat = (
   settings: UserSettings
