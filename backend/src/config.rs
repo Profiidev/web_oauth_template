@@ -1,17 +1,17 @@
 use aide::OperationIo;
-use axum::{extract::FromRequestParts, Extension};
+use axum::{Extension, extract::FromRequestParts};
 use centaurus::{
+  Config,
   backend::{
     auth::settings::{AuthConfig, UserSettings},
     config::{BaseConfig, MetricsConfig, SiteConfig},
   },
   db::config::DBConfig,
   mail::MailSettings,
-  Config,
 };
 use figment::{
-  providers::{Env, Serialized},
   Figment,
+  providers::{Env, Serialized},
 };
 use serde::{Deserialize, Serialize};
 use tracing::instrument;
@@ -41,6 +41,7 @@ pub struct Config {
   pub oidc: UserSettings,
 
   pub db_url: String,
+  pub admin_group: String,
 }
 
 impl Default for Config {
@@ -52,6 +53,7 @@ impl Default for Config {
       mail: MailSettings::default(),
       oidc: UserSettings::default(),
       db_url: "".to_string(),
+      admin_group: "Admin".to_string(),
       metrics: MetricsConfig {
         metrics_name: "{{project-name}}".to_string(),
         ..Default::default()

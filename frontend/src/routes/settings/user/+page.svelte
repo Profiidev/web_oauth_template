@@ -86,7 +86,7 @@
 <h4 class="mb-2">User Settings</h4>
 <BaseForm schema={userSettings} {onsubmit} bind:this={form} bind:isLoading>
   {#snippet children({ props })}
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto_1fr]">
+    <div class="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_auto_1fr]">
       <div class="flex flex-col gap-1">
         <FormSwitch
           {...props}
@@ -180,34 +180,30 @@
     isLoading: boolean;
     isError: boolean;
   })}
-    <div class="grid w-full grid-cols-1 gap-8 xl:grid-cols-2">
-      <div class="flex flex-col">
-        {#if (settings?.from_env.length ?? 0) > 0}
-          <div class="mb-2 flex items-center">
-            <TriangleAlert class="size-6 min-h-6 min-w-6 text-yellow-600" />
-            <p class="ml-2 text-yellow-600">
-              Values loaded from environment variables cannot be edited here.
-            </p>
-          </div>
-        {/if}
-        <div class="mt-4 flex">
-          <Button
-            class="ml-auto cursor-pointer"
-            type="submit"
-            disabled={isLoading}
-            variant={isError ? 'destructive' : undefined}
-          >
-            {#if isLoading}
-              <Spinner />
-            {:else if isError}
-              <RotateCcw />
-            {:else}
-              <Save />
-            {/if}
-            {isError ? 'Retry' : 'Save Changes'}</Button
-          >
-        </div>
+    {#if (settings?.from_env.length ?? 0) > 0}
+      <div class="mb-2 flex items-center">
+        <TriangleAlert class="size-6 min-h-6 min-w-6 text-yellow-600" />
+        <p class="ml-2 text-yellow-600">
+          Values loaded from environment variables cannot be edited here.
+        </p>
       </div>
+    {/if}
+    <div class="mt-4 flex">
+      <Button
+        class="ml-auto cursor-pointer"
+        type="submit"
+        disabled={isLoading}
+        variant={isError ? 'destructive' : undefined}
+      >
+        {#if isLoading}
+          <Spinner />
+        {:else if isError}
+          <RotateCcw />
+        {:else}
+          <Save />
+        {/if}
+        {isError ? 'Retry' : 'Save Changes'}</Button
+      >
     </div>
   {/snippet}
 </BaseForm>
