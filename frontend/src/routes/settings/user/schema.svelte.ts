@@ -6,14 +6,14 @@ export const userSettings = z
   .object({
     oidc_client_id: z.string().optional(),
     oidc_client_secret: z.string().default(''),
-    oidc_enabled: z.boolean(),
+    oidc_enabled: z.boolean().default(false),
     oidc_group_claim: z.string().optional(),
     oidc_group_sync: z.boolean().default(false),
     oidc_image_sync: z.boolean().default(false),
     oidc_issuer: z.url().optional(),
     oidc_scopes: z.string().optional(),
-    sso_create_user: z.boolean(),
-    sso_instant_redirect: z.boolean()
+    sso_create_user: z.boolean().default(false),
+    sso_instant_redirect: z.boolean().default(false)
   })
   .superRefine((data, ctx) => {
     const oidcFields: (keyof typeof data)[] = [

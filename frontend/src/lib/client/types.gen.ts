@@ -150,6 +150,12 @@ export type OidcCallbackQuery = {
   state: string;
 };
 
+export type OidcSetupResponse = {
+  from_env: Array<string>;
+  settings: UserSettings;
+  site_url: string;
+};
+
 export type PasswordUpdate = {
   new_password: string;
   old_password: string;
@@ -291,6 +297,70 @@ export type CompleteSetupErrors = {
 };
 
 export type CompleteSetupError = CompleteSetupErrors[keyof CompleteSetupErrors];
+
+export type GetOidcSettingsData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/setup/oidc";
+};
+
+export type GetOidcSettingsErrors = {
+  /**
+   * An error occurred
+   */
+  "4XX": unknown;
+  /**
+   * An error occurred
+   */
+  "5XX": unknown;
+};
+
+export type GetOidcSettingsResponses = {
+  200: OidcSetupResponse;
+};
+
+export type GetOidcSettingsResponse =
+  GetOidcSettingsResponses[keyof GetOidcSettingsResponses];
+
+export type InitOidcData = {
+  body: UserSettings;
+  path?: never;
+  query?: never;
+  url: "/api/setup/oidc";
+};
+
+export type InitOidcErrors = {
+  /**
+   * Failed to parse the request body as JSON
+   */
+  400: string;
+  /**
+   * Expected request with `Content-Type: application/json`
+   */
+  415: string;
+  /**
+   * Failed to deserialize the JSON body into the target type
+   */
+  422: string;
+  /**
+   * An error occurred
+   */
+  "4XX": unknown;
+  /**
+   * An error occurred
+   */
+  "5XX": unknown;
+};
+
+export type InitOidcError = InitOidcErrors[keyof InitOidcErrors];
+
+export type InitOidcResponses = {
+  /**
+   * no content
+   */
+  200: unknown;
+};
 
 export type KeyData = {
   body?: never;
