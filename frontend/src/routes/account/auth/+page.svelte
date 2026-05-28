@@ -24,7 +24,11 @@
 <div class="mt-4 grid w-full grid-cols-1 gap-8 2xl:grid-cols-2">
   <div>
     <h4 class="mb-2">Authentication</h4>
-    <Password />
-    <Email email={user?.email ?? ''} {mailActive} />
+    <Password oidc={user?.oidc_user ?? false} />
+    <Email
+      email={user?.email ?? ''}
+      oidc={user?.oidc_user ?? false}
+      {mailActive}
+    />
   </div>
 </div>

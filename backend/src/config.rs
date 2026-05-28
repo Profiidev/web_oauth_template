@@ -58,6 +58,7 @@ impl Default for Config {
       },
       auth: AuthConfig {
         auth_pepper: "__{{project-name}}_PEPPER__".to_string(),
+        auth_jwt_expiration: 60 * 60 * 24, // 1 days
         ..Default::default()
       },
     }

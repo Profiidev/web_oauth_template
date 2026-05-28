@@ -198,7 +198,7 @@
         {userInfo.name}
       {/if}
     </h3>
-    {#if !mailActive && allowSpecialEdit}
+    {#if !mailActive && allowSpecialEdit && !userInfo?.oidc_user}
       <Button
         variant="secondary"
         class="mr-2 ml-auto cursor-pointer"
@@ -211,7 +211,9 @@
     {/if}
     <Button
       class={'cursor-pointer' +
-        (mailActive || !allowSpecialEdit ? ' ml-auto' : '')}
+        (mailActive || !allowSpecialEdit || userInfo?.oidc_user
+          ? ' ml-auto'
+          : '')}
       onclick={() => (deleteOpen = true)}
       variant="destructive"
       disabled={readonly}
