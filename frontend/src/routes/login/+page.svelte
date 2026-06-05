@@ -15,6 +15,7 @@
   import { Spinner } from '@profidev/pleiades/components/ui/spinner';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
   import { authenticate, SsoType, type AuthConfig } from '$lib/client';
+  import { OIDC_ERRORS } from '$lib/permissions.svelte';
 
   let { data } = $props();
 
@@ -22,6 +23,29 @@
   let config: AuthConfig | undefined = $state();
   let oidcUrl: string | undefined = $state();
   let oidcError: boolean = $state(false);
+
+  $effect(() => {
+    const url = new URL(window.location.href);
+    let updated = false;
+
+    if (data.error) {
+      let error: string = OIDC_ERRORS[data.error as keyof typeof OIDC_ERRORS];
+      if (!error) {
+        error = `SSO login failed: ${data.error}`;
+      }
+      toast.error(error);
+
+      url.searchParams.delete('error');
+      updated = true;
+    }
+    if (data.skip) {
+      url.searchParams.delete('skip');
+      updated = true;
+    }
+    if (updated) {
+      window.history.replaceState({}, '', url);
+    }
+  });
 
   $effect(() => {
     data.config?.then(async (d) => {
