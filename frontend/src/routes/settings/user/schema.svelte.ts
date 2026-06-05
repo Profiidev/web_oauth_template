@@ -11,6 +11,7 @@ export const userSettings = z
     oidc_group_sync: z.boolean().default(false),
     oidc_image_sync: z.boolean().default(false),
     oidc_issuer: z.url().optional(),
+    oidc_pkce: z.boolean().default(false),
     oidc_scopes: z.string().optional(),
     sso_create_user: z.boolean().default(false),
     sso_instant_redirect: z.boolean().default(false)
@@ -65,6 +66,7 @@ export const unReformat = (
   oidc_group_sync: settings.oidc_group_sync ?? false,
   oidc_image_sync: settings.oidc_image_sync ?? false,
   oidc_issuer: settings.oidc_issuer ?? undefined,
+  oidc_pkce: settings.oidc_pkce ?? false,
   oidc_scopes: settings.oidc_scopes ?? undefined,
   sso_create_user: settings.sso_create_user ?? false,
   sso_instant_redirect: settings.sso_instant_redirect ?? false

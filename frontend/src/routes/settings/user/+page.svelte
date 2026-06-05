@@ -126,6 +126,12 @@
         />
         <FormSwitch
           {...props}
+          key="oidc_pkce"
+          label="Use PKCE"
+          disabled={readonly || settings?.from_env.includes('oidc_pkce')}
+        />
+        <FormSwitch
+          {...props}
           key="oidc_image_sync"
           label="Sync profile images"
           disabled={readonly || settings?.from_env.includes('oidc_image_sync')}

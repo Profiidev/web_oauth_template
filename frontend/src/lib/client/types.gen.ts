@@ -228,6 +228,7 @@ export type UserSettings = {
   oidc_group_sync?: boolean | null;
   oidc_image_sync?: boolean | null;
   oidc_issuer?: string | null;
+  oidc_pkce?: boolean | null;
   oidc_scopes?: string | null;
   sso_create_user?: boolean | null;
   sso_instant_redirect?: boolean | null;
