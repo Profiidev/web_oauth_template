@@ -17,11 +17,7 @@ export const userSettings = z
     sso_instant_redirect: z.boolean().default(false)
   })
   .superRefine((data, ctx) => {
-    const oidcFields: (keyof typeof data)[] = [
-      'oidc_issuer',
-      'oidc_client_id',
-      'oidc_client_secret'
-    ];
+    const oidcFields: (keyof typeof data)[] = ['oidc_issuer', 'oidc_client_id'];
 
     if (data.oidc_enabled) {
       for (const field of oidcFields) {

@@ -18,7 +18,6 @@ export const mailSettings = z
       'smtp_server',
       'smtp_port',
       'smtp_username',
-      'smtp_password',
       'smtp_from_address',
       'smtp_from_name'
     ];
