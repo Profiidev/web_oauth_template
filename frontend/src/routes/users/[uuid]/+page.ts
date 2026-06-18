@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import { listGroupsSimple, mailActive, userInfo } from '$lib/client';
+import { listGroupsSimple, userInfo } from '$lib/client';
 
 export const load: PageLoad = ({ params, fetch }) => {
   const resPromise = userInfo({
@@ -9,13 +9,9 @@ export const load: PageLoad = ({ params, fetch }) => {
   const groupsPromise = listGroupsSimple({
     fetch
   }).then((res) => res.data ?? []);
-  const mailPromise = mailActive({ fetch }).then(
-    (res) => res.data?.active ?? false
-  );
 
   return {
     groupsPromise,
-    mailActivePromise: mailPromise,
     userInfoPromise: resPromise,
     uuid: params.uuid
   };
