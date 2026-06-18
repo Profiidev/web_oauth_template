@@ -566,9 +566,9 @@ dependencies = [
 
 [[package]]
 name = "centaurus"
-version = "0.14.3"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "35be38448e1cdaa3ce25a581dabb339f04b4419c1ab4c2596e08b7dd75457abe"
+checksum = "7b830f9451641fe5ee30b687591313e9440d96c0bc9fa05130e152b430e2fd89"
 dependencies = [
  "addr",
  "aide",
@@ -616,21 +616,23 @@ dependencies = [
 
 [[package]]
 name = "centaurus-derive"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "33ffac57a5a93f92106e261ea55a863e306b47e6abe7c6fb3c83f2e804b02cc2"
+checksum = "9946292aa14ca8300d188f919938d7eee29e103ed4703e0d5c3f68f9279d78d9"
 dependencies = [
  "centaurus-macro-utils",
+ "proc-macro2",
  "quote",
  "syn 2.0.117",
 ]
 
 [[package]]
 name = "centaurus-macro-utils"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1e71a82280f24a3b90dcadaef97f5ba40b91a45806b978f588fa6f5ff3e857cf"
+checksum = "24eb825ae460bc7ea470295e8fed69e29226bfd9ec5ee35a60f4af83cd22f661"
 dependencies = [
+ "proc-macro2",
  "syn 2.0.117",
  "toml_edit",
 ]

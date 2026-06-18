@@ -10,3 +10,4 @@ pub mod key;
 pub mod settings;
 pub mod setup;
 pub mod user;
+pub mod user_avatar;

@@ -12,6 +12,7 @@ impl MigratorTrait for Migrator {
       Box::new(centaurus::db::migrations::m3_user::Migration),
       Box::new(centaurus::db::migrations::m4_groups::Migration),
       Box::new(centaurus::db::migrations::m5_setup::Migration),
+      Box::new(centaurus::db::migrations::m6_user_oidc_subject::Migration),
     ]
   }
 }
