@@ -52,7 +52,7 @@
       config = d;
 
       if (!oidcUrl) {
-        oidcUrl = await getOidcUrl();
+        oidcUrl = await getOidcUrl(data.redirectTo);
         if (config?.instant_redirect && oidcUrl && !data.skip) {
           window.location.href = oidcUrl;
         }
@@ -64,7 +64,7 @@
     setTimeout(async () => {
       connectWebsocket(user);
       await invalidate('/api/user/info');
-      await goto('/');
+      await goto(data.redirectTo);
     });
   };
 
@@ -80,7 +80,8 @@
       body: {
         email: formData.email,
         password: encrypt.encrypt(formData.password) || ''
-      }
+      },
+      parseAs: 'json'
     });
 
     if (!ret.data && ret.response?.status === 401) {
@@ -146,7 +147,7 @@
             if (oidcError) {
               isLoading = true;
               oidcError = false;
-              oidcUrl = await getOidcUrl();
+              oidcUrl = await getOidcUrl(data.redirectTo);
               isLoading = false;
             }
 

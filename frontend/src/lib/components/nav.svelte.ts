@@ -35,10 +35,12 @@ export const items: NavGroup[] = [
   }
 ];
 
-export const noSidebarPaths = [
+export const noAuthPaths = [
   '/login',
   '/setup',
   '/password',
   '/password/forgot',
   '/password/reset'
 ];
+
+export const noSidebarPaths = [...noAuthPaths];
