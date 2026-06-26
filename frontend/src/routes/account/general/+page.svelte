@@ -53,6 +53,8 @@
             let ret = await updateAvatar({ body: { avatar: data } });
             if (ret.error && ret.response?.status === 429) {
               toast.error('Rate limit exceeded. Please try again later.');
+            } else if (ret.error && ret.response?.status === 413) {
+              toast.error('File too large. Please upload a smaller file.');
             } else if (ret.error) {
               toast.error('Failed to update avatar');
             } else {
