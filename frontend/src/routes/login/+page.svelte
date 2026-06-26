@@ -52,7 +52,7 @@
       config = d;
 
       if (!oidcUrl) {
-        oidcUrl = await getOidcUrl();
+        oidcUrl = await getOidcUrl(data.redirectTo);
         if (config?.instant_redirect && oidcUrl && !data.skip) {
           window.location.href = oidcUrl;
         }
@@ -147,7 +147,7 @@
             if (oidcError) {
               isLoading = true;
               oidcError = false;
-              oidcUrl = await getOidcUrl();
+              oidcUrl = await getOidcUrl(data.redirectTo);
               isLoading = false;
             }
 

@@ -26,10 +26,13 @@ export const fetchKey = async () => {
 };
 const _ = fetchKey();
 
-export const getOidcUrl = async () => {
-  const res = await get<{ url: string }>('/api/auth/oidc/url', {
-    res_type: ResponseType.Json
-  });
+export const getOidcUrl = async (redirect?: string) => {
+  const res = await get<{ url: string }>(
+    `/api/auth/oidc/url${redirect ? `?redirect_to=${redirect}` : ''}`,
+    {
+      res_type: ResponseType.Json
+    }
+  );
 
   if (typeof res === 'object') {
     return res.url;
