@@ -147,7 +147,7 @@ export type MailSettingsResponse = {
 export type OidcCallbackQuery = {
   code?: string | null;
   error?: string | null;
-  state: string;
+  state?: string | null;
 };
 
 export type OidcSetupResponse = {

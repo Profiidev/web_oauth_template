@@ -64,7 +64,7 @@
     setTimeout(async () => {
       connectWebsocket(user);
       await invalidate('/api/user/info');
-      await goto('/');
+      await goto(data.redirectTo);
     });
   };
 

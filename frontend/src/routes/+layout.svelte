@@ -18,6 +18,7 @@
   import { logout, testToken, type UserInfo } from '$lib/client';
   import Sidebar from '@profidev/pleiades/components/nav/sidebar/sidebar.svelte';
   import { avatarUrl } from '$lib/permissions.svelte';
+  import { buildLoginUrl } from '$lib/redirect';
 
   // @ts-ignore this is injected at build time via Vite's define option
   let version = __version__;
@@ -42,7 +43,7 @@
       // can also be undefined if there was an error
       if (valid === false) {
         if (!noAuthPaths.includes(page.route.id ?? '') && !blockRedirect) {
-          goto('/login');
+          goto(buildLoginUrl(page.url.pathname + page.url.search));
         }
       } else {
         let user = await data.user;
