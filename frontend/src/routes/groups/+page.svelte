@@ -2,7 +2,7 @@
   import { Button } from '@profidev/pleiades/components/ui/button';
   import FormDialog from '@profidev/pleiades/components/form/form-dialog.svelte';
   import Plus from '@lucide/svelte/icons/plus';
-  import Table from '$lib/components/table/Table.svelte';
+  import Table from '@profidev/pleiades/components/table/clean-table.svelte';
   import { columns } from './table.svelte';
   import { z } from 'zod';
   import { toast } from '@profidev/pleiades/components/util/general';
@@ -90,6 +90,7 @@
       user,
       admin_group: adminGroup
     }}
+    searchColumns={['id', 'name', 'permissions', 'users']}
   />
 </div>
 <FormDialog
