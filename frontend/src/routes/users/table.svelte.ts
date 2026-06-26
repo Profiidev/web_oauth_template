@@ -3,8 +3,7 @@ import * as DataTable from '@profidev/pleiades/components/ui/data-table';
 import { createColumn } from '@profidev/pleiades/components/table/helpers.svelte';
 import type { SimpleGroupInfo, UserListInfo } from '$lib/client';
 import Actions from '@profidev/pleiades/components/table/actions.svelte';
-import SimpleAvatar from '$lib/components/SimpleAvatar.svelte';
-import { avatarUrl } from '$lib/permissions.svelte';
+import UserAvatar from '@profidev/pleiades/components/util/user-avatar.svelte';
 
 export const columns = ({
   deleteUser,
@@ -16,10 +15,10 @@ export const columns = ({
   {
     accessorKey: 'avatar',
     cell: ({ row }) =>
-      DataTable.renderComponent(SimpleAvatar, {
-        alt: row.original.name,
+      DataTable.renderComponent(UserAvatar, {
         class: 'size-8',
-        src: `${avatarUrl}/${row.original.uuid}`
+        userId: row.original.uuid,
+        username: row.original.name
       }),
     header: () => {},
     size: 10

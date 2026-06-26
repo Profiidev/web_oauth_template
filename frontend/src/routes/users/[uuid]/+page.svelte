@@ -3,7 +3,8 @@
   import { Button } from '@profidev/pleiades/components/ui/button';
   import ArrowLeft from '@lucide/svelte/icons/arrow-left';
   import Trash from '@lucide/svelte/icons/trash';
-  import { avatarUrl, Permission } from '$lib/permissions.svelte';
+  import { Permission } from '$lib/permissions.svelte';
+  import UserAvatar from '@profidev/pleiades/components/util/user-avatar.svelte';
   import FormDialog from '@profidev/pleiades/components/form/form-dialog.svelte';
   import { z } from 'zod';
   import { toast } from '@profidev/pleiades/components/util/general';
@@ -36,7 +37,6 @@
   } from '$lib/client';
   import { getEncrypt } from '$lib/backend/auth.svelte.js';
   import { Skeleton } from '@profidev/pleiades/components/ui/skeleton';
-  import SimpleAvatar from '$lib/components/SimpleAvatar.svelte';
   import { Label } from '@profidev/pleiades/components/ui/label';
   import { Input } from '@profidev/pleiades/components/ui/input';
 
@@ -271,8 +271,9 @@
           <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto_1fr]">
             <div>
               <div class="mb-2 flex items-center">
-                <SimpleAvatar
-                  src={userInfo ? avatarUrl + `/${userInfo.uuid}` : ''}
+                <UserAvatar
+                  userId={userInfo?.uuid}
+                  username={userInfo?.name}
                   class="size-14"
                 />
                 <Button
