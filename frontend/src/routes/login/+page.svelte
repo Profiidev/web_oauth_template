@@ -80,7 +80,8 @@
       body: {
         email: formData.email,
         password: encrypt.encrypt(formData.password) || ''
-      }
+      },
+      parseAs: 'json'
     });
 
     if (!ret.data && ret.response?.status === 401) {
