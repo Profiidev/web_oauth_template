@@ -10,5 +10,6 @@ exclude = [
   "frontend/src/routes/groups/+page.svelte",
   "frontend/src/routes/password/reset/+page.svelte",
   "frontend/src/routes/users/+page.svelte",
-  "frontend/src/routes/users/create/+page.svelte"
+  "frontend/src/routes/users/create/+page.svelte",
+  "frontend/src/routes/setup/+page.svelte"
 ]
