@@ -185,6 +185,7 @@ export {
   type MailSettingsResponse,
   type OidcCallbackQuery,
   type OidcSetupResponse,
+  type OidcUrlQuery,
   type PasswordUpdate,
   type ResetPasswordData,
   type ResetPasswordError,

@@ -156,6 +156,10 @@ export type OidcSetupResponse = {
   site_url: string;
 };
 
+export type OidcUrlQuery = {
+  redirect_to?: string | null;
+};
+
 export type PasswordUpdate = {
   new_password: string;
   old_password: string;
