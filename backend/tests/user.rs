@@ -20,7 +20,7 @@ async fn info_returns_admin_profile() {
   let body: Value = resp.json().await.unwrap();
   assert_eq!(body["uuid"], admin_id.to_string());
   assert_eq!(body["email"], "admin@example.com");
-  assert_eq!(body["totp_enabled"], false);
+  assert_eq!(body["oidc_user"], false);
   assert!(!body["permissions"].as_array().unwrap().is_empty());
 }
 
@@ -29,23 +29,23 @@ async fn account_settings_round_trip() {
   let (server, _) = TestServer::start_with_admin().await;
 
   // The default settings are returned for a fresh user...
-  let resp = server.get("/settings/account").await;
+  let resp = server.get("/settings/user").await;
   assert_eq!(resp.status(), StatusCode::OK);
-  let settings: Value = resp.json().await.unwrap();
+  let body: Value = resp.json().await.unwrap();
 
-  // ...and saving them back is accepted.
-  let resp = server.post("/settings/account", settings.clone()).await;
+  // ...and saving the inner settings back is accepted.
+  let resp = server.post("/settings/user", body["settings"].clone()).await;
   assert_eq!(resp.status(), StatusCode::OK);
 
-  let resp = server.get("/settings/account").await;
+  let resp = server.get("/settings/user").await;
   let after: Value = resp.json().await.unwrap();
-  assert_eq!(after, settings);
+  assert_eq!(after, body);
 }
 
 #[tokio::test]
 async fn account_settings_requires_auth() {
   let server = TestServer::start().await;
-  let resp = server.get("/settings/account").await;
+  let resp = server.get("/settings/user").await;
   assert!(!resp.status().is_success());
 }
 
@@ -60,15 +60,12 @@ async fn mail_settings_readable_by_admin() {
 async fn password_change_flow() {
   let (server, _) = TestServer::start_with_admin().await;
 
-  // Password change requires a "special access" (re-auth) token.
-  let resp = server.special_access("hunter2pass").await;
-  assert_eq!(resp.status(), StatusCode::OK);
-
+  let old_pw = server.encrypt_password("hunter2pass").await;
   let new_pw = server.encrypt_password("brandnewpass").await;
   let resp = server
     .post(
-      "/auth/password/change",
-      serde_json::json!({ "password": new_pw, "password_confirm": new_pw }),
+      "/user/account/password",
+      serde_json::json!({ "old_password": old_pw, "new_password": new_pw }),
     )
     .await;
   assert_eq!(resp.status(), StatusCode::OK);
@@ -84,24 +81,16 @@ async fn password_change_flow() {
 }
 
 #[tokio::test]
-async fn password_change_mismatch_conflicts() {
+async fn password_change_wrong_old_password_forbidden() {
   let (server, _) = TestServer::start_with_admin().await;
-  server.special_access("hunter2pass").await;
 
-  let a = server.encrypt_password("passwordone").await;
-  let b = server.encrypt_password("passwordtwo").await;
+  let wrong_old = server.encrypt_password("notmypassword").await;
+  let new_pw = server.encrypt_password("brandnewpass").await;
   let resp = server
     .post(
-      "/auth/password/change",
-      serde_json::json!({ "password": a, "password_confirm": b }),
+      "/user/account/password",
+      serde_json::json!({ "old_password": wrong_old, "new_password": new_pw }),
     )
     .await;
-  assert_eq!(resp.status(), StatusCode::CONFLICT);
-}
-
-#[tokio::test]
-async fn special_access_with_wrong_password_is_unauthorized() {
-  let (server, _) = TestServer::start_with_admin().await;
-  let resp = server.special_access("notmypassword").await;
-  assert_eq!(resp.status(), StatusCode::UNAUTHORIZED);
+  assert_eq!(resp.status(), StatusCode::FORBIDDEN);
 }

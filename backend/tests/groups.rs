@@ -41,7 +41,7 @@ async fn group_crud_flow() {
       serde_json::json!({
         "uuid": group_id,
         "name": name,
-        "permissions": ["apod:list"],
+        "permissions": ["group:view"],
         "users": [admin_id],
       }),
     )

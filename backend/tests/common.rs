@@ -200,7 +200,7 @@ impl TestServer {
   /// Fetch the password-transfer RSA public key and encrypt `plaintext` the
   /// same way the frontend does (RSA-PKCS1v15 + base64).
   pub async fn encrypt_password(&self, plaintext: &str) -> String {
-    let resp = self.get("/auth/password/key").await;
+    let resp = self.get("/auth/password").await;
     assert_eq!(resp.status(), StatusCode::OK, "fetch password key");
     let key: Value = resp.json().await.expect("key json");
     let pem = key["key"].as_str().expect("key pem");
@@ -244,20 +244,8 @@ impl TestServer {
     let encrypted = self.encrypt_password(password).await;
     self
       .post(
-        "/auth/password/authenticate",
-        serde_json::json!({ "email": email, "password": encrypted, "name": "", "application": "", "operating_system": "" }),
-      )
-      .await
-  }
-
-  /// Elevate the current session to "special access" (needed by TOTP and
-  /// password-change endpoints) by re-entering the password.
-  pub async fn special_access(&self, password: &str) -> Response {
-    let encrypted = self.encrypt_password(password).await;
-    self
-      .post(
-        "/auth/password/special_access",
-        serde_json::json!({ "password": encrypted }),
+        "/auth/password",
+        serde_json::json!({ "email": email, "password": encrypted }),
       )
       .await
   }
