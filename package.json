@@ -11,6 +11,7 @@
     "typebox": "=1.2.19"
   },
   "allowScripts": {
-    "sharp": true
+    "sharp": true,
+    "msw": true
   }
 }

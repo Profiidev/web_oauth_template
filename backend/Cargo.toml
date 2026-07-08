@@ -46,5 +46,13 @@ url = { version = "2.5.8", features = ["serde"] }
 uuid = { version = "1.23.1", features = ["v4"] }
 
 [features]
-# only used for testing purposes
-test = []
+test = ["centaurus/test"]
+
+[dev-dependencies]
+tokio = { version = "=1.52.3", features = ["macros", "rt-multi-thread"] }
+tower = { version = "=0.5.3", features = ["util"] }
+reqwest = { version = "=0.13.4", features = ["form", "json"] }
+serde_json = "=1.0.150"
+base64 = "=0.22.1"
+rsa = "=0.9.10"
+uuid = { version = "=1.23.4", features = ["v4"] }
