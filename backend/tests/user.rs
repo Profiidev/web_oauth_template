@@ -34,7 +34,9 @@ async fn account_settings_round_trip() {
   let body: Value = resp.json().await.unwrap();
 
   // ...and saving the inner settings back is accepted.
-  let resp = server.post("/settings/user", body["settings"].clone()).await;
+  let resp = server
+    .post("/settings/user", body["settings"].clone())
+    .await;
   assert_eq!(resp.status(), StatusCode::OK);
 
   let resp = server.get("/settings/user").await;
