@@ -7,8 +7,7 @@
     "oxlint": "1.71.0",
     "oxlint-tsgolint": "0.23.0",
     "prettier-plugin-svelte": "4.1.1",
-    "prettier-plugin-tailwindcss": "0.8.0",
-    "typebox": "=1.2.19"
+    "prettier-plugin-tailwindcss": "0.8.0"
   },
   "allowScripts": {
     "sharp": true,
