@@ -20,39 +20,39 @@ aide = { version = "0.16.0-alpha.4", features = [
   "macros"
 ] }
 axum = { version = "0.8.9", features = ["macros", "tracing", "ws"] }
-axum-extra = { version = "0.12.5", features = ["cookie", "typed-header"] }
-centaurus = { version = "0.16.2", features = ["uuid"] }
-chrono = "0.4.44"
+axum-extra = { version = "0.12.6", features = ["cookie", "typed-header"] }
+centaurus = { version = "0.17.0", features = ["uuid"] }
+chrono = "0.4.45"
 dotenvy = "0.15.7"
 entity = { path = "entity" }
 figment = { version = "0.10.19", features = ["env"] }
-http = "1.4.1"
-jsonwebtoken = { version = "10.4.0", features = ["rust_crypto"] }
+http = "1.5.0"
+jsonwebtoken = { version = "11.0.0", features = ["rust_crypto"] }
 migration = { path = "migration" }
 reqwest = { version = "0.13.4", features = ["form", "json"] }
 rsa = "0.9.10"
-schemars = { version = "1.2.1", features = ["chrono04", "url2", "uuid1"] }
-sea-orm = { version = "1.1.20", features = [
+schemars = { version = "1.2.2", features = ["chrono04", "url2", "uuid1"] }
+sea-orm = { version = "2.0.1", features = [
   "runtime-tokio-rustls",
   "sqlx-postgres",
   "sqlx-sqlite"
 ] }
-serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.150"
-time = "0.3.47"
-tokio = { version = "1.52.3", features = ["signal"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+time = "0.3.55"
+tokio = { version = "1.53.1", features = ["signal"] }
 tracing = "0.1.44"
 url = { version = "2.5.8", features = ["serde"] }
-uuid = { version = "1.23.1", features = ["v4"] }
+uuid = { version = "1.24.0", features = ["v4"] }
 
 [features]
 test = ["centaurus/test"]
 
 [dev-dependencies]
-tokio = { version = "=1.52.3", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "=1.53.1", features = ["macros", "rt-multi-thread"] }
 tower = { version = "=0.5.3", features = ["util"] }
 reqwest = { version = "=0.13.4", features = ["form", "json"] }
-serde_json = "=1.0.150"
+serde_json = "=1.0.151"
 base64 = "=0.22.1"
 rsa = "=0.9.10"
-uuid = { version = "=1.23.4", features = ["v4"] }
+uuid = { version = "=1.24.0", features = ["v4"] }
