@@ -6,7 +6,7 @@
   import { columns } from './table.svelte';
   import { z } from 'zod';
   import { toast } from '@profidev/pleiades/components/util/general';
-  import { invalidate } from '$app/navigation';
+  import { afterNavigate, invalidate } from '$app/navigation';
   import { Permission } from '$lib/permissions.svelte';
   import { deleteGroup, type GroupInfo, type UserInfo } from '$lib/client';
 
@@ -34,18 +34,22 @@
     });
   });
 
-  $effect(() => {
-    if (data.error) {
+  let errorToasted = false;
+  afterNavigate(() => {
+    if (!data.error) return;
+
+    if (!errorToasted) {
+      errorToasted = true;
       if (data.error === 'not_found') {
         toast.error('Group not found');
       } else if (data.error === 'other') {
         toast.error('Failed to load group');
       }
-
-      const url = new URL(window.location.href);
-      url.searchParams.delete('error');
-      window.history.replaceState({}, '', url);
     }
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete('error');
+    window.history.replaceState({}, '', url);
   });
 
   const deleteItemConfirm = async () => {

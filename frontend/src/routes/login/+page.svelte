@@ -7,7 +7,7 @@
   import { FieldSeparator } from '@profidev/pleiades/components/ui/field';
   import { login } from './schema.svelte';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
-  import { goto, invalidate } from '$app/navigation';
+  import { afterNavigate, goto, invalidate } from '$app/navigation';
   import { connectWebsocket } from '$lib/backend/updater.svelte';
   import { toast } from '@profidev/pleiades/components/util/general';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
@@ -24,27 +24,23 @@
   let oidcUrl: string | undefined = $state();
   let oidcError: boolean = $state(false);
 
-  $effect(() => {
-    const url = new URL(window.location.href);
-    let updated = false;
+  let errorToasted = false;
+  afterNavigate(() => {
+    if (!data.error && !data.skip) return;
 
-    if (data.error) {
+    if (data.error && !errorToasted) {
+      errorToasted = true;
       let error: string = OIDC_ERRORS[data.error as keyof typeof OIDC_ERRORS];
       if (!error) {
         error = `SSO login failed: ${data.error}`;
       }
       toast.error(error);
+    }
 
-      url.searchParams.delete('error');
-      updated = true;
-    }
-    if (data.skip) {
-      url.searchParams.delete('skip');
-      updated = true;
-    }
-    if (updated) {
-      window.history.replaceState({}, '', url);
-    }
+    const url = new URL(window.location.href);
+    url.searchParams.delete('error');
+    url.searchParams.delete('skip');
+    window.history.replaceState({}, '', url);
   });
 
   $effect(() => {
