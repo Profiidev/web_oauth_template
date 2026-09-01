@@ -8,7 +8,7 @@ ARG FRONTEND_DIR=/app/frontend
 ARG FRONTEND_URL="http://localhost:3000/"
 ARG BACKEND_URL="http://localhost:8000"
 
-FROM node:26-slim@sha256:1e738cb88890a15c71880323fbc35a739b7bbc703d72e8bfd1613128f8182f78 AS frontend-builder
+FROM node:26-slim@sha256:c0753125a3789977aefe869cbebccf70e3cfd7ea84ca48547458f02e4f1d7146 AS frontend-builder
 
 WORKDIR /app/frontend
 
@@ -26,7 +26,7 @@ COPY frontend/static ./static
 
 RUN npm run build
 
-FROM ghcr.io/profiidev/images/rust-gnu-builder:main@sha256:15425af80485c6688cca13a291888674946c5fc3af0b8330c106ceff21c5af0b AS backend-planner
+FROM ghcr.io/profiidev/images/rust-gnu-builder:main@sha256:ff57874d1ac77b2bde727c89e113ac21eb6b001f77c859fed6b31f008a1acfd8 AS backend-planner
 
 ARG TARGET
 ARG RUSTFLAGS
@@ -41,7 +41,7 @@ RUN \
   --mount=type=cache,target=/app/target \
   cargo chef prepare --recipe-path recipe.json --bin backend
 
-FROM ghcr.io/profiidev/images/rust-gnu-builder:main@sha256:15425af80485c6688cca13a291888674946c5fc3af0b8330c106ceff21c5af0b AS backend-builder
+FROM ghcr.io/profiidev/images/rust-gnu-builder:main@sha256:ff57874d1ac77b2bde727c89e113ac21eb6b001f77c859fed6b31f008a1acfd8 AS backend-builder
 
 ARG TARGET
 ARG RUSTFLAGS
@@ -69,7 +69,7 @@ RUN \
   cd backend && cargo build --release --target $TARGET \
   && mv ../target/$TARGET/release/backend ../app
 
-FROM node:26-slim@sha256:1e738cb88890a15c71880323fbc35a739b7bbc703d72e8bfd1613128f8182f78
+FROM node:26-slim@sha256:c0753125a3789977aefe869cbebccf70e3cfd7ea84ca48547458f02e4f1d7146
 
 ENV DB_URL="sqlite:/data/{{project-name}}.db?mode=rwc"
 ENV SITE_URL="http://localhost:8000"
