@@ -17,7 +17,7 @@ vi.mock('$lib/backend/updater.svelte', () => ({
 }));
 
 // The page reads the error param via `afterNavigate`; the global stub is a
-// no-op, so override it to actually invoke the callback like a real navigation.
+// No-op, so override it to actually invoke the callback like a real navigation.
 vi.mock('$app/navigation', () => ({
   afterNavigate: (fn: () => void) => fn(),
   beforeNavigate: vi.fn(),

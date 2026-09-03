@@ -95,7 +95,7 @@ test.describe('group detail', () => {
     const viewSettings = page.getByRole('checkbox', { name: 'View Settings' });
     await expect(viewSettings).not.toBeChecked();
     // The checkbox sits at the row's right edge inside a scroll area; dispatch
-    // the click directly so Firefox doesn't stall on pointer actionability.
+    // The click directly so Firefox doesn't stall on pointer actionability.
     await viewSettings.dispatchEvent('click');
     await expect(viewSettings).toBeChecked();
 

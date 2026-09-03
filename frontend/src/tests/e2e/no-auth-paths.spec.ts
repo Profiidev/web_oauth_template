@@ -6,12 +6,12 @@ import { gotoReady } from '$test_helpers/layout';
 const pathname = (page: { url: () => string }) => new URL(page.url()).pathname;
 
 // The public paths listed in `noAuthPaths` (`$lib/components/nav.svelte`) are
-// exempt from the auth guard, so the unauthenticated visitor is never bounced
-// to /login. A couple of them perform their own in-app redirect that has
-// nothing to do with auth (kept in `expected`):
+// Exempt from the auth guard, so the unauthenticated visitor is never bounced
+// To /login. A couple of them perform their own in-app redirect that has
+// Nothing to do with auth (kept in `expected`):
 //   - /password always forwards to /password/forgot.
 //   - /setup renders the first-run wizard only on an un-provisioned instance;
-//     the `seedPending` flag seeds `mock_setup=pending` so it stays put.
+//     The `seedPending` flag seeds `mock_setup=pending` so it stays put.
 const cases: { path: string; expected: string; seedPending?: boolean }[] = [
   { expected: '/login', path: '/login' },
   { expected: '/setup', path: '/setup', seedPending: true },

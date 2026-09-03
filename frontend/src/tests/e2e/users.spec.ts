@@ -111,7 +111,7 @@ test.describe('user detail', () => {
 
 test.describe('user detail (mail disabled)', () => {
   // With mail off, the admin can reset the password/avatar and change the email
-  // directly from the detail page.
+  // Directly from the detail page.
   test.beforeEach(async ({ context }) => seedMailInactive(context));
 
   test('resets the avatar', async ({ page }) => {

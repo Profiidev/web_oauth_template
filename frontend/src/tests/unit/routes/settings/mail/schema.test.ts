@@ -36,7 +36,7 @@ describe('mailSettings schema', () => {
     expect(paths).toContain('smtp_port');
     expect(paths).toContain('smtp_username');
     expect(paths).toContain('smtp_from_address');
-    // smtp_from_name has a default of 'Positron', so it is never missing
+    // Smtp_from_name has a default of 'Positron', so it is never missing
     expect(paths).not.toContain('smtp_from_name');
   });
 });
