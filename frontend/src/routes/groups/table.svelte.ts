@@ -18,13 +18,12 @@ export const columns = ({
   createColumn(
     'permissions',
     'Permissions',
-    (permissions: string[]) => permissions.join(', ') || 'No Permissions'
+    (permissions: string[]) => permissions.join(', ') || '-'
   ),
   createColumn(
     'users',
     'Users',
-    (users: SimpleUserInfo[]) =>
-      users.map((u) => u.name).join(', ') || 'No Users'
+    (users: SimpleUserInfo[]) => users.map((u) => u.name).join(', ') || '-'
   ),
   createColumn('id', 'UUID'),
   {
