@@ -23,8 +23,7 @@ export const columns = ({
   createColumn(
     'users',
     'Users',
-    (users: SimpleUserInfo[]) =>
-      users.map((u) => u.name).join(', ') || '-'
+    (users: SimpleUserInfo[]) => users.map((u) => u.name).join(', ') || '-'
   ),
   createColumn('id', 'UUID'),
   {
