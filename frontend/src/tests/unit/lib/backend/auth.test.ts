@@ -4,9 +4,9 @@ const get = vi.fn();
 const key = vi.fn();
 
 vi.mock('@profidev/pleiades/backend', () => ({
-  get: (...args: unknown[]) => get(...args),
   RequestError: { Other: 'Other' },
-  ResponseType: { Json: 'Json', None: 'None', Text: 'Text' }
+  ResponseType: { Json: 'Json', None: 'None', Text: 'Text' },
+  get: (...args: unknown[]) => get(...args)
 }));
 vi.mock('$app/environment', () => ({ browser: true }));
 vi.mock('$lib/client', () => ({ key: () => key() }));

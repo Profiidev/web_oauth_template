@@ -8,7 +8,7 @@ describe('createClientConfig', () => {
     } as never);
 
     expect(result.headers).toEqual({ 'x-test': '1' });
-    // browser -> undefined; SSR -> the localhost placeholder used to keep
+    // Browser -> undefined; SSR -> the localhost placeholder used to keep
     // Node's Request constructor happy.
     expect([undefined, 'http://localhost:12356']).toContain(result.baseUrl);
   });
