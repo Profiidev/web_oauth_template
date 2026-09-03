@@ -29,7 +29,7 @@ export const columns = ({
     'groups',
     'Groups',
     (groups: SimpleGroupInfo[]) =>
-      groups.map((u) => u.name).join(', ') || 'No Groups'
+      groups.map((u) => u.name).join(', ') || '-'
   ),
   createColumn('uuid', 'UUID'),
   {
