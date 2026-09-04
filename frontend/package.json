@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@lucide/svelte": "^1.24.0",
-    "@profidev/pleiades": "^1.11.1",
+    "@profidev/pleiades": "^1.12.1",
     "@sveltejs/enhanced-img": "0.11.0",
     "jsencrypt": "^3.5.4",
     "valibot": "^1.4.1"
