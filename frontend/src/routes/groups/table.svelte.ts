@@ -1,6 +1,8 @@
-import type { ColumnDef } from '@tanstack/table-core';
-import * as DataTable from '@profidev/pleiades/components/ui/data-table';
-import { createColumn } from '@profidev/pleiades/components/table/helpers.svelte';
+import { renderComponent } from '@tanstack/svelte-table';
+import {
+  type TableColumnDef,
+  createColumn
+} from '@profidev/pleiades/components/table/helpers.svelte';
 import { Permission } from '$lib/permissions.svelte';
 import type { GroupInfo, SimpleUserInfo, UserInfo } from '$lib/client';
 import Actions from '@profidev/pleiades/components/table/actions.svelte';
@@ -13,7 +15,7 @@ export const columns = ({
   deleteGroup: (group: GroupInfo) => void;
   user?: UserInfo;
   admin_group?: string;
-}): ColumnDef<GroupInfo>[] => [
+}): TableColumnDef<GroupInfo>[] => [
   createColumn('name', 'Name'),
   createColumn(
     'permissions',
@@ -32,11 +34,9 @@ export const columns = ({
       const disabled = !user
         ? true
         : !user?.permissions.includes(Permission.GROUP_EDIT) ||
-          row.original.permissions.some(
-            (p) => !user?.permissions.includes(p as Permission) // oxlint-disable-line no-unsafe-type-assertion
-          );
+          row.original.permissions.some((p) => !user?.permissions.includes(p));
 
-      return DataTable.renderComponent(Actions, {
+      return renderComponent(Actions, {
         delete_disabled: disabled || row.original.id === admin_group,
         edit: `/groups/${row.original.id}`,
         edit_disabled: disabled,

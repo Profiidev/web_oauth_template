@@ -4,7 +4,6 @@ import {
   unReformat,
   userSettings
 } from '$routes/settings/user/schema.svelte';
-import type { UserSettings } from '$lib/client';
 
 describe('userSettings schema', () => {
   it('accepts a disabled config and applies defaults', () => {
@@ -48,7 +47,7 @@ describe('reformat', () => {
 
 describe('unReformat', () => {
   it('fills defaults for an empty settings object', () => {
-    const out = unReformat({} as unknown as UserSettings);
+    const out = unReformat({});
     expect(out.oidc_enabled).toBe(false);
     expect(out.oidc_client_secret).toBe('');
     expect(out.oidc_pkce).toBe(false);
