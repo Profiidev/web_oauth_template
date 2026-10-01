@@ -19,7 +19,7 @@ jobs:
           cache-on-failure: true
           shared-key: "backend_test_cache"
 
-      - uses: taiki-e/install-action@7c6f5444541685720fe90ed47f7fa10f12f790f5 # nextest
+      - uses: taiki-e/install-action@badb8c3638e0b773c6c17a6025c2306a8f1c4303 # nextest
       - name: "Backend Test"
         run: cd backend && cargo nextest run --all-features --nff
 
