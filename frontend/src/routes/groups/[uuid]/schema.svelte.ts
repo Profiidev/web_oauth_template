@@ -37,9 +37,9 @@ export const formatData = (
   group: GroupDetails
 ): FormValue<typeof groupSettings> => {
   const formattedData: FormValue<typeof groupSettings> = {
-    // oxlint-disable-next-line no-unsafe-type-assertion
     ...(Object.fromEntries(
       Object.keys(groupSettings.shape).map((key) => [key, false])
+      // oxlint-disable-next-line no-unsafe-type-assertion
     ) as unknown as FormValue<typeof groupSettings>),
     name: group.name,
     users: group.users.map((user) => user.id)
