@@ -56,3 +56,4 @@ serde_json = "=1.0.151"
 base64 = "=0.23.1"
 rsa = "=0.9.10"
 uuid = { version = "=1.26.1", features = ["v4"] }
+testcontainers-modules = { version = "=0.15.0", features = ["postgres"] }
