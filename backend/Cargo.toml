@@ -30,7 +30,7 @@ http = "1.5.0"
 jsonwebtoken = { version = "11.0.0", features = ["rust_crypto"] }
 migration = { path = "migration" }
 reqwest = { version = "0.13.4", features = ["form", "json"] }
-rsa = "0.9.10"
+rsa = "0.10.0"
 schemars = { version = "1.2.2", features = ["chrono04", "url2", "uuid1"] }
 sea-orm = { version = "2.0.1", features = [
   "runtime-tokio-rustls",
@@ -54,6 +54,6 @@ tower = { version = "=0.5.3", features = ["util"] }
 reqwest = { version = "=0.13.5", features = ["form", "json"] }
 serde_json = "=1.0.154"
 base64 = "=0.23.1"
-rsa = "=0.9.10"
+rsa = "=0.10.0"
 uuid = { version = "=1.29.0", features = ["v4"] }
 testcontainers-modules = { version = "=0.15.0", features = ["postgres"] }
