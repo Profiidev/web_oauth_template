@@ -1,8 +1,12 @@
 import { HttpResponse, http, ws } from 'msw';
-import * as gen from '$lib/client/msw.gen';
+import * as gen from '#lib/client/msw.gen.ts';
 import * as data from './data';
-import { type Client, createClient, createConfig } from '$lib/client/client';
-import type { ClientOptions } from '$lib/client/types.gen';
+import {
+  type Client,
+  createClient,
+  createConfig
+} from '#lib/client/client/index.ts';
+import type { ClientOptions } from '#lib/client/types.gen.ts';
 
 const client: Client = createClient(createConfig<ClientOptions>());
 

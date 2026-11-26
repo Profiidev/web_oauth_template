@@ -1,6 +1,6 @@
 import Settings from '@lucide/svelte/icons/settings';
 import House from '@lucide/svelte/icons/house';
-import { Permission } from '$lib/permissions.svelte';
+import { Permission } from '#lib/permissions.svelte.ts';
 import Users from '@lucide/svelte/icons/users';
 import User from '@lucide/svelte/icons/user';
 import type { NavGroup } from '@profidev/pleiades/components/nav/sidebar/types';

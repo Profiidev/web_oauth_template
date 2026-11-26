@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { load as listLoad } from '$routes/users/+page';
-import { load as createLoad } from '$routes/users/create/+page';
-import { load as detailLoad } from '$routes/users/[uuid]/+page';
-import { jsonFetch, runLoad } from '$test_helpers/load';
+import { load as listLoad } from '#routes/users/+page.ts';
+import { load as createLoad } from '#routes/users/create/+page.ts';
+import { load as detailLoad } from '#routes/users/[uuid]/+page.ts';
+import { jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 describe('users list load', () => {
   it('resolves users and exposes the error param', async () => {

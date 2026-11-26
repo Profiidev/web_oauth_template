@@ -3,7 +3,7 @@
   import { Button } from '@profidev/pleiades/components/ui/button';
   import ArrowLeft from '@lucide/svelte/icons/arrow-left';
   import Trash from '@lucide/svelte/icons/trash';
-  import { Permission } from '$lib/permissions.svelte';
+  import { Permission } from '#lib/permissions.svelte.ts';
   import UserAvatar from '@profidev/pleiades/components/util/user-avatar.svelte';
   import FormDialog from '@profidev/pleiades/components/form/form-dialog.svelte';
   import { z } from 'zod';
@@ -34,8 +34,8 @@
     resetUserPassword,
     type DetailUserInfo,
     type SimpleGroupInfo
-  } from '$lib/client';
-  import { getEncrypt } from '$lib/backend/auth.svelte.js';
+  } from '#lib/client/index.ts';
+  import { getEncrypt } from '#lib/backend/auth.svelte.js';
   import { Skeleton } from '@profidev/pleiades/components/ui/skeleton';
   import { Label } from '@profidev/pleiades/components/ui/label';
   import { Input } from '@profidev/pleiades/components/ui/input';

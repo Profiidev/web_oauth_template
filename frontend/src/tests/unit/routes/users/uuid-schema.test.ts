@@ -5,8 +5,8 @@ import {
   reformatData,
   resetPassword,
   userSettings
-} from '$routes/users/[uuid]/schema.svelte';
-import type { DetailUserInfo } from '$lib/client';
+} from '#routes/users/[uuid]/schema.svelte.ts';
+import type { DetailUserInfo } from '#lib/client/index.ts';
 
 type UserForm = Parameters<typeof reformatData>[0];
 

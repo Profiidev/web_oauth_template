@@ -1,6 +1,10 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
-import { type UserSettings, getOidcSettings, isSetup } from '$lib/client';
+import {
+  type UserSettings,
+  getOidcSettings,
+  isSetup
+} from '#lib/client/index.ts';
 import { unReformat } from '../settings/user/schema.svelte';
 
 export const load: PageLoad = async ({ fetch }) => {

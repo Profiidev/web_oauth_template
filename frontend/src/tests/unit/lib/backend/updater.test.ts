@@ -15,7 +15,7 @@ vi.mock('@profidev/pleiades/backend', () => ({
 }));
 
 const { UpdateType, connectWebsocket, disconnectWebsocket } =
-  await import('$lib/backend/updater.svelte');
+  await import('#lib/backend/updater.svelte.ts');
 
 type Handler = (msg: { type: string; uuid?: string }, user: string) => void;
 

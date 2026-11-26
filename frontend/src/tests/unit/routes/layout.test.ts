@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { load as layoutLoad } from '$routes/+layout';
-import { load as layoutServerLoad } from '$routes/+layout.server';
-import { noAuthPaths } from '$lib/components/nav.svelte';
-import { catchRedirect, jsonFetch, runLoad } from '$test_helpers/load';
+import { load as layoutLoad } from '#routes/+layout.ts';
+import { load as layoutServerLoad } from '#routes/+layout.server.ts';
+import { noAuthPaths } from '#lib/components/nav.svelte.ts';
+import { catchRedirect, jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ev = (props: Record<string, unknown>) => props as any;

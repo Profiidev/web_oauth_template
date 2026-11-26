@@ -3,7 +3,7 @@
   import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
   import { emailChangeSchema } from './schema.svelte';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
-  import { confirmEmailChange, startEmailChange } from '$lib/client';
+  import { confirmEmailChange, startEmailChange } from '#lib/client/index.ts';
   import Totp6 from '@profidev/pleiades/components/form/totp-6.svelte';
   import { toast } from '@profidev/pleiades/components/util/general';
   import * as Tooltip from '@profidev/pleiades/components/ui/tooltip';

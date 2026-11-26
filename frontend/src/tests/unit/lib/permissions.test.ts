@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { OIDC_ERRORS, Permission, avatarUrl } from '$lib/permissions.svelte';
+import { OIDC_ERRORS, Permission, avatarUrl } from '#lib/permissions.svelte.ts';
 
 describe('Permission enum', () => {
   it('maps every member to a `resource:action` string', () => {

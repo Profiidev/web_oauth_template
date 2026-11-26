@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { load as listLoad } from '$routes/groups/+page';
-import { load as detailLoad } from '$routes/groups/[uuid]/+page';
-import { jsonFetch, runLoad } from '$test_helpers/load';
+import { load as listLoad } from '#routes/groups/+page.ts';
+import { load as detailLoad } from '#routes/groups/[uuid]/+page.ts';
+import { jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 describe('groups list load', () => {
   it('splits out the admin group, error and groups', async () => {

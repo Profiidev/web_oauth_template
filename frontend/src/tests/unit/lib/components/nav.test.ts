@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { items, noAuthPaths, noSidebarPaths } from '$lib/components/nav.svelte';
-import { Permission } from '$lib/permissions.svelte';
+import {
+  items,
+  noAuthPaths,
+  noSidebarPaths
+} from '#lib/components/nav.svelte.ts';
+import { Permission } from '#lib/permissions.svelte.ts';
 
 const allItems = items.flatMap((group) => group.items);
 const permissionValues = new Set<string>(Object.values(Permission));

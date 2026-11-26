@@ -7,8 +7,8 @@
   import { z } from 'zod';
   import { toast } from '@profidev/pleiades/components/util/general';
   import { afterNavigate, invalidate } from '$app/navigation';
-  import { Permission } from '$lib/permissions.svelte';
-  import { deleteUser, type UserListInfo } from '$lib/client';
+  import { Permission } from '#lib/permissions.svelte.ts';
+  import { deleteUser, type UserListInfo } from '#lib/client/index.ts';
 
   const { data } = $props();
 

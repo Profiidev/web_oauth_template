@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { mailSettings, unReformat } from '$routes/settings/mail/schema.svelte';
-import type { MailSettings } from '$lib/client';
+import {
+  mailSettings,
+  unReformat
+} from '#routes/settings/mail/schema.svelte.ts';
+import type { MailSettings } from '#lib/client/index.ts';
 
 describe('mailSettings schema', () => {
   it('accepts a disabled config and applies defaults', () => {

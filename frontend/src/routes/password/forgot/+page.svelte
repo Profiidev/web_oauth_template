@@ -5,7 +5,7 @@
   import { forgotPassword } from './schema.svelte';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
   import { toast } from '@profidev/pleiades/components/util/general';
-  import { sendResetLink } from '$lib/client';
+  import { sendResetLink } from '#lib/client/index.ts';
 
   const onsubmit = async (data: FormValue<typeof forgotPassword>) => {
     let ret = await sendResetLink({

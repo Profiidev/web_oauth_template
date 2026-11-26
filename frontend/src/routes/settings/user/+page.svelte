@@ -12,14 +12,14 @@
   import { Label } from '@profidev/pleiades/components/ui/label';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import { CopyButton } from '@profidev/pleiades/components/ui-extra/copy-button';
-  import { Permission } from '$lib/permissions.svelte';
+  import { Permission } from '#lib/permissions.svelte.ts';
   import { Separator } from '@profidev/pleiades/components/ui/separator';
   import {
     saveUserSettings,
     type GeneralSettings,
     type UserInfo,
     type UserSettingsResponse
-  } from '$lib/client';
+  } from '#lib/client/index.ts';
   import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
 

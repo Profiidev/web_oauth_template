@@ -8,8 +8,8 @@ vi.mock('@profidev/pleiades/backend', () => ({
   ResponseType: { Json: 'Json', None: 'None', Text: 'Text' },
   get: (...args: unknown[]) => get(...args)
 }));
-vi.mock('$app/environment', () => ({ browser: true }));
-vi.mock('$lib/client', () => ({ key: () => key() }));
+vi.mock('$app/env', () => ({ browser: true }));
+vi.mock('#lib/client/index.ts', () => ({ key: () => key() }));
 
 class FakeJSEncrypt {
   pub?: string;
@@ -25,7 +25,7 @@ vi.mock('jsencrypt', () => ({ JSEncrypt: FakeJSEncrypt }));
 // The module calls `fetchKey()` at import time, so give it a resolvable key.
 key.mockResolvedValue({ data: { key: 'PUBKEY' } });
 
-const mod = await import('$lib/backend/auth.svelte');
+const mod = await import('#lib/backend/auth.svelte.ts');
 
 afterEach(() => {
   get.mockReset();

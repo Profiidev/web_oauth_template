@@ -8,14 +8,14 @@
   import { login } from './schema.svelte';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
   import { afterNavigate, goto, invalidate } from '$app/navigation';
-  import { connectWebsocket } from '$lib/backend/updater.svelte';
+  import { connectWebsocket } from '#lib/backend/updater.svelte.ts';
   import { toast } from '@profidev/pleiades/components/util/general';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
-  import { getEncrypt, getOidcUrl } from '$lib/backend/auth.svelte';
+  import { getEncrypt, getOidcUrl } from '#lib/backend/auth.svelte.ts';
   import { Spinner } from '@profidev/pleiades/components/ui/spinner';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
-  import { authenticate, SsoType, type AuthConfig } from '$lib/client';
-  import { OIDC_ERRORS } from '$lib/permissions.svelte';
+  import { authenticate, SsoType, type AuthConfig } from '#lib/client/index.ts';
+  import { OIDC_ERRORS } from '#lib/permissions.svelte.ts';
 
   let { data } = $props();
 

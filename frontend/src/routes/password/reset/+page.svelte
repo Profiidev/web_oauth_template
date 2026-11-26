@@ -7,8 +7,8 @@
   import { toast } from '@profidev/pleiades/components/util/general';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import { goto } from '$app/navigation';
-  import { resetPassword as sendResetPassword } from '$lib/client';
-  import { getEncrypt } from '$lib/backend/auth.svelte';
+  import { resetPassword as sendResetPassword } from '#lib/client/index.ts';
+  import { getEncrypt } from '#lib/backend/auth.svelte.ts';
 
   let { data } = $props();
 

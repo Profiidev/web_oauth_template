@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resetPassword } from '$routes/password/reset/schema.svelte';
+import { resetPassword } from '#routes/password/reset/schema.svelte.ts';
 
 const base = {
   confirm_password: 'secret',

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { load as resetLoad } from '$routes/password/reset/+page';
-import { load as mailLoad } from '$routes/settings/mail/+page';
-import { jsonFetch, runLoad } from '$test_helpers/load';
+import { load as resetLoad } from '#routes/password/reset/+page.ts';
+import { load as mailLoad } from '#routes/settings/mail/+page.ts';
+import { jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 describe('password reset load', () => {
   it('reads the token from the query string', async () => {

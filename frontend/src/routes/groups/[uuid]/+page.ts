@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import { groupInfo, listUsersSimple } from '$lib/client';
+import { groupInfo, listUsersSimple } from '#lib/client/index.ts';
 
 export const load: PageLoad = ({ params, fetch }) => {
   const resPromise = groupInfo({

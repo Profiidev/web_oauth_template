@@ -6,12 +6,12 @@ vi.mock('@profidev/pleiades/components/util/general', () => ({
   toast: { error: toastError, success: vi.fn() }
 }));
 
-vi.mock('$lib/backend/auth.svelte', () => ({
+vi.mock('#lib/backend/auth.svelte.ts', () => ({
   getEncrypt: () => undefined,
   getOidcUrl: vi.fn(async () => undefined)
 }));
 
-vi.mock('$lib/backend/updater.svelte', () => ({
+vi.mock('#lib/backend/updater.svelte.ts', () => ({
   connectWebsocket: vi.fn(),
   disconnectWebsocket: vi.fn()
 }));
@@ -29,10 +29,11 @@ vi.mock('$app/navigation', () => ({
   preloadCode: vi.fn(async () => Promise.resolve()),
   preloadData: vi.fn(async () => Promise.resolve()),
   pushState: vi.fn(),
+  refreshAll: vi.fn(async () => Promise.resolve()),
   replaceState: vi.fn()
 }));
 
-const Page = (await import('$routes/login/+page.svelte')).default;
+const Page = (await import('#routes/login/+page.svelte')).default;
 
 const data = (error?: string) =>
   ({

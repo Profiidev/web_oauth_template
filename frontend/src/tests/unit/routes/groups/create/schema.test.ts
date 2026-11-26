@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { information } from '$routes/groups/create/schema.svelte';
+import { information } from '#routes/groups/create/schema.svelte.ts';
 
 describe('group create information schema', () => {
   it('applies the empty-string default when name is absent (short-circuits min)', () => {

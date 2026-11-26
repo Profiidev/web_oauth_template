@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { load as authLoad } from '$routes/account/auth/+page';
-import { jsonFetch, runLoad } from '$test_helpers/load';
+import { load as authLoad } from '#routes/account/auth/+page.ts';
+import { jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 describe('account auth load', () => {
   it('derives mailActive from the active flag', async () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { adminUser, databaseSetupSchema } from '$routes/setup/schema.svelte';
+import { adminUser, databaseSetupSchema } from '#routes/setup/schema.svelte.ts';
 
 describe('databaseSetupSchema', () => {
   it('accepts when the disclaimer is accepted', () => {

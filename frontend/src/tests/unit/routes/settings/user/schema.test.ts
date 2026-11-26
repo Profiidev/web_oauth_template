@@ -3,7 +3,7 @@ import {
   reformat,
   unReformat,
   userSettings
-} from '$routes/settings/user/schema.svelte';
+} from '#routes/settings/user/schema.svelte.ts';
 
 describe('userSettings schema', () => {
   it('accepts a disabled config and applies defaults', () => {

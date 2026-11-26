@@ -4,7 +4,7 @@
   import type { Stage } from '@profidev/pleiades/components/form/types';
   import MultiStepForm from '@profidev/pleiades/components/form/multistep-form.svelte';
   import Information from './Information.svelte';
-  import { createGroup } from '$lib/client';
+  import { createGroup } from '#lib/client/index.ts';
 
   let stages: Stage[] = [
     {

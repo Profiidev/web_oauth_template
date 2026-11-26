@@ -1,5 +1,5 @@
 import type { LayoutLoad } from './$types';
-import { type UserInfo, info, isSetup } from '$lib/client';
+import { type UserInfo, info, isSetup } from '#lib/client/index.ts';
 
 export const load: LayoutLoad = ({ fetch }) => {
   const setupStatus = isSetup({ fetch });

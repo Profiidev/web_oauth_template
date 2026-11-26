@@ -1,6 +1,6 @@
 <script lang="ts">
   import Password from './Password.svelte';
-  import type { UserInfo } from '$lib/client';
+  import type { UserInfo } from '#lib/client/index.ts';
   import Email from './Email.svelte';
 
   const { data } = $props();

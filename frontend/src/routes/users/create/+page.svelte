@@ -4,8 +4,8 @@
   import type { Stage } from '@profidev/pleiades/components/form/types';
   import MultiStepForm from '@profidev/pleiades/components/form/multistep-form.svelte';
   import Information from './Information.svelte';
-  import { createUser } from '$lib/client';
-  import { getEncrypt } from '$lib/backend/auth.svelte';
+  import { createUser } from '#lib/client/index.ts';
+  import { getEncrypt } from '#lib/backend/auth.svelte.ts';
 
   let { data } = $props();
 

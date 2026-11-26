@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { load as accountLoad } from '$routes/account/+page.server';
-import { load as passwordLoad } from '$routes/password/+page.server';
-import { load as settingsLoad } from '$routes/settings/+page.server';
-import { catchRedirect } from '$test_helpers/load';
+import { load as accountLoad } from '#routes/account/+page.server.ts';
+import { load as passwordLoad } from '#routes/password/+page.server.ts';
+import { load as settingsLoad } from '#routes/settings/+page.server.ts';
+import { catchRedirect } from '#test_helpers/load.ts';
 
 describe('index redirects', () => {
   it.each([

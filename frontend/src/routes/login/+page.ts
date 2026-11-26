@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
-import { authConfig } from '$lib/client';
-import { getRedirectTarget } from '$lib/redirect';
+import { authConfig } from '#lib/client/index.ts';
+import { getRedirectTarget } from '#lib/redirect.ts';
 
 export const load: PageLoad = ({ fetch, url }) => {
   const error = url.searchParams.get('error') || undefined;

@@ -1,4 +1,4 @@
-import type { MailSettings } from '$lib/client';
+import type { MailSettings } from '#lib/client/index.ts';
 import type { FormValue } from '@profidev/pleiades/components/form/types';
 import { z } from 'zod';
 

@@ -1,7 +1,7 @@
 import type JSEncrypt from 'jsencrypt';
 import { RequestError, ResponseType, get } from '@profidev/pleiades/backend';
-import { browser } from '$app/environment';
-import { key as getKey } from '$lib/client';
+import { browser } from '$app/env';
+import { key as getKey } from '#lib/client/index.ts';
 
 let encrypt: false | undefined | JSEncrypt = $state(browser && undefined);
 

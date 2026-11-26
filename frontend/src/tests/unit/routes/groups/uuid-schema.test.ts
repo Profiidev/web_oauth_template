@@ -3,8 +3,8 @@ import {
   formatData,
   groupSettings,
   reformatData
-} from '$routes/groups/[uuid]/schema.svelte';
-import type { GroupDetails } from '$lib/client';
+} from '#routes/groups/[uuid]/schema.svelte.ts';
+import type { GroupDetails } from '#lib/client/index.ts';
 
 type GroupForm = Parameters<typeof reformatData>[0];
 
