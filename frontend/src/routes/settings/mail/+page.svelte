@@ -7,7 +7,7 @@
   import Save from '@lucide/svelte/icons/save';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
   import { toast } from '@profidev/pleiades/components/util/general';
-  import { Permission } from '$lib/permissions.svelte';
+  import { Permission } from '#lib/permissions.svelte.ts';
   import FormSwitch from '@profidev/pleiades/components/form/form-switch.svelte';
   import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
@@ -18,7 +18,7 @@
     testMail,
     type MailSettingsResponse,
     type UserInfo
-  } from '$lib/client';
+  } from '#lib/client/index.ts';
 
   let { data } = $props();
 

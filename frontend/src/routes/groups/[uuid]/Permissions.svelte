@@ -1,13 +1,13 @@
 <script lang="ts">
   import FormCheckbox from '@profidev/pleiades/components/form/form-checkbox.svelte';
-  import { Permission } from '$lib/permissions.svelte';
+  import { Permission } from '#lib/permissions.svelte.ts';
   import type {
     FormPath,
     FormValue,
     SuperForm
   } from '@profidev/pleiades/components/form/types';
   import type { groupSettings } from './schema.svelte';
-  import type { UserInfo } from '$lib/client';
+  import type { UserInfo } from '#lib/client/index.ts';
   import * as Collapsible from '@profidev/pleiades/components/ui/collapsible';
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
   import ChevronUp from '@lucide/svelte/icons/chevron-up';

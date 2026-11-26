@@ -3,8 +3,8 @@ import {
   type TableColumnDef,
   createColumn
 } from '@profidev/pleiades/components/table/helpers.svelte';
-import { Permission } from '$lib/permissions.svelte';
-import type { GroupInfo, SimpleUserInfo, UserInfo } from '$lib/client';
+import { Permission } from '#lib/permissions.svelte.ts';
+import type { GroupInfo, SimpleUserInfo, UserInfo } from '#lib/client/index.ts';
 import Actions from '@profidev/pleiades/components/table/actions.svelte';
 
 export const columns = ({

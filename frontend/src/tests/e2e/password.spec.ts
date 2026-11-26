@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
-import { test } from '$test_helpers/e2e-fixture';
-import { gotoReady } from '$test_helpers/layout';
+import { test } from '#test_helpers/e2e-fixture.ts';
+import { gotoReady } from '#test_helpers/layout.ts';
 
 test('redirects /password to the forgot-password page', async ({ page }) => {
   await gotoReady(page, '/password');

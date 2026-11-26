@@ -3,7 +3,7 @@ import {
   buildLoginUrl,
   getRedirectTarget,
   isSafeRedirectPath
-} from '$lib/redirect';
+} from '#lib/redirect.ts';
 
 describe('isSafeRedirectPath', () => {
   it.each(['/', '/users', '/groups/abc?tab=1', '/password/reset?token=x'])(

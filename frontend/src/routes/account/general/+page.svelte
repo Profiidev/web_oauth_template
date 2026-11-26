@@ -9,8 +9,12 @@
   import FormInput from '@profidev/pleiades/components/form/form-input.svelte';
   import * as ImageCropper from '@profidev/pleiades/components/ui-extra/image-cropper';
   import { arrayBufferToBase64 } from '@profidev/pleiades/util/convert.svelte';
-  import { updateAccount, updateAvatar, type UserInfo } from '$lib/client';
-  import { avatarUrl } from '$lib/permissions.svelte';
+  import {
+    updateAccount,
+    updateAvatar,
+    type UserInfo
+  } from '#lib/client/index.ts';
+  import { avatarUrl } from '#lib/permissions.svelte.ts';
   import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
 
   let { data } = $props();

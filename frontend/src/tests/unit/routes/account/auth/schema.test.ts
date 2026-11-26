@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   emailChangeSchema,
   passwordChange
-} from '$routes/account/auth/schema.svelte';
+} from '#routes/account/auth/schema.svelte.ts';
 
 describe('passwordChange schema', () => {
   it('accepts all three non-empty fields', () => {

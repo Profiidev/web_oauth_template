@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generalSettings } from '$routes/account/general/schema.svelte';
+import { generalSettings } from '#routes/account/general/schema.svelte.ts';
 
 describe('account general settings schema', () => {
   it('requires a non-empty username', () => {

@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
-import { test } from '$test_helpers/e2e-fixture';
-import { setupSession } from '$test_helpers/session';
-import { gotoReady } from '$test_helpers/layout';
+import { test } from '#test_helpers/e2e-fixture.ts';
+import { setupSession } from '#test_helpers/session.ts';
+import { gotoReady } from '#test_helpers/layout.ts';
 
 test.beforeEach(async ({ context }) => setupSession(context));
 

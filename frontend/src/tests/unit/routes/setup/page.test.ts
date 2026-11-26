@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { load } from '$routes/setup/+page';
-import { catchRedirect, jsonFetch, runLoad } from '$test_helpers/load';
+import { load } from '#routes/setup/+page.ts';
+import { catchRedirect, jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const event = (fetch: typeof globalThis.fetch) => ({ fetch }) as any;

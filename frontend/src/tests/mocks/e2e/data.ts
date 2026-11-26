@@ -1,4 +1,4 @@
-import { Permission } from '$lib/permissions.svelte';
+import { Permission } from '#lib/permissions.svelte.ts';
 
 /** Scenario name read from the `mock_scenario` cookie (set by the e2e tests). */
 export type Scenario =

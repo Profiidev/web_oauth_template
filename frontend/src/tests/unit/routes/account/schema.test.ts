@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { confirmSchema } from '$routes/account/schema.svelte';
+import { confirmSchema } from '#routes/account/schema.svelte.ts';
 
 describe('account confirm schema', () => {
   it('requires a non-empty password', () => {

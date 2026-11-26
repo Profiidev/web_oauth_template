@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { getRedirectTarget } from '$lib/redirect';
+import { getRedirectTarget } from '#lib/redirect.ts';
 
 export const load: PageServerLoad = ({ cookies, url }) => {
   const cookie = cookies.get('centaurus_jwt');

@@ -1,4 +1,4 @@
-import { getGeneralSettings, getUserSettings } from '$lib/client';
+import { getGeneralSettings, getUserSettings } from '#lib/client/index.ts';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ fetch }) => {

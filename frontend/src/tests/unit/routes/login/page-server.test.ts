@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { load } from '$routes/login/+page.server';
-import { catchRedirect, runLoad } from '$test_helpers/load';
+import { load } from '#routes/login/+page.server.ts';
+import { catchRedirect, runLoad } from '#test_helpers/load.ts';
 
 const cookies = (value?: string) => ({ get: () => value });
 

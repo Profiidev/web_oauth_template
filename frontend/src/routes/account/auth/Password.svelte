@@ -3,8 +3,8 @@
   import { toast } from '@profidev/pleiades/components/util/general';
   import { passwordChange } from './schema.svelte';
   import type { FormValue } from '@profidev/pleiades/components/form/types';
-  import { getEncrypt } from '$lib/backend/auth.svelte';
-  import { updatePassword } from '$lib/client';
+  import { getEncrypt } from '#lib/backend/auth.svelte.ts';
+  import { updatePassword } from '#lib/client/index.ts';
   import FormInputPassword from '@profidev/pleiades/components/form/form-input-password.svelte';
   import * as Tooltip from '@profidev/pleiades/components/ui/tooltip';
   import { Button } from '@profidev/pleiades/components/ui/button';

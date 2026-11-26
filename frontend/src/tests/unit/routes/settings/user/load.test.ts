@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { load } from '$routes/settings/user/+page';
-import { jsonFetch, runLoad } from '$test_helpers/load';
+import { load } from '#routes/settings/user/+page.ts';
+import { jsonFetch, runLoad } from '#test_helpers/load.ts';
 
 describe('settings/user load', () => {
   it('exposes the user-settings and general-settings promises', async () => {

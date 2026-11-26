@@ -1,4 +1,4 @@
-import type { UserSettings } from '$lib/client';
+import type { UserSettings } from '#lib/client/index.ts';
 import type { FormValue } from '@profidev/pleiades/components/form/types';
 import { z } from 'zod';
 

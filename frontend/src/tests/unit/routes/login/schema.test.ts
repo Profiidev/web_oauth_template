@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { login } from '$routes/login/schema.svelte';
+import { login } from '#routes/login/schema.svelte.ts';
 
 describe('login schema', () => {
   it('accepts a valid email and password', () => {

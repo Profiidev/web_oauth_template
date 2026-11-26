@@ -1,11 +1,11 @@
 import { expect } from '@playwright/test';
-import { test } from '$test_helpers/e2e-fixture';
-import { seedSetupPending, setupSession } from '$test_helpers/session';
-import { gotoReady } from '$test_helpers/layout';
+import { test } from '#test_helpers/e2e-fixture.ts';
+import { seedSetupPending, setupSession } from '#test_helpers/session.ts';
+import { gotoReady } from '#test_helpers/layout.ts';
 
 const pathname = (page: { url: () => string }) => new URL(page.url()).pathname;
 
-// The public paths listed in `noAuthPaths` (`$lib/components/nav.svelte`) are
+// The public paths listed in `noAuthPaths` (`#lib/components/nav.svelte.ts`) are
 // Exempt from the auth guard, so the unauthenticated visitor is never bounced
 // To /login. A couple of them perform their own in-app redirect that has
 // Nothing to do with auth (kept in `expected`):

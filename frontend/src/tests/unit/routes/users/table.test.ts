@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { columns } from '$routes/users/table.svelte';
+import { columns } from '#routes/users/table.svelte.ts';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cellProps = (cols: any[], key: string, original: unknown) =>

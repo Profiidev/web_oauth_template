@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { information } from '$routes/users/create/schema.svelte';
+import { information } from '#routes/users/create/schema.svelte.ts';
 
 describe('user create information schema', () => {
   it('applies defaults when fields are absent', () => {

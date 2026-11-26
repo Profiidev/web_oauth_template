@@ -5,7 +5,7 @@
   import {
     connectWebsocket,
     disconnectWebsocket
-  } from '$lib/backend/updater.svelte';
+  } from '#lib/backend/updater.svelte.ts';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
@@ -13,12 +13,12 @@
     items,
     noAuthPaths,
     noSidebarPaths
-  } from '$lib/components/nav.svelte';
+  } from '#lib/components/nav.svelte.ts';
   import { setMode } from 'mode-watcher';
-  import { logout, testToken, type UserInfo } from '$lib/client';
+  import { logout, testToken, type UserInfo } from '#lib/client/index.ts';
   import Sidebar from '@profidev/pleiades/components/nav/sidebar/sidebar.svelte';
-  import { avatarUrl } from '$lib/permissions.svelte';
-  import { buildLoginUrl } from '$lib/redirect';
+  import { avatarUrl } from '#lib/permissions.svelte.ts';
+  import { buildLoginUrl } from '#lib/redirect.ts';
 
   // @ts-ignore this is injected at build time via Vite's define option
   let version = __version__;

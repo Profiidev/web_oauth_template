@@ -6,9 +6,9 @@
   import type { FormValue } from '@profidev/pleiades/components/form/types';
   import type { adminUser } from './schema.svelte';
   import { goto, invalidate } from '$app/navigation';
-  import { connectWebsocket } from '$lib/backend/updater.svelte';
-  import { completeSetup, initOidc } from '$lib/client';
-  import { getEncrypt, getOidcUrl } from '$lib/backend/auth.svelte';
+  import { connectWebsocket } from '#lib/backend/updater.svelte.ts';
+  import { completeSetup, initOidc } from '#lib/client/index.ts';
+  import { getEncrypt, getOidcUrl } from '#lib/backend/auth.svelte.ts';
   import UserSetup from './UserSetup.svelte';
   import { reformat, type userSettings } from '../settings/user/schema.svelte';
 
