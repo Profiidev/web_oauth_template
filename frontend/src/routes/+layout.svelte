@@ -7,8 +7,11 @@
     disconnectWebsocket
   } from '#lib/backend/updater.svelte.ts';
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { page } from '$app/state';
+  import { beforeNavigate, goto } from '$app/navigation';
+  import { page, updated } from '$app/state';
+  import * as Alert from '@profidev/pleiades/components/ui/alert';
+  import { Button } from '@profidev/pleiades/components/ui/button';
+  import RefreshCw from '@lucide/svelte/icons/refresh-cw';
   import {
     items,
     noAuthPaths,
@@ -27,6 +30,14 @@
 
   let user: UserInfo | undefined = $state();
   let blockRedirect = false;
+  let updateDismissed = $state(false);
+
+  // pending update: make next client-side navigation a full page load
+  beforeNavigate(({ willUnload, to }) => {
+    if (updated.current && !willUnload && to?.url) {
+      location.href = to.url.href;
+    }
+  });
 
   $effect(() => {
     data.user.then((u) => {
@@ -66,6 +77,29 @@
 
 <ModeWatcher />
 <Toaster position="top-right" closeButton={true} richColors={true} />
+
+{#if updated.current && !updateDismissed}
+  <Alert.Root class="fixed right-4 bottom-4 z-50 w-80 shadow-lg">
+    <RefreshCw />
+    <Alert.Title>Update available</Alert.Title>
+    <Alert.Description>
+      A new version has been deployed.
+      <div class="mt-2 flex w-full justify-end gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          class="cursor-pointer"
+          onclick={() => (updateDismissed = true)}>Later</Button
+        >
+        <Button
+          size="sm"
+          class="cursor-pointer"
+          onclick={() => location.reload()}>Reload</Button
+        >
+      </div>
+    </Alert.Description>
+  </Alert.Root>
+{/if}
 
 {#if noSidebarPaths.includes(page.route.id ?? '')}
   {@render children()}
